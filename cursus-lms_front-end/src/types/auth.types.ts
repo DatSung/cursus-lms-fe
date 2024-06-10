@@ -1,3 +1,4 @@
+
 // Represent to SignDTO of back-end 
 export interface ISignInDTO {
     email: string;
@@ -157,6 +158,13 @@ export interface IPhoneNumberDTO {
 }
 
 export interface ISignUpResponseDTO {
+    result: string,
+    isSuccess: boolean,
+    statusCode: number,
+    message: string
+}
+
+export interface ISendVerifyEmailResponseDTO {
     result: string,
     isSuccess: boolean,
     statusCode: number,

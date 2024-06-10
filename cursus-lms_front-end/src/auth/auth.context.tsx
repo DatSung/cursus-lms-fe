@@ -1,9 +1,9 @@
 import { ReactNode, createContext, useCallback, useEffect, useReducer } from "react";
-import { IAuthContext, IAuthContextAction, IAuthContextActionTypes, IAuthContextState, IJwtTokenDTO, ISignInByGooleInstructorDTO, ISignInByGooleStudentDTO, ISignInDTO, ISignInResponseDTO, ISignUpInstructorDTO, ISignUpResponseDTO, ISignUpStudentDTO } from "../types/auth.types";
+import { IAuthContext, IAuthContextAction, IAuthContextActionTypes, IAuthContextState, IJwtTokenDTO, ISendVerifyEmailResponseDTO, ISignInByGooleInstructorDTO, ISignInByGooleStudentDTO, ISignInDTO, ISignInResponseDTO, ISignUpInstructorDTO, ISignUpResponseDTO, ISignUpStudentDTO } from "../types/auth.types";
 import { useNavigate } from "react-router-dom";
 import { getJwtTokenSession, setJwtTokenSession } from "./auth.utils";
 import axiosInstance from "../utils/axiosInstance";
-import { INSTRUCTOR_SIGNIN_BY_GOOGLE_URL, REFRESH_URL, SIGN_IN_URL, SIGN_UP_INSTRUCTOR_URL, SIGN_UP_STUDENT_URL, STUDENT_SIGNIN_BY_GOOGLE_URL } from "../utils/globalConfig";
+import { INSTRUCTOR_SIGNIN_BY_GOOGLE_URL, REFRESH_URL, SEND_VERIFY_EMAIL_URL, SIGN_IN_URL, SIGN_UP_INSTRUCTOR_URL, SIGN_UP_STUDENT_URL, STUDENT_SIGNIN_BY_GOOGLE_URL } from "../utils/globalConfig";
 import toast from "react-hot-toast";
 
 // Reducer function for useReducer hook
@@ -32,7 +32,7 @@ const authReducer = (state: IAuthContextState, action: IAuthContextAction) => {
     if (action.type === IAuthContextActionTypes.SIGNOUT) {
         return {
             ...state,
-            isAuthenticated: true,
+            isAuthenticated: false,
             isFullInfo: false,
             isAuthLoading: false,
             user: undefined
@@ -126,13 +126,21 @@ const AuthContextProvider = ({ children }: IProps) => {
                 navigate('/');
 
             } else {
-                toast.success('Something went wrong');
+                toast.error(signInResponse.message);
+                if (signInResponse.statusCode === 401) {
+                    const emailToSend = {
+                        email: signInDTO.email
+                    }
+                    const response = await axiosInstance.post<ISendVerifyEmailResponseDTO>(SEND_VERIFY_EMAIL_URL, emailToSend);
+                    const sendResponse = response.data;
+                    if (sendResponse.isSuccess === true) {
+                        toast.success(sendResponse.message);
+                    }
+                }
             }
-
-            // navigate(PATH_AFTER_SIGNIN);
-
         } catch (error) {
             console.log(error)
+            toast.error('Somethign went wrong');
         }
 
     }, [])
