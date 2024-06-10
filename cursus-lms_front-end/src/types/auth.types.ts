@@ -200,7 +200,7 @@ export interface IAuthContext {
 
     signUpInstructor: (signUpField: ISignUpInstructorDTO) => Promise<void>;
 
-    logout: () => void;
+    signout: () => void;
 
     // refresh: (refreshToken: string) => Promise<void>;
 

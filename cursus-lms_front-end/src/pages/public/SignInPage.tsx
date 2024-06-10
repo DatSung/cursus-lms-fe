@@ -8,6 +8,7 @@ import InputField from '../../components/general/InputField';
 import { Link } from 'react-router-dom';
 import Button from '../../components/general/Button';
 import { PATH_PUBLIC } from '../../routes/paths';
+import toast from 'react-hot-toast';
 
 const SignInPage = () => {
 
@@ -44,6 +45,25 @@ const SignInPage = () => {
 
     })
 
+    const onSubmitLoginForm = async (data: ISignInDTO) => {
+        try {
+            setLoading(true);
+            const respone = await signInByEmailPassword(data);
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+            const err = error as { data: string; status: number }
+            const { status } = err;
+
+            if (status === 401) {
+                toast.error('Invalid username or password');
+            } else {
+                toast.error('An error occurred. Please contact admins');
+            }
+
+        }
+    };
+
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -58,7 +78,12 @@ const SignInPage = () => {
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6" action="#" method="POST">
+                <form
+                    onSubmit={handleSubmit(onSubmitLoginForm)}
+                    className="space-y-6"
+                    action="#"
+                    method="POST"
+                >
 
                     <InputField
                         control={control}

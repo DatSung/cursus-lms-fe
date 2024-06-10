@@ -25,7 +25,7 @@ function classNames(...classes: any[]) {
 
 const Header = () => {
 
-    const { isAuthenticated, user, logout } = useAuth();
+    const { isAuthenticated, user, signout } = useAuth();
     const navigate = useNavigate();
 
     return (
@@ -144,8 +144,8 @@ const Header = () => {
                                                         <MenuItem>
                                                             {({ focus }) => (
                                                                 <a
-                                                                    onClick={logout}
-                                                                    className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                                                    onClick={signout}
+                                                                    className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700 cursor-pointer')}
                                                                 >
                                                                     Sign out
                                                                 </a>

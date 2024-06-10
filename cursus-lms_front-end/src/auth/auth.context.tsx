@@ -122,8 +122,8 @@ const AuthContextProvider = ({ children }: IProps) => {
                     payload: userInfo
                 })
 
-                ////// Navigate here
-                // navigate();
+                //// Navigate here
+                navigate('/');
 
             } else {
                 toast.success('Something went wrong');
@@ -259,12 +259,12 @@ const AuthContextProvider = ({ children }: IProps) => {
         }
     }, [])
 
-    const logout = useCallback(() => {
+    const signout = useCallback(() => {
         setJwtTokenSession(null, null);
         dispatch({
             type: IAuthContextActionTypes.SIGNOUT
         });
-        // navigate(PATH_AFTER_LOGOUT);
+        navigate('/signin');
     }, [])
 
     const valuesObject = {
@@ -279,7 +279,7 @@ const AuthContextProvider = ({ children }: IProps) => {
         signInByGoogleInstructor: signInByGoogleInstructor,
         signUpInstructor: signUpInstructor,
         signUpStudent: signUpStudent,
-        logout: logout,
+        signout: signout,
 
     };
 
