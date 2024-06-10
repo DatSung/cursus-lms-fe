@@ -7,6 +7,7 @@ import SignUpPage from "../pages/public/SignUpPage";
 import CoursesPage from "../pages/courses/CoursesPage";
 import NotFoundPage from "../pages/public/NotFoundPage";
 import ForgotPasswordPage from "../pages/public/ForgotPasswordPage.tsx";
+import VerifyEmailPage from "../pages/public/VerifyEmailPage.tsx";
 
 const GlobalRouter = () => {
     return (
@@ -18,6 +19,7 @@ const GlobalRouter = () => {
                 <Route index element={<HomePage></HomePage>} />
                 <Route path={PATH_PUBLIC.signin} element={<SignInPage></SignInPage>} />
                 <Route path={PATH_PUBLIC.forgotPassword} element={<ForgotPasswordPage></ForgotPasswordPage>} />
+                <Route path={PATH_PUBLIC.verifyEmail} element={<VerifyEmailPage></VerifyEmailPage>} />
                 <Route path={PATH_PUBLIC.signup} element={<SignUpPage></SignUpPage>} />
                 <Route path={PATH_PUBLIC.courses} element={<CoursesPage></CoursesPage>} />
                 <Route path={PATH_PUBLIC.unauthorized} element />

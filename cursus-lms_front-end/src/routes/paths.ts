@@ -3,7 +3,9 @@ export const PATH_PUBLIC = {
     courses: '/courses',
     signin: '/signin',
     forgotPassword: '/signin/forgot-password',
+    verifyEmail: '/signin/verify-email',
     signup: '/signup',
     unauthorized: '/unauthorized',
-    notFound: '/404' 
+    notFound: '/404'
 }
+
