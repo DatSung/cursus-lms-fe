@@ -1,23 +1,23 @@
-import { useState } from 'react'
+import {useState} from 'react'
 import useAuth from '../../hooks/useAuth.hook';
-import { useForm } from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import * as Yup from 'yup';
-import { yupResolver } from "@hookform/resolvers/yup";
-import { ISignInDTO } from '../../types/auth.types';
+import {yupResolver} from "@hookform/resolvers/yup";
+import {ISignInDTO} from '../../types/auth.types';
 import InputField from '../../components/general/InputField';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Button from '../../components/general/Button';
-import { PATH_PUBLIC } from '../../routes/paths';
+import {PATH_PUBLIC} from '../../routes/paths';
 import toast from 'react-hot-toast';
 
 const SignInPage = () => {
 
     const [loading, setLoading] = useState<boolean>(false);
-    const { signInByEmailPassword } = useAuth();
+    const {signInByEmailPassword} = useAuth();
 
     const signinSchema = Yup.object().shape({
         email: Yup.string()
-            .required("Email is required"),
+            .required("Email is required").email("Email must be a valid email"),
         password: Yup.string()
             .required("Password is required")
             .min(8, "Password must be at least 8 characters")
@@ -31,7 +31,7 @@ const SignInPage = () => {
 
         control,
         handleSubmit,
-        formState: { errors },
+        formState: {errors},
         reset,
 
     } = useForm<ISignInDTO>({
@@ -48,12 +48,12 @@ const SignInPage = () => {
     const onSubmitLoginForm = async (data: ISignInDTO) => {
         try {
             setLoading(true);
-            const respone = await signInByEmailPassword(data);
+            await signInByEmailPassword(data);
             setLoading(false);
         } catch (error) {
             setLoading(false);
             const err = error as { data: string; status: number }
-            const { status } = err;
+            const {status} = err;
 
             if (status === 401) {
                 toast.error('Invalid username or password');
@@ -101,7 +101,12 @@ const SignInPage = () => {
                     />
 
                     <div className='flex justify-evenly items-center'>
-                        <h1>Not a member?</h1>
+                        <Link
+                            to={PATH_PUBLIC.forgotPassword}
+                            className='text-green-800 hover:text-green-600 px-3'
+                        >
+                            Forgot password?
+                        </Link>
                         <Link
                             to={PATH_PUBLIC.signup}
                             className='text-green-800 border border-[754eb4] hover:text-green-600 px-3 rounded-2xl duration-200'

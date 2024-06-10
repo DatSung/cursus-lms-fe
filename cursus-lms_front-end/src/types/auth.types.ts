@@ -70,9 +70,9 @@ export interface ISignInResponseDTO {
         refreshToken: string;
         userInfo: IUserInfo;
         message: string;
-    }
-    isSuccess: true,
-    statusCode: number,
+    };
+    isSuccess: true;
+    statusCode: number;
     message: string;
 }
 
@@ -102,10 +102,10 @@ export interface IJwtTokenDTO {
     result: {
         accessToken: string;
         refreshToken: string;
-    }
-    isSuccess: boolean,
-    statusCode: number,
-    message: string
+    };
+    isSuccess: boolean;
+    statusCode: number;
+    message: string;
 }
 
 export interface IResetPasswordDTO {
@@ -158,17 +158,17 @@ export interface IPhoneNumberDTO {
 }
 
 export interface ISignUpResponseDTO {
-    result: string,
-    isSuccess: boolean,
-    statusCode: number,
-    message: string
+    result: string;
+    isSuccess: boolean;
+    statusCode: number;
+    message: string;
 }
 
-export interface ISendVerifyEmailResponseDTO {
-    result: string,
-    isSuccess: boolean,
-    statusCode: number,
-    message: string
+export interface IResponseDTO<T> {
+    result: T;
+    isSuccess: boolean;
+    statusCode: number;
+    message: string;
 }
 
 // Auth Context Interfaces

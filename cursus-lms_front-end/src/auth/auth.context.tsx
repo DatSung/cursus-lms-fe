@@ -1,9 +1,31 @@
-import { ReactNode, createContext, useCallback, useEffect, useReducer } from "react";
-import { IAuthContext, IAuthContextAction, IAuthContextActionTypes, IAuthContextState, IJwtTokenDTO, ISendVerifyEmailResponseDTO, ISignInByGooleInstructorDTO, ISignInByGooleStudentDTO, ISignInDTO, ISignInResponseDTO, ISignUpInstructorDTO, ISignUpResponseDTO, ISignUpStudentDTO } from "../types/auth.types";
-import { useNavigate } from "react-router-dom";
-import { getJwtTokenSession, setJwtTokenSession } from "./auth.utils";
+import {ReactNode, createContext, useCallback, useEffect, useReducer} from "react";
+import {
+    IAuthContext,
+    IAuthContextAction,
+    IAuthContextActionTypes,
+    IAuthContextState,
+    IJwtTokenDTO,
+    IResponseDTO,
+    ISignInByGooleInstructorDTO,
+    ISignInByGooleStudentDTO,
+    ISignInDTO,
+    ISignInResponseDTO,
+    ISignUpInstructorDTO,
+    ISignUpResponseDTO,
+    ISignUpStudentDTO
+} from "../types/auth.types";
+import {useNavigate} from "react-router-dom";
+import {getJwtTokenSession, setJwtTokenSession} from "./auth.utils";
 import axiosInstance from "../utils/axiosInstance";
-import { INSTRUCTOR_SIGNIN_BY_GOOGLE_URL, REFRESH_URL, SEND_VERIFY_EMAIL_URL, SIGN_IN_URL, SIGN_UP_INSTRUCTOR_URL, SIGN_UP_STUDENT_URL, STUDENT_SIGNIN_BY_GOOGLE_URL } from "../utils/globalConfig";
+import {
+    INSTRUCTOR_SIGNIN_BY_GOOGLE_URL,
+    REFRESH_URL,
+    SEND_VERIFY_EMAIL_URL,
+    SIGN_IN_URL,
+    SIGN_UP_INSTRUCTOR_URL,
+    SIGN_UP_STUDENT_URL,
+    STUDENT_SIGNIN_BY_GOOGLE_URL
+} from "../utils/globalConfig";
 import toast from "react-hot-toast";
 
 // Reducer function for useReducer hook
@@ -59,7 +81,7 @@ interface IProps {
 }
 
 // Create a component to manage all auth functionalities
-const AuthContextProvider = ({ children }: IProps) => {
+const AuthContextProvider = ({children}: IProps) => {
 
     const [state, dispatch] = useReducer(authReducer, initalAuthState);
     const navigate = useNavigate();
@@ -68,7 +90,7 @@ const AuthContextProvider = ({ children }: IProps) => {
     const initializeAuthContext = useCallback(async () => {
         try {
 
-            const { refreshToken } = getJwtTokenSession();
+            const {refreshToken} = getJwtTokenSession();
 
             if (refreshToken) {
                 const response = await axiosInstance.post<IJwtTokenDTO>(REFRESH_URL, refreshToken);
@@ -113,7 +135,7 @@ const AuthContextProvider = ({ children }: IProps) => {
             if (signInResponse.isSuccess === true) {
                 toast.success('Sign in was successfully');
 
-                const { accessToken, refreshToken, userInfo } = signInResponse.result;
+                const {accessToken, refreshToken, userInfo} = signInResponse.result;
 
                 setJwtTokenSession(accessToken, refreshToken);
 
@@ -131,7 +153,7 @@ const AuthContextProvider = ({ children }: IProps) => {
                     const emailToSend = {
                         email: signInDTO.email
                     }
-                    const response = await axiosInstance.post<ISendVerifyEmailResponseDTO>(SEND_VERIFY_EMAIL_URL, emailToSend);
+                    const response = await axiosInstance.post<IResponseDTO<string>>(SEND_VERIFY_EMAIL_URL, emailToSend);
                     const sendResponse = response.data;
                     if (sendResponse.isSuccess === true) {
                         toast.success(sendResponse.message);
@@ -140,7 +162,7 @@ const AuthContextProvider = ({ children }: IProps) => {
             }
         } catch (error) {
             console.log(error)
-            toast.error('Somethign went wrong');
+            toast.error('Something went wrong');
         }
 
     }, [])
@@ -156,7 +178,7 @@ const AuthContextProvider = ({ children }: IProps) => {
                 toast.success('Sign in was successfully')
 
                 const userInfo = signInResponse.result.userInfo;
-                const { accessToken, refreshToken } = signInResponse.result;
+                const {accessToken, refreshToken} = signInResponse.result;
 
                 setJwtTokenSession(accessToken, refreshToken);
 
@@ -198,7 +220,7 @@ const AuthContextProvider = ({ children }: IProps) => {
                 toast.success('Sign in was successfully')
 
                 const userInfo = signInResponse.result.userInfo;
-                const { accessToken, refreshToken } = signInResponse.result;
+                const {accessToken, refreshToken} = signInResponse.result;
 
                 setJwtTokenSession(accessToken, refreshToken);
 
