@@ -259,6 +259,14 @@ const AuthContextProvider = ({children}: IProps) => {
 
             if (signUpReponse.isSuccess === true) {
                 toast.success(signUpReponse.message);
+                const emailToSend = {
+                    email: signUpStudentDTO.email
+                }
+                const response = await axiosInstance.post<IResponseDTO<string>>(SEND_VERIFY_EMAIL_URL, emailToSend);
+                const sendResponse = response.data;
+                if (sendResponse.isSuccess === true) {
+                    toast.success(sendResponse.message);
+                }
             } else {
                 console.log(signUpReponse.message);
             }

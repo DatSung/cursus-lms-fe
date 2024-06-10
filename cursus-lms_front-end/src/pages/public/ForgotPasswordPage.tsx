@@ -9,6 +9,7 @@ import {FORGOT_PASSWORD_URL} from "../../utils/globalConfig.ts";
 import InputField from "../../components/general/InputField.tsx";
 import Button from "../../components/general/Button.tsx";
 import {useNavigate} from "react-router-dom";
+import {PATH_PUBLIC} from "../../routes/paths.ts";
 
 const ForgotPasswordPage = () => {
 
@@ -81,7 +82,7 @@ const ForgotPasswordPage = () => {
                             variant='secondary'
                             type='button'
                             label='Back'
-                            onClick={() => navigate('/signin')}
+                            onClick={() => navigate(PATH_PUBLIC.signIn)}
                         />
                         <Button
                             variant='secondary'

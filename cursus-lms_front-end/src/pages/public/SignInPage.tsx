@@ -67,7 +67,7 @@ const SignInPage = () => {
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-green-800">
+                <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-green-800">
                     Sign in to your account
                 </h2>
             </div>
@@ -91,7 +91,7 @@ const SignInPage = () => {
                         control={control}
                         label='Password'
                         inputName='password'
-                        inputType='passowrd'
+                        inputType='password'
                         error={errors.password?.message}
                     />
 
@@ -103,7 +103,7 @@ const SignInPage = () => {
                             Forgot password?
                         </Link>
                         <Link
-                            to={PATH_PUBLIC.signup}
+                            to={PATH_PUBLIC.signUpStudent}
                             className='text-green-800 border border-[754eb4] hover:text-green-600 px-3 rounded-2xl duration-200'
                         >
                             Create an account

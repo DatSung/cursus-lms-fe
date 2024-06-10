@@ -1,10 +1,11 @@
 export const PATH_PUBLIC = {
     home: '/',
     courses: '/courses',
-    signin: '/signin',
-    forgotPassword: '/signin/forgot-password',
-    verifyEmail: '/signin/verify-email',
-    signup: '/signup',
+    signIn: '/sign-in',
+    forgotPassword: '/sign-in/forgot-password',
+    verifyEmail: '/sign-in/verify-email',
+    signUpStudent: '/sign-up-student',
+    signUpInstructor: '/sign-up-instructor',
     unauthorized: '/unauthorized',
     notFound: '/404'
 }

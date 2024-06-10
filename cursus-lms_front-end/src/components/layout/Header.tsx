@@ -13,10 +13,11 @@ import useAuth from '../../hooks/useAuth.hook'
 import { useNavigate } from 'react-router-dom'
 import CursusLogo from '../../../public/images/logo/CURSUSLOGO.svg';
 import Button from '../general/Button';
+import {PATH_PUBLIC} from "../../routes/paths.ts";
 
 const navigation = [
-    { name: 'Home', path: '/', current: false },
-    { name: 'Courses', path: '/courses', current: false },
+    { name: 'Home', path: PATH_PUBLIC.home, current: false },
+    { name: 'Courses', path: PATH_PUBLIC.courses, current: false },
 ]
 
 function classNames(...classes: any[]) {
@@ -166,14 +167,14 @@ const Header = () => {
                                                     variant='light'
                                                     type='button'
                                                     label='Sign Up'
-                                                    onClick={() => navigate('/signup')}
+                                                    onClick={() => navigate(PATH_PUBLIC.signUpStudent)}
                                                 />
 
                                                 <Button
                                                     variant='primary'
                                                     type='button'
                                                     label='Sign In'
-                                                    onClick={() => navigate('/signin')}
+                                                    onClick={() => navigate(PATH_PUBLIC.signIn)}
                                                 />
                                             </div>
                                         </div>

@@ -1,5 +1,5 @@
 
-// Represent to SignDTO of back-end 
+// Represent to SignDTO of back-end
 export interface ISignInDTO {
     email: string;
     password: string;
@@ -15,11 +15,12 @@ export interface ISignInByGooleInstructorDTO {
 // Represent to InstructorDTO of back-end 
 export interface ISignUpInstructorDTO {
     password: string;
+    confirmPassword: string;
     email: string,
     phoneNumber: string;
     gender: string;
     fullName: string;
-    birthDate: string;
+    birthDate: Date;
     country: string;
     address: string;
     degree: string;
@@ -41,7 +42,7 @@ export interface ISignUpStudentDTO {
     country: string;
     gender: string;
     university: string;
-    birthDate: string;
+    birthDate: Date;
     phoneNumber: string;
     cardNumber: string;
     cardName: string;
