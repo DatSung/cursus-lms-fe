@@ -12,7 +12,7 @@ export interface ISignInByGooleInstructorDTO {
 }
 
 // Represent to InstructorDTO of back-end 
-export interface ISignUpInstructor {
+export interface ISignUpInstructorDTO {
     password: string;
     email: string,
     phoneNumber: string;
@@ -31,7 +31,7 @@ export interface ISignUpInstructor {
 }
 
 // Represent to RegisterStudentDTO of back-end 
-export interface ISignUpStudent {
+export interface ISignUpStudentDTO {
     email: string,
     password: string;
     confirmPassword: string;
@@ -64,9 +64,14 @@ export interface IUserInfo {
 
 // Represent to SignResponseDTO of back-end
 export interface ISignInResponseDTO {
-    accessToken: string;
-    refreshToken: string;
-    userInfo: IUserInfo;
+    result: {
+        accessToken: string;
+        refreshToken: string;
+        userInfo: IUserInfo;
+        message: string;
+    }
+    isSuccess: true,
+    statusCode: number,
     message: string;
 }
 
@@ -93,8 +98,13 @@ export interface IForgotPasswordDTO {
 }
 
 export interface IJwtTokenDTO {
-    accessToken: string;
-    refreshToken: string;
+    result: {
+        accessToken: string;
+        refreshToken: string;
+    }
+    isSuccess: boolean,
+    statusCode: number,
+    message: string
 }
 
 export interface IResetPasswordDTO {
@@ -146,18 +156,27 @@ export interface IPhoneNumberDTO {
     phoneNumber: string;
 }
 
+export interface ISignUpResponseDTO {
+    result: string,
+    isSuccess: boolean,
+    statusCode: number,
+    message: string
+}
+
 // Auth Context Interfaces
 
 export interface IAuthContextState {
     isAuthenticated: boolean;
+    isFullInfo: boolean;
     isAuthLoading: boolean;
     user?: IUserInfo;
 }
 
 export enum IAuthContextActionTypes {
     INITIAL = 'INITIAL',
-    LOGIN = 'LOGIN',
-    LOGOUT = 'LOGOUT',
+    SIGNIN = 'SIGNIN',
+    SIGNINBYGOOGLE = 'SIGNINBYGOOGLE',
+    SIGNOUT = 'SIGNOUT',
 }
 
 export interface IAuthContextAction {
@@ -167,6 +186,7 @@ export interface IAuthContextAction {
 
 export interface IAuthContext {
     isAuthenticated: boolean;
+    isFullInfo: boolean;
     isAuthLoading: boolean;
     user?: IUserInfo;
 
@@ -176,39 +196,40 @@ export interface IAuthContext {
 
     signInByGoogleInstructor: (signInField: ISignInByGooleInstructorDTO) => Promise<void>;
 
-    uploadUserAvatar: (uploadFile: IAvatarUploadDTO) => Promise<void>;
+    signUpStudent: (signUpField: ISignUpStudentDTO) => Promise<void>;
 
-    getUserAvatar: (uploadFile: IAvatarUploadDTO) => Promise<void>;
-
-    uploadInstructorDegree: (uploadFile: IDegreeUploadDTO) => Promise<void>;
-
-    getInstructorDegree: (uploadFile: IDegreeUploadDTO) => Promise<void>;
-
-    signUpStudent: (signUpField: ISignUpStudent) => Promise<void>;
-
-    signUpInstructor: (signUpField: ISignUpInstructor) => Promise<void>;
-
-    updateStudentProfile: (updateField: IUpdateStudentProfile) => Promise<void>;
-
-    updateInstructorProfile: (updateField: IUpdateInstructorProfile) => Promise<void>;
-
-    forgotPassword: (forgotField: IForgotPasswordDTO) => Promise<void>;
-
-    resetPassword: (resetField: IResetPasswordDTO) => Promise<void>;
-
-    changePassword: (changeField: IChangePasswordDTO) => Promise<void>;
-
-    sendVerifyEmail: (sendField: ISendVerifyEmailDTO) => Promise<void>;
-
-    verifyEmail: (verifyField: IVerifyEmailDTO) => Promise<void>;
-
-    checkEmailExist: (checkField: IEmailDTO) => Promise<void>;
-
-    checkPhoneNumberExist: (checkField: IPhoneNumberDTO) => Promise<void>;
-
-    refresh: (refreshToken: string) => Promise<void>;
+    signUpInstructor: (signUpField: ISignUpInstructorDTO) => Promise<void>;
 
     logout: () => void;
+
+    // refresh: (refreshToken: string) => Promise<void>;
+
+    // uploadUserAvatar: (uploadFile: IAvatarUploadDTO) => Promise<void>;
+
+    // getUserAvatar: (uploadFile: IAvatarUploadDTO) => Promise<void>;
+
+    // uploadInstructorDegree: (uploadFile: IDegreeUploadDTO) => Promise<void>;
+
+    // getInstructorDegree: (uploadFile: IDegreeUploadDTO) => Promise<void>;
+
+    // updateStudentProfile: (updateField: IUpdateStudentProfile) => Promise<void>;
+
+    // updateInstructorProfile: (updateField: IUpdateInstructorProfile) => Promise<void>;
+
+    // forgotPassword: (forgotField: IForgotPasswordDTO) => Promise<void>;
+
+    // resetPassword: (resetField: IResetPasswordDTO) => Promise<void>;
+
+    // changePassword: (changeField: IChangePasswordDTO) => Promise<void>;
+
+    // sendVerifyEmail: (sendField: ISendVerifyEmailDTO) => Promise<void>;
+
+    // verifyEmail: (verifyField: IVerifyEmailDTO) => Promise<void>;
+
+    // checkEmailExist: (checkField: IEmailDTO) => Promise<void>;
+
+    // checkPhoneNumberExist: (checkField: IPhoneNumberDTO) => Promise<void>;
+
 }
 
 export enum RolesEnum {

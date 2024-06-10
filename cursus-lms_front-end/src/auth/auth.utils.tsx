@@ -1,14 +1,15 @@
+import { string } from "yup";
 import { IJwtTokenDTO, IUserInfo, RolesEnum } from "../types/auth.types";
 
 import axiosInstance from "../utils/axiosInstance";
 
 // Function to set session information (e.g., access token) in local storage and Axios headers
-export const setJwtTokenSession = (setField: IJwtTokenDTO | null) => {
-    if (setField?.accessToken) {
-        localStorage.setItem('accessToken', setField.accessToken);
-        localStorage.setItem('refreshToken', setField.refreshToken);
+export const setJwtTokenSession = (accessToken: string | null, refreshToken: string | null) => {
+    if (accessToken && refreshToken) {
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
 
-        axiosInstance.defaults.headers.common.Authorization = `Bearer ${setField.accessToken}`;
+        axiosInstance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
     } else {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
