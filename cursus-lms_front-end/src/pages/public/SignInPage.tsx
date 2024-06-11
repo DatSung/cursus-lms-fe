@@ -1,11 +1,11 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import useAuth from '../../hooks/useAuth.hook';
 import {useForm} from 'react-hook-form';
 import * as Yup from 'yup';
 import {yupResolver} from "@hookform/resolvers/yup";
 import {ISignInDTO} from '../../types/auth.types';
 import InputField from '../../components/general/InputField';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import Button from '../../components/general/Button';
 import {PATH_PUBLIC} from '../../routes/paths';
 import toast from 'react-hot-toast';
@@ -13,7 +13,14 @@ import toast from 'react-hot-toast';
 const SignInPage = () => {
 
     const [loading, setLoading] = useState<boolean>(false);
-    const {signInByEmailPassword} = useAuth();
+    const {signInByEmailPassword, isAuthenticated} = useAuth();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate(PATH_PUBLIC.home);
+        }
+    });
 
     const signinSchema = Yup.object().shape({
         email: Yup.string()

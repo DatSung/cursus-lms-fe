@@ -3,6 +3,7 @@ import {IResponseDTO} from "../../types/auth.types.ts";
 import axiosInstance from "../../utils/axiosInstance.ts";
 import Button from "../../components/general/Button.tsx";
 import {useNavigate} from "react-router-dom";
+import {PATH_PUBLIC} from "../../routes/paths.ts";
 
 const VerifyEmailPage = () => {
     const [message, setMessage] = useState('');
@@ -46,7 +47,7 @@ const VerifyEmailPage = () => {
                     variant='secondary'
                     type='button'
                     label='Sign In'
-                    onClick={() => navigate('/signin')}
+                    onClick={() => navigate(PATH_PUBLIC.signIn)}
                 />
             </div>
         </div>

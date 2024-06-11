@@ -1,4 +1,3 @@
-
 // Represent to SignDTO of back-end
 export interface ISignInDTO {
     email: string;
@@ -8,6 +7,7 @@ export interface ISignInDTO {
 export interface ISignInByGooleStudentDTO {
     token: string;
 }
+
 export interface ISignInByGooleInstructorDTO {
     token: string;
 }
@@ -60,7 +60,9 @@ export interface IUserInfo {
     country: string;
     phoneNumber: string;
     address: string;
-    updateTime: string;
+    updateTime: Date;
+    degreeImageUrl: string;
+    isAccepted: boolean;
     roles: string[]
 }
 
@@ -209,15 +211,15 @@ export interface IAuthContext {
 
     signUpInstructor: (signUpField: ISignUpInstructorDTO) => Promise<void>;
 
-    signout: () => void;
+    uploadDegree: (uploadFile: IDegreeUploadDTO) => Promise<void>;
+
+    signOut: () => void;
 
     // refresh: (refreshToken: string) => Promise<void>;
 
     // uploadUserAvatar: (uploadFile: IAvatarUploadDTO) => Promise<void>;
 
     // getUserAvatar: (uploadFile: IAvatarUploadDTO) => Promise<void>;
-
-    // uploadInstructorDegree: (uploadFile: IDegreeUploadDTO) => Promise<void>;
 
     // getInstructorDegree: (uploadFile: IDegreeUploadDTO) => Promise<void>;
 

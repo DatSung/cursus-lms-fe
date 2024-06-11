@@ -26,7 +26,7 @@ function classNames(...classes: any[]) {
 
 const Header = () => {
 
-    const { isAuthenticated, user, signout } = useAuth();
+    const { isAuthenticated, user, signOut } = useAuth();
     const navigate = useNavigate();
 
     return (
@@ -52,7 +52,7 @@ const Header = () => {
                                     <img
                                         className="h-8 w-auto"
                                         src={CursusLogo}
-                                        alt="Your Company"
+                                        alt="Cursus LMS Website"
                                     />
                                 </div>
                                 <div className="hidden sm:ml-6 sm:block">
@@ -145,7 +145,7 @@ const Header = () => {
                                                         <MenuItem>
                                                             {({ focus }) => (
                                                                 <a
-                                                                    onClick={signout}
+                                                                    onClick={signOut}
                                                                     className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700 cursor-pointer')}
                                                                 >
                                                                     Sign out

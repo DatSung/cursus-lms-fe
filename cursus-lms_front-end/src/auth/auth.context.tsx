@@ -3,7 +3,7 @@ import {
     IAuthContext,
     IAuthContextAction,
     IAuthContextActionTypes,
-    IAuthContextState,
+    IAuthContextState, IDegreeUploadDTO,
     IJwtTokenDTO,
     IResponseDTO,
     ISignInByGooleInstructorDTO,
@@ -12,7 +12,7 @@ import {
     ISignInResponseDTO,
     ISignUpInstructorDTO,
     ISignUpResponseDTO,
-    ISignUpStudentDTO
+    ISignUpStudentDTO, RolesEnum
 } from "../types/auth.types";
 import {useNavigate} from "react-router-dom";
 import {getJwtTokenSession, setJwtTokenSession} from "./auth.utils";
@@ -24,9 +24,10 @@ import {
     SIGN_IN_URL,
     SIGN_UP_INSTRUCTOR_URL,
     SIGN_UP_STUDENT_URL,
-    STUDENT_SIGNIN_BY_GOOGLE_URL
+    STUDENT_SIGNIN_BY_GOOGLE_URL, UPLOAD_INSTRUCTOR_DEGREE_URL
 } from "../utils/globalConfig";
 import toast from "react-hot-toast";
+import {PATH_PUBLIC} from "../routes/paths.ts";
 
 // Reducer function for useReducer hook
 const authReducer = (state: IAuthContextState, action: IAuthContextAction) => {
@@ -90,10 +91,14 @@ const AuthContextProvider = ({children}: IProps) => {
     const initializeAuthContext = useCallback(async () => {
         try {
 
-            const {refreshToken} = getJwtTokenSession();
+            const {refreshToken, accessToken} = getJwtTokenSession();
 
-            if (refreshToken) {
-                const response = await axiosInstance.post<IJwtTokenDTO>(REFRESH_URL, refreshToken);
+            if (refreshToken && accessToken) {
+                const token = {
+                    accessToken,
+                    refreshToken,
+                }
+                const response = await axiosInstance.post<IJwtTokenDTO>(REFRESH_URL, token);
                 const jwtToken: IJwtTokenDTO = response.data;
 
                 if (jwtToken.isSuccess === false) {
@@ -144,8 +149,13 @@ const AuthContextProvider = ({children}: IProps) => {
                     payload: userInfo
                 })
 
-                //// Navigate here
-                navigate('/');
+                if (userInfo.roles[0] === RolesEnum.INSTRUCTOR) {
+                    if (userInfo.degreeImageUrl === null) {
+                        navigate(PATH_PUBLIC.uploadDegree);
+                    }
+                } else {
+                    navigate(PATH_PUBLIC.home);
+                }
 
             } else {
                 toast.error(signInResponse.message);
@@ -224,7 +234,7 @@ const AuthContextProvider = ({children}: IProps) => {
 
                 setJwtTokenSession(accessToken, refreshToken);
 
-                if (userInfo.updateTime == undefined) {
+                if (userInfo.updateTime === undefined) {
                     dispatch({
                         type: IAuthContextActionTypes.SIGNINBYGOOGLE,
                         payload: userInfo
@@ -246,6 +256,8 @@ const AuthContextProvider = ({children}: IProps) => {
             }
 
         } catch (error) {
+            // @ts-ignore
+            toast.error(error.data.message)
             console.log(error)
         }
 
@@ -255,10 +267,10 @@ const AuthContextProvider = ({children}: IProps) => {
     const signUpStudent = useCallback(async (signUpStudentDTO: ISignUpStudentDTO) => {
         try {
             const response = await axiosInstance.post<ISignUpResponseDTO>(SIGN_UP_STUDENT_URL, signUpStudentDTO);
-            const signUpReponse = response.data;
+            const signUpResponse = response.data;
 
-            if (signUpReponse.isSuccess === true) {
-                toast.success(signUpReponse.message);
+            if (signUpResponse.isSuccess) {
+                toast.success(signUpResponse.message);
                 const emailToSend = {
                     email: signUpStudentDTO.email
                 }
@@ -267,14 +279,15 @@ const AuthContextProvider = ({children}: IProps) => {
                 if (sendResponse.isSuccess === true) {
                     toast.success(sendResponse.message);
                 }
+                navigate(PATH_PUBLIC.signIn);
             } else {
-                console.log(signUpReponse.message);
+                toast.error(signUpResponse.message);
             }
 
-            // navigate(PATH_AFTER_SIGNUP);
-
         } catch (error) {
-            console.log(error)
+            // @ts-ignore
+            toast.error(error.data.message);
+            console.log(error);
         }
     }, [])
 
@@ -282,27 +295,53 @@ const AuthContextProvider = ({children}: IProps) => {
     const signUpInstructor = useCallback(async (signUpInstructorDTO: ISignUpInstructorDTO) => {
         try {
             const response = await axiosInstance.post<ISignUpResponseDTO>(SIGN_UP_INSTRUCTOR_URL, signUpInstructorDTO);
-            const signUpReponse = response.data;
+            const signUpResponse = response.data;
 
-            if (signUpReponse.isSuccess === true) {
-                toast.success('Register was successfully. Please signin!');
+            if (signUpResponse.isSuccess) {
+                toast.success(signUpResponse.message);
+                const emailToSend = {
+                    email: signUpInstructorDTO.email
+                }
+                const response = await axiosInstance.post<IResponseDTO<string>>(SEND_VERIFY_EMAIL_URL, emailToSend);
+                const sendResponse = response.data;
+                if (sendResponse.isSuccess === true) {
+                    toast.success(sendResponse.message);
+                }
+                navigate(PATH_PUBLIC.signIn);
             } else {
-                console.log(signUpReponse.message);
+                toast.error(signUpResponse.message);
             }
 
-            // navigate(PATH_AFTER_SIGNUP);
-
         } catch (error) {
+            // @ts-ignore
+            toast.error(error.data.message);
+            console.log(error);
+        }
+    }, [])
+
+    const uploadDegree = useCallback(async (degreeUploadDTO: IDegreeUploadDTO) => {
+        try {
+            const response = await axiosInstance.post<IResponseDTO<string>>(UPLOAD_INSTRUCTOR_DEGREE_URL, degreeUploadDTO)
+            const uploadResponse = response.data;
+            if (uploadResponse.isSuccess === true) {
+                toast.success(uploadResponse.message);
+            } else {
+                toast.error(uploadResponse.message);
+            }
+        } catch (error) {
+            // @ts-ignore
+            toast.error(error.data.message)
             console.log(error)
         }
     }, [])
 
-    const signout = useCallback(() => {
+
+    const signOut = useCallback(() => {
         setJwtTokenSession(null, null);
         dispatch({
             type: IAuthContextActionTypes.SIGNOUT
         });
-        navigate('/signin');
+        navigate('/signIn');
     }, [])
 
     const valuesObject = {
@@ -317,7 +356,8 @@ const AuthContextProvider = ({children}: IProps) => {
         signInByGoogleInstructor: signInByGoogleInstructor,
         signUpInstructor: signUpInstructor,
         signUpStudent: signUpStudent,
-        signout: signout,
+        uploadDegree: uploadDegree,
+        signOut: signOut,
 
     };
 

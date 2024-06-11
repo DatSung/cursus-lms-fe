@@ -6,6 +6,7 @@ export const PATH_PUBLIC = {
     verifyEmail: '/sign-in/verify-email',
     signUpStudent: '/sign-up-student',
     signUpInstructor: '/sign-up-instructor',
+    uploadDegree: '/sign-in/upload-degree',
     unauthorized: '/unauthorized',
     notFound: '/404'
 }

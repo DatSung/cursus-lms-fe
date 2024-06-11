@@ -9,6 +9,7 @@ import NotFoundPage from "../pages/public/NotFoundPage";
 import ForgotPasswordPage from "../pages/public/ForgotPasswordPage.tsx";
 import VerifyEmailPage from "../pages/public/VerifyEmailPage.tsx";
 import SignUpInstructor from "../pages/public/SignUpInstructor.tsx";
+import UploadDegreeInstructor from "../pages/public/UploadDegreeInstructor.tsx";
 
 const GlobalRouter = () => {
     return (
@@ -23,6 +24,7 @@ const GlobalRouter = () => {
                 <Route path={PATH_PUBLIC.verifyEmail} element={<VerifyEmailPage></VerifyEmailPage>} />
                 <Route path={PATH_PUBLIC.signUpStudent} element={<SignUpStudentPage></SignUpStudentPage>} />
                 <Route path={PATH_PUBLIC.signUpInstructor} element={<SignUpInstructor></SignUpInstructor>} />
+                <Route path={PATH_PUBLIC.uploadDegree} element={<UploadDegreeInstructor></UploadDegreeInstructor>} />
                 <Route path={PATH_PUBLIC.courses} element={<CoursesPage></CoursesPage>} />
                 <Route path={PATH_PUBLIC.unauthorized} element />
                 {/* Public routes */}

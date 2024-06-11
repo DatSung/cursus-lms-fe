@@ -2,20 +2,27 @@ import InputField from "../../components/general/InputField.tsx";
 import {Link, useNavigate} from "react-router-dom";
 import {PATH_PUBLIC} from "../../routes/paths.ts";
 import Button from "../../components/general/Button.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import * as Yup from 'yup';
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import useAuth from "../../hooks/useAuth.hook.ts";
 import toast from "react-hot-toast";
 import {ISignUpInstructorDTO} from "../../types/auth.types.ts";
-import GenderInputField from "../../components/general/GenderInputField.tsx";
+import SelectField from "../../components/general/SelectField.tsx";
 
 const SignUpStudentPage = () => {
 
     const [loading, setLoading] = useState<boolean>(false);
-    const {signUpInstructor} = useAuth();
+    const {signUpInstructor, isAuthenticated} = useAuth();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate(PATH_PUBLIC.home);
+        }
+    });
+
 
     const signUpSchema = Yup.object().shape({
         email: Yup.string().required("Email is required"),
@@ -58,7 +65,7 @@ const SignUpStudentPage = () => {
                 confirmPassword: '',
                 fullName: '',
                 country: '',
-                gender: 'Men',
+                gender: '',
                 degree: '',
                 industry: '',
                 introduction: '',
@@ -144,11 +151,15 @@ const SignUpStudentPage = () => {
                         error={errors.introduction?.message}
                     />
 
-                    <GenderInputField
+                    <SelectField
                         control={control}
-                        label='Gender'
-                        inputName='checkbox'
+                        inputName="gender"
+                        label="Gender"
                         error={errors.gender?.message}
+                        options={[
+                            {value: "male", label: "Male"},
+                            {value: "female", label: "Female"},
+                        ]}
                     />
 
                     <InputField
@@ -196,17 +207,18 @@ const SignUpStudentPage = () => {
 
                     <InputField
                         control={control}
+                        label='Tax Number'
+                        inputName='taxNumber'
+                        error={errors.taxNumber?.message}
+                    />
+
+                    <InputField
+                        control={control}
                         label='Card Number'
                         inputName='cardNumber'
                         error={errors.cardNumber?.message}
                     />
 
-                    <InputField
-                        control={control}
-                        label='Tax Number'
-                        inputName='taxNumber'
-                        error={errors.taxNumber?.message}
-                    />
 
                     <InputField
                         control={control}
