@@ -14,6 +14,7 @@ export const SEND_VERIFY_EMAIL_URL = "/Auth/send-verify-email";
 export const VERIFY_EMAIL_URL = "/Auth/verify-email";
 export const CHANGE_PASSWORD_URL = "/Auth/change-password";
 export const SIGN_IN_URL = "/Auth/sign-in";
+export const SIGN_IN_BY_GOOGLE_URL = "/Auth/sign-in-by-google";
 export const STUDENT_SIGNIN_BY_GOOGLE_URL = "/Auth/student-signin-by-google";
 export const INSTRUCTOR_SIGNIN_BY_GOOGLE_URL = "/Auth/instructor-signin-by-google";
 export const REFRESH_URL = "/Auth/refresh";

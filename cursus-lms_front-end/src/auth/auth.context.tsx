@@ -5,9 +5,7 @@ import {
     IAuthContextActionTypes,
     IAuthContextState, IDegreeUploadDTO,
     IJwtTokenDTO,
-    IResponseDTO,
-    ISignInByGooleInstructorDTO,
-    ISignInByGooleStudentDTO,
+    IResponseDTO, ISignInByGoogleDTO,
     ISignInDTO,
     ISignInResponseDTO,
     ISignUpInstructorDTO,
@@ -18,13 +16,12 @@ import {useNavigate} from "react-router-dom";
 import {getJwtTokenSession, setJwtTokenSession} from "./auth.utils";
 import axiosInstance from "../utils/axiosInstance";
 import {
-    INSTRUCTOR_SIGNIN_BY_GOOGLE_URL,
     REFRESH_URL,
-    SEND_VERIFY_EMAIL_URL,
+    SEND_VERIFY_EMAIL_URL, SIGN_IN_BY_GOOGLE_URL,
     SIGN_IN_URL,
     SIGN_UP_INSTRUCTOR_URL,
     SIGN_UP_STUDENT_URL,
-    STUDENT_SIGNIN_BY_GOOGLE_URL, UPLOAD_INSTRUCTOR_DEGREE_URL
+    UPLOAD_INSTRUCTOR_DEGREE_URL
 } from "../utils/globalConfig";
 import toast from "react-hot-toast";
 import {PATH_PUBLIC} from "../routes/paths.ts";
@@ -124,12 +121,15 @@ const AuthContextProvider = ({children}: IProps) => {
         }
     }, []);
 
+
+    // Initialize when first load
     useEffect(() => {
         console.log('AuthContext Initialization start');
         initializeAuthContext()
             .then(() => console.log('AuthContext Initialization was successfully'))
             .catch((error: Error) => console.log(error));
     }, []);
+
 
     // Sign In By Email and Password Method
     const signInByEmailPassword = useCallback(async (signInDTO: ISignInDTO) => {
@@ -177,10 +177,10 @@ const AuthContextProvider = ({children}: IProps) => {
 
     }, [])
 
-    /// Sign in by Google for student
-    const signInByGoogleStudent = useCallback(async (signInByGoogleStudentDTO: ISignInByGooleStudentDTO) => {
+    // Sign In By Google Method
+    const signInByGoogle = useCallback(async (signInByGoogleDTO: ISignInByGoogleDTO) => {
         try {
-            const response = await axiosInstance.post<ISignInResponseDTO>(STUDENT_SIGNIN_BY_GOOGLE_URL, signInByGoogleStudentDTO);
+            const response = await axiosInstance.post<ISignInResponseDTO>(SIGN_IN_BY_GOOGLE_URL, signInByGoogleDTO);
             const signInResponse = response.data;
 
             if (signInResponse.isSuccess === true) {
@@ -192,76 +192,29 @@ const AuthContextProvider = ({children}: IProps) => {
 
                 setJwtTokenSession(accessToken, refreshToken);
 
-                if (userInfo.updateTime == undefined) {
+                if (userInfo.roles.length == 0) {
                     dispatch({
                         type: IAuthContextActionTypes.SIGNINBYGOOGLE,
                         payload: userInfo
                     });
 
-                    // navigate(PATH_AFTER_SIGNIN_GOOGLE_STUDENT);
+                    navigate(PATH_PUBLIC.completeProfile);
 
                 } else {
                     dispatch({
                         type: IAuthContextActionTypes.SIGNIN,
                         payload: userInfo
                     });
-
-                    // navigate(PATH_AFTER_SIGNIN);
-
+                    navigate(PATH_PUBLIC.home);
                 }
             } else {
-                toast.success('Something went wrong');
+                toast.success(signInResponse.message);
             }
-
         } catch (error) {
             console.log(error)
         }
-
     }, [])
 
-    /// Sign in by Google for instructor
-    const signInByGoogleInstructor = useCallback(async (signInByGoogleInstructorDTO: ISignInByGooleInstructorDTO) => {
-        try {
-            const response = await axiosInstance.post<ISignInResponseDTO>(INSTRUCTOR_SIGNIN_BY_GOOGLE_URL, signInByGoogleInstructorDTO);
-            const signInResponse = response.data;
-
-            if (signInResponse.isSuccess === true) {
-
-                toast.success('Sign in was successfully')
-
-                const userInfo = signInResponse.result.userInfo;
-                const {accessToken, refreshToken} = signInResponse.result;
-
-                setJwtTokenSession(accessToken, refreshToken);
-
-                if (userInfo.updateTime === undefined) {
-                    dispatch({
-                        type: IAuthContextActionTypes.SIGNINBYGOOGLE,
-                        payload: userInfo
-                    })
-
-                    // navigate(PATH_AFTER_SIGNIN_GOOGLE_STUDENT);
-
-                } else {
-                    dispatch({
-                        type: IAuthContextActionTypes.SIGNIN,
-                        payload: userInfo
-                    })
-
-                    // navigate(PATH_AFTER_SIGNIN);
-
-                }
-            } else {
-                toast.success('Something went wrong');
-            }
-
-        } catch (error) {
-            // @ts-ignore
-            toast.error(error.data.message)
-            console.log(error)
-        }
-
-    }, [])
 
     // Sign up for student 
     const signUpStudent = useCallback(async (signUpStudentDTO: ISignUpStudentDTO) => {
@@ -360,8 +313,7 @@ const AuthContextProvider = ({children}: IProps) => {
         user: state.user,
 
         signInByEmailPassword: signInByEmailPassword,
-        signInByGoogleStudent: signInByGoogleStudent,
-        signInByGoogleInstructor: signInByGoogleInstructor,
+        signInByGoogle: signInByGoogle,
         signUpInstructor: signUpInstructor,
         signUpStudent: signUpStudent,
         uploadDegree: uploadDegree,

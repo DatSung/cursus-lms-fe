@@ -174,6 +174,10 @@ export interface IResponseDTO<T> {
     message: string;
 }
 
+export interface ISignInByGoogleDTO {
+    Token: string;
+}
+
 // Auth Context Interfaces
 
 export interface IAuthContextState {
@@ -203,9 +207,7 @@ export interface IAuthContext {
 
     signInByEmailPassword: (signInField: ISignInDTO) => Promise<void>;
 
-    signInByGoogleStudent: (signInField: ISignInByGooleStudentDTO) => Promise<void>;
-
-    signInByGoogleInstructor: (signInField: ISignInByGooleInstructorDTO) => Promise<void>;
+    signInByGoogle: (signInField: ISignInByGoogleDTO) => Promise<void>;
 
     signUpStudent: (signUpField: ISignUpStudentDTO) => Promise<void>;
 
@@ -214,6 +216,10 @@ export interface IAuthContext {
     uploadDegree: (uploadFile: IDegreeUploadDTO) => Promise<void>;
 
     signOut: () => void;
+
+    // signInByGoogleStudent: (signInField: ISignInByGooleStudentDTO) => Promise<void>;
+
+    // signInByGoogleInstructor: (signInField: ISignInByGooleInstructorDTO) => Promise<void>;
 
     // refresh: (refreshToken: string) => Promise<void>;
 
