@@ -50,34 +50,33 @@ const SignUpStudentPage = () => {
     })
 
     const {
-            control,
-            handleSubmit,
-            formState: {errors},
-            reset,
-        } = useForm<ISignUpInstructorDTO>({
+        control,
+        handleSubmit,
+        formState: {errors},
+        reset,
+    } = useForm<ISignUpInstructorDTO>({
 
-            resolver: yupResolver(signUpSchema),
+        resolver: yupResolver(signUpSchema),
 
-            defaultValues: {
-                email: '',
-                address: '',
-                password: '',
-                confirmPassword: '',
-                fullName: '',
-                country: '',
-                gender: '',
-                degree: '',
-                industry: '',
-                introduction: '',
-                taxNumber: '',
-                birthDate: new Date(),
-                phoneNumber: '',
-                cardNumber: '',
-                cardName: '',
-                cardProvider: '',
-            }
-        })
-    ;
+        defaultValues: {
+            email: '',
+            address: '',
+            password: '',
+            confirmPassword: '',
+            fullName: '',
+            country: '',
+            gender: '',
+            degree: '',
+            industry: '',
+            introduction: '',
+            taxNumber: '',
+            birthDate: new Date(),
+            phoneNumber: '',
+            cardNumber: '',
+            cardName: '',
+            cardProvider: '',
+        }
+    });
 
     const onSubmitSignUpForm = async (data: ISignUpInstructorDTO) => {
         try {

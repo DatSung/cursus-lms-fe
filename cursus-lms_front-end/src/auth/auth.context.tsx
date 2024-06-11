@@ -3,7 +3,7 @@ import {
     IAuthContext,
     IAuthContextAction,
     IAuthContextActionTypes,
-    IAuthContextState, IDegreeUploadDTO,
+    IAuthContextState, ICompleteInstructorProfile, ICompleteStudentProfile, IDegreeUploadDTO,
     IJwtTokenDTO,
     IResponseDTO, ISignInByGoogleDTO,
     ISignInDTO,
@@ -16,6 +16,8 @@ import {useNavigate} from "react-router-dom";
 import {getJwtTokenSession, setJwtTokenSession} from "./auth.utils";
 import axiosInstance from "../utils/axiosInstance";
 import {
+    COMPLETE_INSTRUCTOR_PROFILE_URL,
+    COMPLETE_STUDENT_PROFILE_URL,
     REFRESH_URL,
     SEND_VERIFY_EMAIL_URL, SIGN_IN_BY_GOOGLE_URL,
     SIGN_IN_URL,
@@ -56,6 +58,15 @@ const authReducer = (state: IAuthContextState, action: IAuthContextAction) => {
             isFullInfo: false,
             isAuthLoading: false,
             user: undefined
+        }
+    }
+
+    if (action.type === IAuthContextActionTypes.COMPLETE_PROFILE) {
+        return {
+            ...state,
+            isAuthenticated: true,
+            isFullInfo: true,
+            isAuthLoading: false,
         }
     }
 
@@ -201,11 +212,19 @@ const AuthContextProvider = ({children}: IProps) => {
                     navigate(PATH_PUBLIC.completeProfile);
 
                 } else {
-                    dispatch({
-                        type: IAuthContextActionTypes.SIGNIN,
-                        payload: userInfo
-                    });
-                    navigate(PATH_PUBLIC.home);
+                    if (userInfo.degreeImageUrl === null || userInfo.degreeImageUrl === '') {
+                        dispatch({
+                            type: IAuthContextActionTypes.COMPLETE_PROFILE,
+                            payload: userInfo
+                        });
+                        navigate(PATH_PUBLIC.uploadDegree);
+                    } else {
+                        dispatch({
+                            type: IAuthContextActionTypes.SIGNIN,
+                            payload: userInfo
+                        });
+                        navigate(PATH_PUBLIC.home);
+                    }
                 }
             } else {
                 toast.success(signInResponse.message);
@@ -215,6 +234,45 @@ const AuthContextProvider = ({children}: IProps) => {
         }
     }, [])
 
+
+    // Complete profile method when sign in by google for student
+    const completeStudentProfile = useCallback(async (studentProfile: ICompleteStudentProfile) => {
+        try {
+            const response = await axiosInstance.post<IResponseDTO<string>>(COMPLETE_STUDENT_PROFILE_URL, studentProfile)
+            const completeResponse = response.data;
+            if (completeResponse.isSuccess === true) {
+                toast.success(completeResponse.message);
+                dispatch({
+                    type: IAuthContextActionTypes.COMPLETE_PROFILE
+                });
+                navigate(PATH_PUBLIC.home);
+            } else {
+                toast.error(completeResponse.message);
+            }
+        } catch (error) {
+            // @ts-ignore
+            toast.error(error.data.message);
+            console.log(error)
+        }
+    }, []);
+
+    // Complete profile method when sign in by google for instructor
+    const completeInstructorProfile = useCallback(async (instructorProfile: ICompleteInstructorProfile) => {
+        try {
+            const response = await axiosInstance.post<IResponseDTO<string>>(COMPLETE_INSTRUCTOR_PROFILE_URL, instructorProfile)
+            const completeResponse = response.data;
+            if (completeResponse.isSuccess === true) {
+                toast.success(completeResponse.message);
+                navigate(PATH_PUBLIC.uploadDegree);
+            } else {
+                toast.error(completeResponse.message);
+            }
+        } catch (error) {
+            // @ts-ignore
+            toast.error(error.data.message);
+            console.log(error)
+        }
+    }, []);
 
     // Sign up for student 
     const signUpStudent = useCallback(async (signUpStudentDTO: ISignUpStudentDTO) => {
@@ -282,7 +340,7 @@ const AuthContextProvider = ({children}: IProps) => {
             const uploadResponse = response.data;
             if (uploadResponse.isSuccess === true) {
                 dispatch({
-                    type: IAuthContextActionTypes.SIGNIN,
+                    type: IAuthContextActionTypes.COMPLETE_PROFILE,
                 })
                 toast.success(uploadResponse.message);
             } else {
@@ -314,6 +372,8 @@ const AuthContextProvider = ({children}: IProps) => {
 
         signInByEmailPassword: signInByEmailPassword,
         signInByGoogle: signInByGoogle,
+        completeStudentProfile: completeStudentProfile,
+        completeInstructorProfile: completeInstructorProfile,
         signUpInstructor: signUpInstructor,
         signUpStudent: signUpStudent,
         uploadDegree: uploadDegree,

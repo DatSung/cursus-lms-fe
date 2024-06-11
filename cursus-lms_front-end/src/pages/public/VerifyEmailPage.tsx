@@ -4,6 +4,7 @@ import axiosInstance from "../../utils/axiosInstance.ts";
 import Button from "../../components/general/Button.tsx";
 import {useNavigate} from "react-router-dom";
 import {PATH_PUBLIC} from "../../routes/paths.ts";
+import {VERIFY_EMAIL_URL} from "../../utils/globalConfig.ts";
 
 const VerifyEmailPage = () => {
     const [message, setMessage] = useState('');
@@ -18,7 +19,7 @@ const VerifyEmailPage = () => {
         const verifyEmail = async () => {
             if (userId && token) {
                 try {
-                    const response = await axiosInstance.post<IResponseDTO<string>>(`https://localhost:7554/api/Auth/verify-email?userId=${userId}&token=${encodeURIComponent(token)}`);
+                    const response = await axiosInstance.post<IResponseDTO<string>>(`${VERIFY_EMAIL_URL}?userId=${userId}&token=${encodeURIComponent(token)}`);
                     setMessage(response.data.message);
                 } catch (error) {
                     setMessage('Email verification failed. Please try again.');

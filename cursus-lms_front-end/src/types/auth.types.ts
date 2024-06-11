@@ -117,11 +117,11 @@ export interface IResetPasswordDTO {
     password: string;
 }
 
-export interface IUpdateStudentProfile {
+export interface ICompleteStudentProfile {
     country: string;
     phoneNumber: string;
     address: string;
-    birthDate: string;
+    birthDate: Date;
     gender: string;
     university: string;
     cardNumber: string;
@@ -129,14 +129,15 @@ export interface IUpdateStudentProfile {
     cardName: string;
 }
 
-export interface IUpdateInstructorProfile {
+export interface ICompleteInstructorProfile {
     phoneNumber: string;
     gender: string;
-    birthDate: string;
+    birthDate: Date;
     country: string;
     address: string;
     taxNumber: string;
     cardNumber: string;
+    degree: string;
     cardProvider: string;
     cardName: string;
     industry: string;
@@ -192,6 +193,7 @@ export enum IAuthContextActionTypes {
     SIGNIN = 'SIGNIN',
     SIGNINBYGOOGLE = 'SIGNINBYGOOGLE',
     SIGNOUT = 'SIGNOUT',
+    COMPLETE_PROFILE = 'COMPLETE_PROFILE'
 }
 
 export interface IAuthContextAction {
@@ -208,6 +210,10 @@ export interface IAuthContext {
     signInByEmailPassword: (signInField: ISignInDTO) => Promise<void>;
 
     signInByGoogle: (signInField: ISignInByGoogleDTO) => Promise<void>;
+
+    completeStudentProfile: (completeField: ICompleteStudentProfile) => Promise<void>;
+
+    completeInstructorProfile: (completeField: ICompleteInstructorProfile) => Promise<void>;
 
     signUpStudent: (signUpField: ISignUpStudentDTO) => Promise<void>;
 
