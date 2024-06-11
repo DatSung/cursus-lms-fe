@@ -150,7 +150,7 @@ const AuthContextProvider = ({children}: IProps) => {
                 })
 
                 if (userInfo.roles[0] === RolesEnum.INSTRUCTOR) {
-                    if (userInfo.degreeImageUrl === null) {
+                    if (userInfo.degreeImageUrl === null || userInfo.degreeImageUrl === '') {
                         navigate(PATH_PUBLIC.uploadDegree);
                     }
                 } else {
@@ -321,13 +321,21 @@ const AuthContextProvider = ({children}: IProps) => {
 
     const uploadDegree = useCallback(async (degreeUploadDTO: IDegreeUploadDTO) => {
         try {
-            const response = await axiosInstance.post<IResponseDTO<string>>(UPLOAD_INSTRUCTOR_DEGREE_URL, degreeUploadDTO)
+            const response = await axiosInstance.post<IResponseDTO<string>>(UPLOAD_INSTRUCTOR_DEGREE_URL, degreeUploadDTO, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
             const uploadResponse = response.data;
             if (uploadResponse.isSuccess === true) {
+                dispatch({
+                    type: IAuthContextActionTypes.SIGNIN,
+                })
                 toast.success(uploadResponse.message);
             } else {
                 toast.error(uploadResponse.message);
             }
+
         } catch (error) {
             // @ts-ignore
             toast.error(error.data.message)

@@ -86,7 +86,7 @@ export interface IAvatarUploadDTO {
 
 // Represent to DegreeUploadDTO of back-end
 export interface IDegreeUploadDTO {
-    degreeFile: File;
+    File: File;
 }
 
 // Represent to ChangePasswordDTO of back-end
