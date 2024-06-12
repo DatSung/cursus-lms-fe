@@ -212,12 +212,20 @@ const AuthContextProvider = ({children}: IProps) => {
                     navigate(PATH_PUBLIC.completeProfile);
 
                 } else {
-                    if (userInfo.degreeImageUrl === null || userInfo.degreeImageUrl === '') {
-                        dispatch({
-                            type: IAuthContextActionTypes.COMPLETE_PROFILE,
-                            payload: userInfo
-                        });
-                        navigate(PATH_PUBLIC.uploadDegree);
+                    if (userInfo.roles[0] === RolesEnum.INSTRUCTOR) {
+                        if (userInfo.degreeImageUrl === null || userInfo.degreeImageUrl === '') {
+                            dispatch({
+                                type: IAuthContextActionTypes.COMPLETE_PROFILE,
+                                payload: userInfo
+                            });
+                            navigate(PATH_PUBLIC.uploadDegree);
+                        } else {
+                            dispatch({
+                                type: IAuthContextActionTypes.SIGNIN,
+                                payload: userInfo
+                            });
+                            navigate(PATH_PUBLIC.home);
+                        }
                     } else {
                         dispatch({
                             type: IAuthContextActionTypes.SIGNIN,
@@ -225,6 +233,7 @@ const AuthContextProvider = ({children}: IProps) => {
                         });
                         navigate(PATH_PUBLIC.home);
                     }
+
                 }
             } else {
                 toast.success(signInResponse.message);
@@ -274,7 +283,7 @@ const AuthContextProvider = ({children}: IProps) => {
         }
     }, []);
 
-    // Sign up for student 
+    // Sign up for student
     const signUpStudent = useCallback(async (signUpStudentDTO: ISignUpStudentDTO) => {
         try {
             const response = await axiosInstance.post<ISignUpResponseDTO>(SIGN_UP_STUDENT_URL, signUpStudentDTO);
