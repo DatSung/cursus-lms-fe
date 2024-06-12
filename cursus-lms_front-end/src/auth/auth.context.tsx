@@ -239,6 +239,8 @@ const AuthContextProvider = ({children}: IProps) => {
                 toast.success(signInResponse.message);
             }
         } catch (error) {
+            // @ts-ignore
+            toast.success(error.data.message);
             console.log(error)
         }
     }, [])
