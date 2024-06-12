@@ -19,6 +19,10 @@ const CompleteProfile = () => {
         setIsStudentForm(!isStudentForm);
     };
 
+
+
+
+    
     const studentFormSchema = Yup.object().shape({
         address: Yup.string().required("Address is required"),
         country: Yup.string().required("Country is required"),
