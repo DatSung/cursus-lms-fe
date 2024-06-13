@@ -10,14 +10,14 @@ import {
     ISignInResponseDTO,
     ISignUpInstructorDTO,
     ISignUpResponseDTO,
-    ISignUpStudentDTO, RolesEnum
+    ISignUpStudentDTO, IUserInfo, RolesEnum
 } from "../types/auth.types";
 import {useNavigate} from "react-router-dom";
 import {getJwtTokenSession, setJwtTokenSession} from "./auth.utils";
 import axiosInstance from "../utils/axiosInstance";
 import {
     COMPLETE_INSTRUCTOR_PROFILE_URL,
-    COMPLETE_STUDENT_PROFILE_URL,
+    COMPLETE_STUDENT_PROFILE_URL, GET_USER_INFO_URL,
     REFRESH_URL,
     SEND_VERIFY_EMAIL_URL, SIGN_IN_BY_GOOGLE_URL,
     SIGN_IN_URL,
@@ -27,6 +27,7 @@ import {
 } from "../utils/globalConfig";
 import toast from "react-hot-toast";
 import {PATH_PUBLIC} from "../routes/paths.ts";
+import {jwtDecode} from "jwt-decode";
 
 // Reducer function for useReducer hook
 const authReducer = (state: IAuthContextState, action: IAuthContextAction) => {
@@ -95,13 +96,26 @@ const AuthContextProvider = ({children}: IProps) => {
     const [state, dispatch] = useReducer(authReducer, initalAuthState);
     const navigate = useNavigate();
 
+    const isTokenValid = (token: string | null) => {
+        if (!token) return false;
+
+        const decodedToken = jwtDecode(token);
+        const currentTime = Date.now() / 1000; // current time in seconds
+
+        if (decodedToken.exp == null) {
+            return false
+        }
+
+        return decodedToken.exp > currentTime;
+    };
+
     // Initialize method
     const initializeAuthContext = useCallback(async () => {
         try {
 
             const {refreshToken, accessToken} = getJwtTokenSession();
 
-            if (refreshToken && accessToken) {
+            if (refreshToken && !isTokenValid(accessToken)) {
                 const token = {
                     accessToken,
                     refreshToken,
@@ -109,7 +123,7 @@ const AuthContextProvider = ({children}: IProps) => {
                 const response = await axiosInstance.post<IJwtTokenDTO>(REFRESH_URL, token);
                 const jwtToken: IJwtTokenDTO = response.data;
 
-                if (jwtToken.isSuccess === false) {
+                if (!jwtToken.isSuccess) {
                     throw new Error(jwtToken.message);
                 }
 
@@ -118,8 +132,22 @@ const AuthContextProvider = ({children}: IProps) => {
 
                 setJwtTokenSession(newAccessToken, newRefreshToken);
 
+                const userInfoResponse = await axiosInstance.get<IResponseDTO<IUserInfo>>(GET_USER_INFO_URL);
+                const userInfo = userInfoResponse.data.result;
+
                 dispatch({
                     type: IAuthContextActionTypes.SIGNIN,
+                    payload: userInfo
+                });
+            } else {
+                const {accessToken} = getJwtTokenSession();
+                axiosInstance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+                const userInfoResponse = await axiosInstance.get<IResponseDTO<IUserInfo>>(GET_USER_INFO_URL);
+                const userInfo = userInfoResponse.data.result;
+
+                dispatch({
+                    type: IAuthContextActionTypes.SIGNIN,
+                    payload: userInfo
                 });
             }
 
@@ -139,7 +167,7 @@ const AuthContextProvider = ({children}: IProps) => {
         initializeAuthContext()
             .then(() => console.log('AuthContext Initialization was successfully'))
             .catch((error: Error) => console.log(error));
-    }, []);
+    }, [initializeAuthContext]);
 
 
     // Sign In By Email and Password Method
@@ -148,12 +176,15 @@ const AuthContextProvider = ({children}: IProps) => {
             const response = await axiosInstance.post<ISignInResponseDTO>(SIGN_IN_URL, signInDTO)
             const signInResponse = response.data;
 
-            if (signInResponse.isSuccess === true) {
+            if (signInResponse.isSuccess) {
                 toast.success('Sign in was successfully');
 
-                const {accessToken, refreshToken, userInfo} = signInResponse.result;
+                const {accessToken, refreshToken} = signInResponse.result;
 
                 setJwtTokenSession(accessToken, refreshToken);
+
+                const userInfoResponse = await axiosInstance.get<IResponseDTO<IUserInfo>>(GET_USER_INFO_URL);
+                const userInfo = userInfoResponse.data.result;
 
                 dispatch({
                     type: IAuthContextActionTypes.SIGNIN,
@@ -161,7 +192,7 @@ const AuthContextProvider = ({children}: IProps) => {
                 })
 
                 if (userInfo.roles[0] === RolesEnum.INSTRUCTOR) {
-                    if (userInfo.degreeImageUrl === null || userInfo.degreeImageUrl === '') {
+                    if (!userInfo.isUploadDegree) {
                         navigate(PATH_PUBLIC.uploadDegree);
                     }
                 } else {
@@ -176,7 +207,7 @@ const AuthContextProvider = ({children}: IProps) => {
                     }
                     const response = await axiosInstance.post<IResponseDTO<string>>(SEND_VERIFY_EMAIL_URL, emailToSend);
                     const sendResponse = response.data;
-                    if (sendResponse.isSuccess === true) {
+                    if (sendResponse.isSuccess) {
                         toast.success(sendResponse.message);
                     }
                 }
@@ -198,10 +229,12 @@ const AuthContextProvider = ({children}: IProps) => {
 
                 toast.success('Sign in was successfully')
 
-                const userInfo = signInResponse.result.userInfo;
                 const {accessToken, refreshToken} = signInResponse.result;
 
                 setJwtTokenSession(accessToken, refreshToken);
+
+                const userInfoResponse = await axiosInstance.get<IResponseDTO<IUserInfo>>(GET_USER_INFO_URL);
+                const userInfo = userInfoResponse.data.result;
 
                 if (userInfo.roles.length == 0) {
                     dispatch({
@@ -213,7 +246,7 @@ const AuthContextProvider = ({children}: IProps) => {
 
                 } else {
                     if (userInfo.roles[0] === RolesEnum.INSTRUCTOR) {
-                        if (userInfo.degreeImageUrl === null || userInfo.degreeImageUrl === '') {
+                        if (!userInfo.isUploadDegree) {
                             dispatch({
                                 type: IAuthContextActionTypes.COMPLETE_PROFILE,
                                 payload: userInfo
