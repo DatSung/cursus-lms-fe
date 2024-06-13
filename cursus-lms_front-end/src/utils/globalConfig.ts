@@ -18,6 +18,7 @@ export const SIGN_IN_BY_GOOGLE_URL = "/Auth/sign-in-by-google";
 export const COMPLETE_STUDENT_PROFILE_URL = "/Auth/complete-student-profile";
 export const COMPLETE_INSTRUCTOR_PROFILE_URL = "/Auth/complete-instructor-profile";
 export const REFRESH_URL = "/Auth/refresh";
+export const GET_USER_INFO_URL = "/Auth/get-user-info";
 export const CHECK_EMAIL_EXIST_URL = "/Auth/check-email-exist";
 export const CHECK_PHONE_NUMBER_EXIST_URL = "/Auth/check-phone-number-exist";
 export const UPDATE_STUDENT_PROFILE_URL = "/Auth/update-student-profile";

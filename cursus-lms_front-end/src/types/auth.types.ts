@@ -61,7 +61,7 @@ export interface IUserInfo {
     phoneNumber: string;
     address: string;
     updateTime: Date;
-    degreeImageUrl: string;
+    isUploadDegree: boolean;
     isAccepted: boolean;
     roles: string[]
 }
@@ -71,8 +71,6 @@ export interface ISignInResponseDTO {
     result: {
         accessToken: string;
         refreshToken: string;
-        userInfo: IUserInfo;
-        message: string;
     };
     isSuccess: true;
     statusCode: number;
