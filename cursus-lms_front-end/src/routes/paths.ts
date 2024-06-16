@@ -1,14 +1,17 @@
 export const PATH_PUBLIC = {
     home: '/',
     courses: '/courses',
-    signIn: '/sign-in',
-    completeProfile: '/sign-in/complete-profile',
-    forgotPassword: '/sign-in/forgot-password',
-    verifyEmail: '/sign-in/verify-email',
-    signUpStudent: '/sign-up-student',
-    signUpInstructor: '/sign-up-instructor',
-    uploadDegree: '/sign-in/upload-degree',
+    signIn: '/user/sign-in',
+    completeProfile: '/user/sign-in/complete-profile',
+    forgotPassword: '/user/sign-in/forgot-password',
+    verifyEmail: '/user/sign-in/verify-email',
+    signUpStudent: '/user/sign-up-student',
+    signUpInstructor: '/user/sign-up-instructor',
+    uploadDegree: '/user/sign-in/upload-degree',
     unauthorized: '/unauthorized',
     notFound: '/404'
 }
 
+export const PATH_ADMIN = {
+    dashboard: '/admin/dashboard',
+}

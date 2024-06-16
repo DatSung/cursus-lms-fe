@@ -26,7 +26,7 @@ import {
     UPLOAD_INSTRUCTOR_DEGREE_URL
 } from "../utils/globalConfig";
 import toast from "react-hot-toast";
-import {PATH_PUBLIC} from "../routes/paths.ts";
+import {PATH_ADMIN, PATH_PUBLIC} from "../routes/paths.ts";
 import {jwtDecode} from "jwt-decode";
 
 // Reducer function for useReducer hook
@@ -195,8 +195,10 @@ const AuthContextProvider = ({children}: IProps) => {
                     if (!userInfo.isUploadDegree) {
                         navigate(PATH_PUBLIC.uploadDegree);
                     }
-                } else {
+                } else if (userInfo.roles[0] === RolesEnum.STUDENT) {
                     navigate(PATH_PUBLIC.home);
+                } else {
+                    navigate(PATH_ADMIN.dashboard);
                 }
 
             } else {
@@ -404,7 +406,7 @@ const AuthContextProvider = ({children}: IProps) => {
         dispatch({
             type: IAuthContextActionTypes.SIGNOUT
         });
-        navigate('/signIn');
+        navigate(PATH_PUBLIC.signIn);
     }, [])
 
     const valuesObject = {

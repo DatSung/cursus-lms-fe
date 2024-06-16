@@ -1,13 +1,13 @@
 import {useEffect, useState} from 'react'
-import useAuth from '../../hooks/useAuth.hook';
+import useAuth from '../../hooks/useAuth.hook.ts';
 import {useForm} from 'react-hook-form';
 import * as Yup from 'yup';
 import {yupResolver} from "@hookform/resolvers/yup";
-import {ISignInByGoogleDTO, ISignInDTO} from '../../types/auth.types';
-import InputField from '../../components/general/InputField';
+import {ISignInByGoogleDTO, ISignInDTO} from '../../types/auth.types.ts';
+import InputField from '../../components/general/InputField.tsx';
 import {Link, useNavigate} from 'react-router-dom';
-import Button from '../../components/general/Button';
-import {PATH_PUBLIC} from '../../routes/paths';
+import Button from '../../components/general/Button.tsx';
+import {PATH_PUBLIC} from '../../routes/paths.ts';
 import toast from 'react-hot-toast';
 import {GoogleAuthProvider, signInWithPopup} from 'firebase/auth';
 import auth from '../../firebase/firebaseConfig.ts';
