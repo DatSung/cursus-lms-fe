@@ -16,6 +16,7 @@ import DashboardPage from "../pages/admin/dashboard/DashboardPage.tsx";
 import AuthGuard from "../auth/AuthGuard.tsx";
 import {RolesEnum} from "../types/auth.types.ts";
 import UnauthorizedPage from "../pages/public/UnauthorizedPage.tsx";
+import CategoriesPage from "../pages/admin/services/categories/CategoriesPage.tsx";
 
 const GlobalRouter = () => {
     return (
@@ -41,6 +42,7 @@ const GlobalRouter = () => {
                 <Route element={<AuthGuard roles={[RolesEnum.ADMIN]}/>}>
                     {/* Admin routes */}
                     <Route path={PATH_ADMIN.dashboard} element={<DashboardPage></DashboardPage>}/>
+                    <Route path={PATH_ADMIN.categories} element={<CategoriesPage></CategoriesPage>}/>
                     {/* Admin routes */}
                 </Route>
 

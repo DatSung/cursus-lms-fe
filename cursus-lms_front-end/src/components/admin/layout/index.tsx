@@ -1,13 +1,9 @@
-import {Outlet, useLocation} from "react-router-dom";
+import {Outlet} from "react-router-dom";
 import Sidebar from "./sidebar";
 import Header from "./header";
 
 
 const AdminLayout = () => {
-
-    const {pathname} = useLocation();
-
-    console.log(pathname);
 
     return (
         <div>
@@ -15,7 +11,9 @@ const AdminLayout = () => {
 
             <div className='flex'>
                 <Sidebar></Sidebar>
-                <Outlet/>
+                <div className='flex w-full m-2'>
+                    <Outlet/>
+                </div>
             </div>
 
         </div>
