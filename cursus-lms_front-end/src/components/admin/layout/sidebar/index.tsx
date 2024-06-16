@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import Button from "../../../general/Button.tsx";
 import {PATH_ADMIN} from "../../../../routes/paths.ts";
@@ -64,13 +64,11 @@ const Sidebar = () => {
                             />
                             <Button
                                 label='Courses'
-                                onClick={() => handleClick(PATH_ADMIN.subcategory2)}
                                 type='button'
                                 variant='secondary'
                             />
                             <Button
                                 label='More'
-                                onClick={() => handleClick(PATH_ADMIN.subcategory3)}
                                 type='button'
                                 variant='secondary'
                             />
@@ -90,13 +88,11 @@ const Sidebar = () => {
                         <div className='flex flex-col gap-2 mt-2 w-11/12 mx-auto p-2 border-l-2'>
                             <Button
                                 label='Option 1'
-                                onClick={() => handleClick(PATH_ADMIN.option1)}
                                 type='button'
                                 variant='secondary'
                             />
                             <Button
                                 label='Option 2'
-                                onClick={() => handleClick(PATH_ADMIN.option2)}
                                 type='button'
                                 variant='secondary'
                             />

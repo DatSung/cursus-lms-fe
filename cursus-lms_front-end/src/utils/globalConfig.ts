@@ -1,4 +1,6 @@
 // HOST API URL
+import {IQueryParameters} from "../types/category.types.ts";
+
 export const HOST_API_KEY = "https://localhost:7554/api";
 
 // AUTH API URLS
@@ -23,5 +25,25 @@ export const CHECK_EMAIL_EXIST_URL = "/Auth/check-email-exist";
 export const CHECK_PHONE_NUMBER_EXIST_URL = "/Auth/check-phone-number-exist";
 export const UPDATE_STUDENT_PROFILE_URL = "/Auth/update-student-profile";
 export const UPDATE_INSTRUCTOR_PROFILE_URL = "/Auth/update-instructor-profile";
-
 // AUTH ROUTES
+
+// CATEGORIES ROUTES
+export const CATEGORIES_URL = {
+    GET_ALL_CATEGORIES_URL:
+        (
+            query: IQueryParameters
+        ) => {
+            return `/Category?filterOn=${query.filterOn}&filterQuery=${query.filterQuery}&sortBy=${query.sortBy}&isAscending=${query.isAscending}&pageNumber=${query.pageNumber > 0 ? query.pageNumber : 1}&pageSize=${query.pageSize > 0 ? query.pageSize : 10}`
+        },
+    SEARCH_CATEGORIES_URL:
+        (
+            query: IQueryParameters
+        ) => {
+            return `/Category/search?filterOn=${query.filterOn}&filterQuery=${query.filterQuery}&sortBy=${query.sortBy}&isAscending=${query.isAscending}&pageNumber=${query.pageNumber > 0 ? query.pageNumber : 1}&pageSize=${query.pageSize > 0 ? query.pageSize : 10}`
+        },
+    GET_SUB_CATEGORIES_URL: (id: string) => `/Category/get-sub-category/${id}`,
+    GET_PARENT_CATEGORIES_URL: (id: string) => `/Category/get-parent-category/${id}`,
+    POST_PUT_DELETE_CATEGORY_URL: (id: string) => `/Category${id ? `/${id}` : ''}`
+}
+
+// CATEGORIES ROUTES
