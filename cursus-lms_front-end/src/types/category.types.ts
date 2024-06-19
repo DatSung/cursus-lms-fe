@@ -18,6 +18,7 @@ export interface IAdminCategoryDTO {
     id: string;
     name: string;
     description?: string | null;
+    parentName?:string | null
     createdBy: string;
     createTime: Date;
     updatedBy: string;

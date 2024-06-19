@@ -39,6 +39,7 @@ const CategoriesTable = () => {
                     <td className="py-3 px-6 text-left whitespace-nowrap">{index + 1}</td>
                     <td className="py-3 px-6 text-left">{category.name}</td>
                     <td className="py-3 px-6 text-left">{category.description ?? '-'}</td>
+                    <td className="py-3 px-6 text-left">{category.parentName ?? '-'}</td>
                     <td className="py-3 px-6 text-left">{category.createdBy ?? '-'}</td>
                     <td className="py-3 px-6 text-left">{formatTimestamp(category.createTime)}</td>
                     <td className="py-3 px-6 text-left">{category.updatedBy ?? '-'}</td>
@@ -143,6 +144,7 @@ const CategoriesTable = () => {
                         <th className="text-left text-nowrap py-4 px-6">No</th>
                         <th className="text-left text-nowrap py-4 px-6">Name</th>
                         <th className="text-left text-nowrap py-4 px-6">Description</th>
+                        <th className="text-left text-nowrap py-4 px-6">Parent Name</th>
                         <th className="text-left text-nowrap py-4 px-6">Created By</th>
                         <th className="text-left text-nowrap py-4 px-6">Create Time</th>
                         <th className="text-left text-nowrap py-4 px-6">Updated By</th>
