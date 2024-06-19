@@ -1,7 +1,7 @@
 interface IProps {
     variant: 'primary' | 'secondary' | 'danger' | 'light';
     type: 'submit' | 'button';
-    label: string;
+    label: any;
     onClick?: () => void;
     loading?: boolean;
     disabled?: boolean;
@@ -12,10 +12,10 @@ const Button = ({variant, type, label, onClick, loading, disabled}: IProps) => {
     const primaryClasses = ' text-white bg-green-800';
     const secondaryClasses = ' text-black bg-gray-200';
     const dangerClasses = ' text-white bg-[#AE899A]';
-    const lightClasses = ' text-white border';
+    const lightClasses = ' text-green-700 border border-green-700';
 
     const classNameCreator = (): string => {
-        let finalClassName = 'flex justify-center items-center outline-none duration-300 h-8 px-4 rounded';
+        let finalClassName = 'hover:opacity-50 flex justify-center items-center outline-none duration-300 h-8 px-4 rounded w-full text-nowrap';
 
         if (variant === 'primary') {
             finalClassName += primaryClasses;

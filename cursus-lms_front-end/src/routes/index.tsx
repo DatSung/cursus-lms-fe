@@ -1,21 +1,26 @@
 import {Navigate, Route, Routes} from "react-router-dom"
-import Layout from "../components/layout";
-import {PATH_PUBLIC} from "./paths";
-import HomePage from "../pages/public/HomePage";
-import SignInPage from "../pages/public/SignInPage";
-import SignUpStudentPage from "../pages/public/SignUpStudentPage.tsx";
+import Layout from "../components/user/layout";
+import {PATH_ADMIN, PATH_PUBLIC} from "./paths";
+import HomePage from "../pages/home/HomePage.tsx";
+import SignInPage from "../pages/authentication/SignInPage.tsx";
+import SignUpStudentPage from "../pages/authentication/SignUpStudentPage.tsx";
 import CoursesPage from "../pages/courses/CoursesPage";
 import NotFoundPage from "../pages/public/NotFoundPage";
-import ForgotPasswordPage from "../pages/public/ForgotPasswordPage.tsx";
-import VerifyEmailPage from "../pages/public/VerifyEmailPage.tsx";
-import SignUpInstructor from "../pages/public/SignUpInstructor.tsx";
-import UploadDegreeInstructor from "../pages/public/UploadDegreeInstructor.tsx";
-import CompleteProfile from "../pages/public/CompleteProfile.tsx";
+import ForgotPasswordPage from "../pages/authentication/ForgotPasswordPage.tsx";
+import VerifyEmailPage from "../pages/authentication/VerifyEmailPage.tsx";
+import SignUpInstructor from "../pages/authentication/SignUpInstructor.tsx";
+import UploadDegreeInstructor from "../pages/user/UploadDegreeInstructor.tsx";
+import CompleteProfile from "../pages/authentication/CompleteProfile.tsx";
+import AdminLayout from "../components/admin/layout";
+import DashboardPage from "../pages/admin/dashboard/DashboardPage.tsx";
+import AuthGuard from "../auth/AuthGuard.tsx";
+import {RolesEnum} from "../types/auth.types.ts";
+import UnauthorizedPage from "../pages/public/UnauthorizedPage.tsx";
+import CategoriesPage from "../pages/admin/services/categories/CategoriesPage.tsx";
 
 const GlobalRouter = () => {
     return (
         <Routes>
-
             <Route element={<Layout/>}>
 
                 {/* Public routes */}
@@ -28,15 +33,26 @@ const GlobalRouter = () => {
                 <Route path={PATH_PUBLIC.signUpInstructor} element={<SignUpInstructor></SignUpInstructor>}/>
                 <Route path={PATH_PUBLIC.uploadDegree} element={<UploadDegreeInstructor></UploadDegreeInstructor>}/>
                 <Route path={PATH_PUBLIC.courses} element={<CoursesPage></CoursesPage>}/>
-                <Route path={PATH_PUBLIC.unauthorized} element/>
                 {/* Public routes */}
 
-                {/* Catch all (404) */}
-                <Route path={PATH_PUBLIC.notFound} element={<NotFoundPage/>}/>
-                <Route path='*' element={<Navigate to={PATH_PUBLIC.notFound} replace/>}/>
-                {/* Catch all (404) */}
+            </Route>
+
+            <Route element={<AdminLayout/>}>
+
+                <Route element={<AuthGuard roles={[RolesEnum.ADMIN]}/>}>
+                    {/* Admin routes */}
+                    <Route path={PATH_ADMIN.dashboard} element={<DashboardPage></DashboardPage>}/>
+                    <Route path={PATH_ADMIN.categories} element={<CategoriesPage></CategoriesPage>}/>
+                    {/* Admin routes */}
+                </Route>
 
             </Route>
+
+            {/* Catch all (404) */}
+            <Route path={PATH_PUBLIC.unauthorized} element={<UnauthorizedPage></UnauthorizedPage>}/>
+            <Route path={PATH_PUBLIC.notFound} element={<NotFoundPage/>}/>
+            <Route path='*' element={<Navigate to={PATH_PUBLIC.notFound} replace/>}/>
+            {/* Catch all (404) */}
 
         </Routes>
     )
