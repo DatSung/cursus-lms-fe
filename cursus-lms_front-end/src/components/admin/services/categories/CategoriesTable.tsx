@@ -63,8 +63,22 @@ const CategoriesTable = () => {
         <>
             <div className='flex justify-between'>
                 <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="filterOn">
+                        Search By
+                    </label>
+                    <input
+                        type="text"
+                        id="filterOn"
+                        name="filterOn"
+                        value={query.filterOn}
+                        onChange={handleChange}
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        placeholder="Enter filter on"
+                    />
+                </div>
+                <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="filterQuery">
-                        Search By Name
+                        Search Input
                     </label>
                     <input
                         type="text"
