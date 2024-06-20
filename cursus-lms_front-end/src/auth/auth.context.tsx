@@ -14,7 +14,7 @@ import {
 } from "../types/auth.types";
 import {useNavigate} from "react-router-dom";
 import {getJwtTokenSession, setJwtTokenSession} from "./auth.utils";
-import axiosInstance from "../utils/axiosInstance";
+import axiosInstance from "../utils/axios/axiosInstance.ts";
 import {
     COMPLETE_INSTRUCTOR_PROFILE_URL,
     COMPLETE_STUDENT_PROFILE_URL, GET_USER_INFO_URL,
@@ -24,10 +24,11 @@ import {
     SIGN_UP_INSTRUCTOR_URL,
     SIGN_UP_STUDENT_URL,
     UPLOAD_INSTRUCTOR_DEGREE_URL
-} from "../utils/globalConfig";
+} from "../utils/axios/globalConfig.ts";
 import toast from "react-hot-toast";
 import {PATH_ADMIN, PATH_PUBLIC} from "../routes/paths.ts";
 import {jwtDecode} from "jwt-decode";
+import SignalRService from "../utils/signalR/signalRService.ts";
 
 // Reducer function for useReducer hook
 const authReducer = (state: IAuthContextState, action: IAuthContextAction) => {
@@ -185,6 +186,9 @@ const AuthContextProvider = ({children}: IProps) => {
 
                 const userInfoResponse = await axiosInstance.get<IResponseDTO<IUserInfo>>(GET_USER_INFO_URL);
                 const userInfo = userInfoResponse.data.result;
+
+                // Connect to signalR hub from back-end
+                await SignalRService.startConnection();
 
                 dispatch({
                     type: IAuthContextActionTypes.SIGNIN,
@@ -401,8 +405,9 @@ const AuthContextProvider = ({children}: IProps) => {
     }, [])
 
 
-    const signOut = useCallback(() => {
+    const signOut = useCallback(async () => {
         setJwtTokenSession(null, null);
+        await SignalRService.stopConnection();
         dispatch({
             type: IAuthContextActionTypes.SIGNOUT
         });

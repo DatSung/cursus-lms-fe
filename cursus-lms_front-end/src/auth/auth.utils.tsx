@@ -1,4 +1,4 @@
-import axiosInstance from "../utils/axiosInstance";
+import axiosInstance from "../utils/axios/axiosInstance.ts";
 
 // Function to set session information (e.g., access token) in local storage and Axios headers
 export const setJwtTokenSession = (accessToken: string | null, refreshToken: string | null) => {

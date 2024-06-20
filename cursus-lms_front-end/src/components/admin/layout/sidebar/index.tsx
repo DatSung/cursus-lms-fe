@@ -76,6 +76,31 @@ const Sidebar = () => {
                     )}
                 </div>
 
+                {/* User Menus */}
+                <div>
+                    <Button
+                        label='Users +'
+                        onClick={() => toggleMenu('Users')}
+                        type='button'
+                        variant='primary'
+                    />
+                    {openMenu === 'Users' && (
+                        <div className='flex flex-col gap-2 mt-2 w-11/12 mx-auto p-2 border-l-2'>
+                            <Button
+                                label='Instructors'
+                                type='button'
+                                variant='secondary'
+                                onClick={() => handleClick(PATH_ADMIN.instructors)}
+                            />
+                            <Button
+                                label='Student'
+                                type='button'
+                                variant='secondary'
+                            />
+                        </div>
+                    )}
+                </div>
+
                 {/* More Menus */}
                 <div>
                     <Button
