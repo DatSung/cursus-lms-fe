@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import axiosInstance from '../../../../utils/axiosInstance.ts';
+import axiosInstance from '../../../../utils/axios/axiosInstance.ts';
 import {IAdminCategoryDTO, IQueryParameters} from '../../../../types/category.types.ts';
-import {CATEGORIES_URL} from '../../../../utils/globalConfig.ts';
+import {CATEGORIES_URL} from '../../../../utils/axios/globalConfig.ts';
 import {IResponseDTO} from '../../../../types/auth.types.ts';
 import Spinner from '../../../general/Spinner.tsx';
-import {formatTimestamp} from "../../../../utils/formatDate.ts";
+import {formatTimestamp} from "../../../../utils/funcs/formatDate.ts";
 
 const CategoriesTable = () => {
     const [loading, setLoading] = useState<boolean>(true);

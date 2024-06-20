@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 
-import { HOST_API_KEY } from './globalConfig';
+import { HOST_API_KEY } from './globalConfig.ts';
 
 
 // Creating an instance of Axios with a base URL

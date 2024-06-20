@@ -1,5 +1,5 @@
 // HOST API URL
-import {IQueryParameters} from "../types/category.types.ts";
+import {IQueryParameters} from "../../types/category.types.ts";
 
 export const HOST_API_KEY = "https://localhost:7554/api";
 

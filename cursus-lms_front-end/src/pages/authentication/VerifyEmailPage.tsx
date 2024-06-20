@@ -1,10 +1,10 @@
 import {useEffect, useState} from 'react';
 import {IResponseDTO} from "../../types/auth.types.ts";
-import axiosInstance from "../../utils/axiosInstance.ts";
+import axiosInstance from "../../utils/axios/axiosInstance.ts";
 import Button from "../../components/general/Button.tsx";
 import {useNavigate} from "react-router-dom";
 import {PATH_PUBLIC} from "../../routes/paths.ts";
-import {VERIFY_EMAIL_URL} from "../../utils/globalConfig.ts";
+import {VERIFY_EMAIL_URL} from "../../utils/axios/globalConfig.ts";
 
 const VerifyEmailPage = () => {
     const [message, setMessage] = useState('');
