@@ -26,7 +26,7 @@ const InstructorsTable = () => {
     useEffect(() => {
         const getInstructors = async (query: IQueryParameters) => {
             try {
-                const response = await axiosInstance.get<IResponseDTO<IInstructorDTO>>(INSTRUCTORS_URL.GET_ALL_INSTRUCTORS_URL(query));
+                const response = await axiosInstance.get<IResponseDTO<IInstructorDTO[]>>(INSTRUCTORS_URL.GET_ALL_INSTRUCTORS_URL(query));
                 setInstructors(response.data.result);
                 setLoading(false);
             } catch (error) {
