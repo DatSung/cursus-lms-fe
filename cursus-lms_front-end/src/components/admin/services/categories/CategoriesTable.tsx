@@ -9,14 +9,16 @@ import {formatTimestamp} from "../../../../utils/funcs/formatDate.ts";
 const CategoriesTable = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [categories, setCategories] = useState<IAdminCategoryDTO[]>([]);
-    const [query, setQuery] = useState<IQueryParameters>({
-        filterOn: 'name',
-        filterQuery: '',
-        sortBy: '',
-        pageSize: 10,
-        pageNumber: 1,
-        isAscending: true,
-    });
+    const [query, setQuery] = useState<IQueryParameters>(
+        {
+            filterOn: 'name',
+            filterQuery: '',
+            sortBy: '',
+            pageSize: 10,
+            pageNumber: 1,
+            isAscending: true,
+        }
+    );
 
     useEffect(() => {
         const getCategories = async (query: IQueryParameters) => {
