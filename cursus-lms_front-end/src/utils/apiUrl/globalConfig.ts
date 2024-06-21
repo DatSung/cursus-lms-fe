@@ -41,19 +41,74 @@ export const CATEGORIES_URL = {
         ) => {
             return `/Category/search?filterOn=${query.filterOn}&filterQuery=${query.filterQuery}&sortBy=${query.sortBy}&isAscending=${query.isAscending}&pageNumber=${query.pageNumber > 0 ? query.pageNumber : 1}&pageSize=${query.pageSize > 0 ? query.pageSize : 10}`
         },
-    GET_SUB_CATEGORIES_URL: (id: string) => `/Category/get-sub-category/${id}`,
-    GET_PARENT_CATEGORIES_URL: (id: string) => `/Category/get-parent-category/${id}`,
-    POST_PUT_DELETE_CATEGORY_URL: (id: string) => `/Category${id ? `/${id}` : ''}`
+    GET_SUB_CATEGORIES_URL:
+        (
+            id: string | null
+        ) => {
+            return `/Category/get-sub-category/${id}`
+        },
+    GET_PARENT_CATEGORIES_URL:
+        (
+            id: string | null
+        ) => {
+            return `/Category/get-parent-category/${id}`
+        },
+    POST_PUT_DELETE_CATEGORY_URL:
+        (
+            id: string | null
+        ) => {
+            return `/Category${id ? `/${id}` : ''}`
+        }
 }
 
 // CATEGORIES ROUTES
 
 // INSTRUCTORS ROUTES
 export const INSTRUCTORS_URL = {
-    EXPORT_INSTRUCTORS_URL: () => {
-        return "/Instructor/export"
-    },
-    DOWNLOAD_INSTRUCTORS_URL: (fileName: string) => {
-        return `/Instructor/download/${fileName}`
-    },
+    GET_ALL_INSTRUCTORS_URL:
+        (
+            query: IQueryParameters
+        ) => {
+            return `/Instructor?filterOn=${query.filterOn}&filterQuery=${query.filterQuery}&sortBy=${query.sortBy}&isAscending=${query.isAscending}&pageNumber=${query.pageNumber > 0 ? query.pageNumber : 1}&pageSize=${query.pageSize > 0 ? query.pageSize : 10}`
+        },
+    GET_PUT_INSTRUCTOR_URL:
+        (
+            instructorId: string | null
+        ) => {
+            return `/Instructor${instructorId ? `/${instructorId}` : ''}`
+        },
+    GET_TOTAL_COURSES_INSTRUCTOR_URL:
+        (
+            instructorId: string | null
+        ) => {
+            return `/Instructor/total-courses${instructorId ? `/${instructorId}` : ''}`
+        },
+    GET_TOTAL_RATING_INSTRUCTOR_URL:
+        (
+            instructorId: string | null
+        ) => {
+            return `/Instructor/total-courses${instructorId ? `/${instructorId}` : ''}`
+        },
+    GET_TOTAL_EARNED_MONEY_INSTRUCTOR_URL:
+        (
+            instructorId: string | null
+        ) => {
+            return `/Instructor/total-earned-money${instructorId ? `/${instructorId}` : ''}`
+        },
+    GET_TOTAL_PAYOUT_MONEY_INSTRUCTOR_URL:
+        (
+            instructorId: string | null
+        ) => {
+            return `/Instructor/total-payout-money${instructorId ? `/${instructorId}` : ''}`
+        },
+    EXPORT_INSTRUCTORS_URL:
+        () => {
+            return "/Instructor/export"
+        },
+    DOWNLOAD_INSTRUCTORS_URL:
+        (
+            fileName: string
+        ) => {
+            return `/Instructor/download/${fileName}`
+        },
 }
