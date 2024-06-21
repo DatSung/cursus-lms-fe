@@ -4,7 +4,7 @@ import axiosInstance from "../../utils/axios/axiosInstance.ts";
 import Button from "../../components/general/Button.tsx";
 import {useNavigate} from "react-router-dom";
 import {PATH_PUBLIC} from "../../routes/paths.ts";
-import {VERIFY_EMAIL_URL} from "../../utils/axios/globalConfig.ts";
+import {VERIFY_EMAIL_URL} from "../../utils/apiUrl/globalConfig.ts";
 
 const VerifyEmailPage = () => {
     const [message, setMessage] = useState('');

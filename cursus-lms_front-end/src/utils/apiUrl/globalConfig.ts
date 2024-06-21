@@ -47,3 +47,13 @@ export const CATEGORIES_URL = {
 }
 
 // CATEGORIES ROUTES
+
+// INSTRUCTORS ROUTES
+export const INSTRUCTORS_URL = {
+    EXPORT_INSTRUCTORS_URL: () => {
+        return "/Instructor/export"
+    },
+    DOWNLOAD_INSTRUCTORS_URL: (fileName: string) => {
+        return `/Instructor/download/${fileName}`
+    },
+}
