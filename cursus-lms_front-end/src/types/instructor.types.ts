@@ -7,13 +7,31 @@ export interface IQueryParameters {
     pageSize: number
 }
 
-export interface IInstructorDTO {
+export interface IInstructorInfoLiteDTO {
     instructorId: string;
     fullName: string;
     email: string;
     phoneNumber: string;
     gender: string;
     birthDate: Date;
+    isAccepted: boolean;
+}
+
+export interface IInstructorInfoDTO {
+    instructorId: string;
+    userId: string;
+    avatarUrl: string;
+    fullName: string;
+    email: string;
+    phoneNumber: string;
+    gender: string;
+    birthDate: Date;
+    country: string;
+    address: string;
+    degree: string;
+    industry: string;
+    introduction: string;
+    taxNumber: string;
     isAccepted: boolean;
 }
 

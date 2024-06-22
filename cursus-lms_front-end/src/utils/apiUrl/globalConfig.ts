@@ -25,6 +25,8 @@ export const CHECK_EMAIL_EXIST_URL = "/Auth/check-email-exist";
 export const CHECK_PHONE_NUMBER_EXIST_URL = "/Auth/check-phone-number-exist";
 export const UPDATE_STUDENT_PROFILE_URL = "/Auth/update-student-profile";
 export const UPDATE_INSTRUCTOR_PROFILE_URL = "/Auth/update-instructor-profile";
+export const DISPLAY_USER_AVATAR_URL = "/Auth/display-user-avatar/"
+export const DISPLAY_INSTRUCTOR_DEGREE_URL = "/Auth/display-instructor-degree/"
 // AUTH ROUTES
 
 // CATEGORIES ROUTES
@@ -60,8 +62,6 @@ export const CATEGORIES_URL = {
             return `/Category${id ? `/${id}` : ''}`
         }
 }
-
-// CATEGORIES ROUTES
 
 // INSTRUCTORS ROUTES
 export const INSTRUCTORS_URL = {
@@ -102,8 +102,11 @@ export const INSTRUCTORS_URL = {
             return `/Instructor/total-payout-money${instructorId ? `/${instructorId}` : ''}`
         },
     EXPORT_INSTRUCTORS_URL:
-        () => {
-            return "/Instructor/export"
+        (
+            month: number,
+            year: number
+        ) => {
+            return `/Instructor/export/${month}/${year}`
         },
     DOWNLOAD_INSTRUCTORS_URL:
         (
