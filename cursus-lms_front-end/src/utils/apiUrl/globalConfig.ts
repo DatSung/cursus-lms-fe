@@ -1,5 +1,6 @@
 // HOST API URL
 import {IQueryParameters} from "../../types/category.types.ts";
+import {IPagingParameters} from "../../types/instructor.types.ts";
 
 export const HOST_API_KEY = "https://localhost:7554/api";
 
@@ -100,6 +101,17 @@ export const INSTRUCTORS_URL = {
             instructorId: string | null
         ) => {
             return `/Instructor/total-payout-money${instructorId ? `/${instructorId}` : ''}`
+        },
+    GET_ALL_COMMENT_INSTRUCTOR_URL:
+        (
+            instructorId: string | null,
+            query: IPagingParameters
+        ) => {
+            return `/Instructor/comment/${instructorId}?pageNumber=${query.pageNumber > 0 ? query.pageNumber : 1}&pageSize=${query.pageSize ? query.pageSize : 10}`
+        },
+    CREATE_COMMENT_INSTRUCTOR_URL:
+        () => {
+            return `/Instructor/comment`
         },
     EXPORT_INSTRUCTORS_URL:
         (

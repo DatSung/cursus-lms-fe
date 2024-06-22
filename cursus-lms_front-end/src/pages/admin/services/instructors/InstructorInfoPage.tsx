@@ -19,8 +19,8 @@ const InstructorInfoPage = () => {
             <div>
                 <InstructorDetails instructorId={instructorId}></InstructorDetails>
             </div>
-            <div>
-                <InstructorComment></InstructorComment>
+            <div className={'max-w-full'}>
+                <InstructorComment instructorId={instructorId}></InstructorComment>
             </div>
         </div>
     );

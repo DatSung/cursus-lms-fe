@@ -11,8 +11,8 @@ const ExportInstructor = () => {
         const {value: formValues} = await Swal.fire({
             title: 'Choose month and year',
             html:
-                `<input id="swal-input1" class="swal2-input" placeholder="Tháng" type="number" min="1" max="12">` +
-                `<input id="swal-input2" class="swal2-input" placeholder="Năm" type="number" min="2020" max="2050">`,
+                `<input id="swal-input1" class="swal2-input" placeholder="Month" type="number" min="1" max="12">` +
+                `<input id="swal-input2" class="swal2-input" placeholder="Year" type="number" min="2020" max="2050">`,
             focusConfirm: false,
             preConfirm: () => {
                 const month = (document.getElementById('swal-input1') as HTMLInputElement).value;

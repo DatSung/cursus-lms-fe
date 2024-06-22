@@ -7,6 +7,11 @@ export interface IQueryParameters {
     pageSize: number
 }
 
+export interface IPagingParameters {
+    pageSize: number
+    pageNumber: number
+}
+
 export interface IInstructorInfoLiteDTO {
     instructorId: string;
     fullName: string;
@@ -37,4 +42,20 @@ export interface IInstructorInfoDTO {
 
 export interface IInstructorTotalCountDTO {
     total: number
+}
+
+export interface IInstructorComment {
+    id: string,
+    comment: string,
+    createTime: Date,
+    createBy: string,
+    updateTime: Date,
+    updateBy: string,
+    status: number,
+    statusDescription: string
+}
+
+export interface ICreateComment {
+    comment: string | null,
+    instructorId: string | null,
 }

@@ -7,6 +7,7 @@ import Spinner from "../../../general/Spinner.tsx";
 import {formatTimestamp} from "../../../../utils/funcs/formatDate.ts";
 import InstructorAvatar from "./InstructorAvatar.tsx";
 import InstructorDegree from "./InstructorDegree.tsx";
+import {Button} from "@material-tailwind/react";
 
 interface IProps {
     instructorId: string | null;
@@ -85,6 +86,32 @@ const InstructorDetails = (props: IProps) => {
                                 <p>
                                     <strong>Accepted:</strong> {instructorDetails.isAccepted ? "Yes" : "No"}
                                 </p>
+                            </div>
+                            <div className={'flex gap-4 mt-6 justify-center'}>
+                                <Button
+                                    placeholder={undefined}
+                                    onPointerEnterCapture={undefined}
+                                    onPointerLeaveCapture={undefined}
+                                    className={'py-1 bg-white text-black border border-green-700 rounded-md normal-case'}
+                                >
+                                    Edit
+                                </Button>
+                                <Button
+                                    placeholder={undefined}
+                                    onPointerEnterCapture={undefined}
+                                    onPointerLeaveCapture={undefined}
+                                    className={`py-1 ${instructorDetails.isAccepted ? 'bg-yellow-800': 'bg-green-800'} rounded-md normal-case`}
+                                >
+                                    {instructorDetails.isAccepted ? 'Reject': 'Accept'}
+                                </Button>
+                                <Button
+                                    placeholder={undefined}
+                                    onPointerEnterCapture={undefined}
+                                    onPointerLeaveCapture={undefined}
+                                    className={'py-1 bg-red-700 rounded-md normal-case'}
+                                >
+                                    Lock
+                                </Button>
                             </div>
                         </div>
                     </div>
