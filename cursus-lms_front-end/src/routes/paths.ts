@@ -16,4 +16,5 @@ export const PATH_ADMIN = {
     dashboard: '/admin/dashboard',
     categories: '/admin/services/categories',
     instructors: '/admin/services/instructors',
+    instructorInfo: '/admin/services/instructors/info',
 }

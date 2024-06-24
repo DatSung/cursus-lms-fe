@@ -2,16 +2,21 @@ import SignalRService from "../../../../utils/signalR/signalRService.ts";
 import React, {useEffect, useState} from "react";
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
 import {INSTRUCTORS_URL} from "../../../../utils/apiUrl/globalConfig.ts";
-import {IInstructorDTO} from "../../../../types/instructor.types.ts";
+import {IInstructorInfoLiteDTO} from "../../../../types/instructor.types.ts";
 import {IQueryParameters} from "../../../../types/category.types.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
 import {formatTimestamp} from "../../../../utils/funcs/formatDate.ts";
 import Spinner from "../../../general/Spinner.tsx";
+import Button from "../../../general/Button.tsx";
+import {useNavigate} from "react-router-dom";
+import {PATH_ADMIN} from "../../../../routes/paths.ts";
+import ExportInstructor from "./ExportInstructor.tsx";
 
 
 const InstructorsTable = () => {
+    const navigate = useNavigate();
     const [loading, setLoading] = useState<boolean>(true);
-    const [instructors, setInstructors] = useState<IInstructorDTO[]>([]);
+    const [instructors, setInstructors] = useState<IInstructorInfoLiteDTO[]>([]);
     const [query, setQuery] = useState<IQueryParameters>(
         {
             filterOn: 'name',
@@ -26,7 +31,7 @@ const InstructorsTable = () => {
     useEffect(() => {
         const getInstructors = async (query: IQueryParameters) => {
             try {
-                const response = await axiosInstance.get<IResponseDTO<IInstructorDTO[]>>(INSTRUCTORS_URL.GET_ALL_INSTRUCTORS_URL(query));
+                const response = await axiosInstance.get<IResponseDTO<IInstructorInfoLiteDTO[]>>(INSTRUCTORS_URL.GET_ALL_INSTRUCTORS_URL(query));
                 setInstructors(response.data.result);
                 setLoading(false);
             } catch (error) {
@@ -37,7 +42,7 @@ const InstructorsTable = () => {
         getInstructors(query);
     }, [query]);
 
-    const renderInstructors = (instructors: IInstructorDTO[]) => {
+    const renderInstructors = (instructors: IInstructorInfoLiteDTO[]) => {
         return instructors.map((instructor, index) => (
             <React.Fragment key={instructor.instructorId}>
                 <tr className="border-b border-gray-200">
@@ -47,7 +52,16 @@ const InstructorsTable = () => {
                     <td className="py-3 px-6 text-left">{instructor.phoneNumber ?? '-'}</td>
                     <td className="py-3 px-6 text-left">{instructor.gender ?? '-'}</td>
                     <td className="py-3 px-6 text-left">{formatTimestamp(instructor.birthDate)}</td>
-                    <td className="py-3 px-6 text-left">{instructor.isAccepted ?? '-'}</td>
+                    <td className="py-3 px-6 text-left">{instructor.isAccepted ? 'Yes': 'No'}</td>
+                    <td className="py-3 px-6 text-left">
+                        <Button
+                            label='Detail'
+                            variant='primary'
+                            type='button'
+                            onClick={() => navigate(PATH_ADMIN.instructorInfo + "?instructorId=" + instructor.instructorId)}
+                        >
+                        </Button>
+                    </td>
                 </tr>
             </React.Fragment>
         ));
@@ -61,28 +75,27 @@ const InstructorsTable = () => {
         }));
     }
 
-    useEffect(() => {
-        SignalRService.on("DownloadExcelNow", async (fileName: string) => {
-            const response = await axiosInstance.get(INSTRUCTORS_URL.DOWNLOAD_INSTRUCTORS_URL(fileName), {responseType: 'blob'});
-            // Create a url from blob
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const link = document.createElement('a');
-            link.href = url;
+    SignalRService.on("DownloadExcelNow", async (fileName: string) => {
+        const response = await axiosInstance.get(INSTRUCTORS_URL.DOWNLOAD_INSTRUCTORS_URL(fileName), {responseType: 'blob'});
+        // Create a url from blob
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
 
-            // File name after download
-            link.setAttribute('download', `${fileName}.xlsx`);
+        // File name after download
+        link.setAttribute('download', `${fileName}`);
 
-            // Add link to dom to download the file
-            document.body.appendChild(link);
-            link.click();
+        // Add link to dom to download the file
+        document.body.appendChild(link);
+        link.click();
 
-            // Delete the link after download
-            link.parentNode?.removeChild(link);
-        });
-    }, []);
+        // Delete the link after download
+        link.parentNode?.removeChild(link);
+    });
 
     return (
         <>
+            <ExportInstructor></ExportInstructor>
             <div className='flex justify-between'>
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="filterOn">
@@ -184,7 +197,7 @@ const InstructorsTable = () => {
                         <th className="text-left text-nowrap py-4 px-6">Gender</th>
                         <th className="text-left text-nowrap py-4 px-6">Birth Date</th>
                         <th className="text-left text-nowrap py-4 px-6">Is Accepted</th>
-
+                        <th className="text-left text-nowrap py-4 px-6">Actions</th>
                         {/* Add more headers as needed */}
                     </tr>
                     </thead>

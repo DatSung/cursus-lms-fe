@@ -1,5 +1,6 @@
 // HOST API URL
 import {IQueryParameters} from "../../types/category.types.ts";
+import {IPagingParameters} from "../../types/instructor.types.ts";
 
 export const HOST_API_KEY = "https://localhost:7554/api";
 
@@ -25,6 +26,8 @@ export const CHECK_EMAIL_EXIST_URL = "/Auth/check-email-exist";
 export const CHECK_PHONE_NUMBER_EXIST_URL = "/Auth/check-phone-number-exist";
 export const UPDATE_STUDENT_PROFILE_URL = "/Auth/update-student-profile";
 export const UPDATE_INSTRUCTOR_PROFILE_URL = "/Auth/update-instructor-profile";
+export const DISPLAY_USER_AVATAR_URL = "/Auth/display-user-avatar/"
+export const DISPLAY_INSTRUCTOR_DEGREE_URL = "/Auth/display-instructor-degree/"
 // AUTH ROUTES
 
 // CATEGORIES ROUTES
@@ -60,8 +63,6 @@ export const CATEGORIES_URL = {
             return `/Category${id ? `/${id}` : ''}`
         }
 }
-
-// CATEGORIES ROUTES
 
 // INSTRUCTORS ROUTES
 export const INSTRUCTORS_URL = {
@@ -101,9 +102,31 @@ export const INSTRUCTORS_URL = {
         ) => {
             return `/Instructor/total-payout-money${instructorId ? `/${instructorId}` : ''}`
         },
+    ACCEPT_INSTRUCTOR_URL:
+        (instructorId: string | null) => {
+            return `/Instructor/accept/${instructorId}`
+        },
+    REJECT_INSTRUCTOR_URL:
+        (instructorId: string | null) => {
+            return `/Instructor/reject/${instructorId}`
+        },
+    GET_ALL_COMMENT_INSTRUCTOR_URL:
+        (
+            instructorId: string | null,
+            query: IPagingParameters
+        ) => {
+            return `/Instructor/comment/${instructorId}?pageNumber=${query.pageNumber > 0 ? query.pageNumber : 1}&pageSize=${query.pageSize ? query.pageSize : 10}`
+        },
+    POST_PUT_DELETE_COMMENT_INSTRUCTOR_URL:
+        (commentId: string | null) => {
+            return `/Instructor/comment${commentId != null ? `/${commentId}` : ''}`
+        },
     EXPORT_INSTRUCTORS_URL:
-        () => {
-            return "/Instructor/export"
+        (
+            month: number,
+            year: number
+        ) => {
+            return `/Instructor/export/${month}/${year}`
         },
     DOWNLOAD_INSTRUCTORS_URL:
         (
