@@ -1,12 +1,19 @@
 import React, {useEffect, useState} from "react";
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
-import {ICreateComment, IInstructorComment, IPagingParameters} from "../../../../types/instructor.types.ts";
+import {
+    ICreateComment,
+    IInstructorComment,
+    IPagingParameters,
+    IUpdateComment
+} from "../../../../types/instructor.types.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
 import {INSTRUCTORS_URL} from "../../../../utils/apiUrl/globalConfig.ts";
 import Spinner from "../../../general/Spinner.tsx";
 import {Button} from "@material-tailwind/react";
 import moment from "moment";
 import Swal from "sweetalert2";
+import useAuth from "../../../../hooks/useAuth.hook.ts";
+import toast from "react-hot-toast";
 
 export interface IProps {
     instructorId: string | null
@@ -23,6 +30,7 @@ const CommentList = (props: IProps) => {
             pageNumber: 1,
         }
     )
+    const {user} = useAuth();
 
     useEffect(() => {
         const getCommentList = async () => {
@@ -45,7 +53,7 @@ const CommentList = (props: IProps) => {
         }
 
         return comments.map((comment) => (
-            <div className="flex items-start gap-4 p-2">
+            <div key={comment.id} className="flex items-start gap-4 p-2">
                 <img className="w-12 h-12 rounded-full mt-2" src="https://via.placeholder.com/150" alt="User Avatar"/>
                 <div className=''>
                     <div className="bg-gray-100 p-3 rounded-lg">
@@ -54,8 +62,31 @@ const CommentList = (props: IProps) => {
                     </div>
                     <div className="flex space-x-4 mt-2 text-sm text-gray-500">
                         <button className="hover:underline">{comment.statusDescription}</button>
-                        <button className="hover:underline">Edit</button>
-                        <button className="hover:underline">Delete</button>
+                        {
+                            comment.createBy === user?.email ?
+                                (
+                                    <>
+                                        <button
+                                            onClick={() => handleEditComment(comment.id, comment.comment)}
+                                            className="hover:underline"
+                                        >
+                                            Edit
+                                        </button>
+
+                                        <button
+                                            onClick={() => handleDeleteComment(comment.id)}
+                                            className="hover:underline"
+                                        >
+                                            Delete
+                                        </button>
+                                    </>
+                                )
+                                :
+                                (
+                                    <>
+                                    </>
+                                )
+                        }
                         <span>·</span>
                         <span>{moment(comment.createTime).fromNow()}</span>
                     </div>
@@ -72,7 +103,7 @@ const CommentList = (props: IProps) => {
         }));
     }
 
-    const handleComment = async () => {
+    const handleCreateComment = async () => {
         const {value: formValues} = await Swal.fire({
             title: 'Create new comment',
             html:
@@ -89,10 +120,42 @@ const CommentList = (props: IProps) => {
                 comment: formValues.comment,
                 instructorId: props.instructorId
             }
-            await axiosInstance.post(INSTRUCTORS_URL.CREATE_COMMENT_INSTRUCTOR_URL(), newComment);
+            await axiosInstance.post(INSTRUCTORS_URL.POST_PUT_DELETE_COMMENT_INSTRUCTOR_URL(null), newComment);
             setReload(!reload);
         }
     };
+
+    const handleDeleteComment = async (commentId: string) => {
+        const response = await axiosInstance.delete<IResponseDTO<string>>(INSTRUCTORS_URL.POST_PUT_DELETE_COMMENT_INSTRUCTOR_URL(commentId));
+        if (response.data.statusCode === 200) {
+            toast.success(response.data.message);
+        } else {
+            toast.error(response.data.message);
+        }
+        setReload(!reload);
+    }
+
+    const handleEditComment = async (commentId: string, comment: string) => {
+        const {value: formValues} = await Swal.fire({
+            title: 'Edit comment',
+            html:
+                `<input id="swal-input1" class="swal2-input" value="${comment}" placeholder="Comment" type="text">`,
+            focusConfirm: false,
+            preConfirm: () => {
+                const comment = (document.getElementById('swal-input1') as HTMLInputElement).value;
+                return {comment};
+            }
+        });
+
+        if (formValues && formValues.comment) {
+            const updateComment: IUpdateComment = {
+                id: commentId,
+                comment: formValues.comment,
+            }
+            await axiosInstance.put(INSTRUCTORS_URL.POST_PUT_DELETE_COMMENT_INSTRUCTOR_URL(null), updateComment);
+            setReload(!reload);
+        }
+    }
 
     return (
         <div>
@@ -139,7 +202,7 @@ const CommentList = (props: IProps) => {
                                                 onPointerEnterCapture={undefined}
                                                 onPointerLeaveCapture={undefined}
                                                 className={'bg-green-800 py-2 normal-case'}
-                                                onClick={() => handleComment()}
+                                                onClick={() => handleCreateComment()}
                                             >
                                                 Create</Button>
                                         </div>

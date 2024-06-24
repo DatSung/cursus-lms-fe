@@ -102,6 +102,14 @@ export const INSTRUCTORS_URL = {
         ) => {
             return `/Instructor/total-payout-money${instructorId ? `/${instructorId}` : ''}`
         },
+    ACCEPT_INSTRUCTOR_URL:
+        (instructorId: string | null) => {
+            return `/Instructor/accept/${instructorId}`
+        },
+    REJECT_INSTRUCTOR_URL:
+        (instructorId: string | null) => {
+            return `/Instructor/reject/${instructorId}`
+        },
     GET_ALL_COMMENT_INSTRUCTOR_URL:
         (
             instructorId: string | null,
@@ -109,9 +117,9 @@ export const INSTRUCTORS_URL = {
         ) => {
             return `/Instructor/comment/${instructorId}?pageNumber=${query.pageNumber > 0 ? query.pageNumber : 1}&pageSize=${query.pageSize ? query.pageSize : 10}`
         },
-    CREATE_COMMENT_INSTRUCTOR_URL:
-        () => {
-            return `/Instructor/comment`
+    POST_PUT_DELETE_COMMENT_INSTRUCTOR_URL:
+        (commentId: string | null) => {
+            return `/Instructor/comment${commentId != null ? `/${commentId}` : ''}`
         },
     EXPORT_INSTRUCTORS_URL:
         (

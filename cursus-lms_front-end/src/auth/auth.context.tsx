@@ -76,7 +76,7 @@ const authReducer = (state: IAuthContextState, action: IAuthContextAction) => {
 }
 
 // Initial state object for useReducer hook
-const initalAuthState: IAuthContextState = {
+const initialAuthState: IAuthContextState = {
     isAuthenticated: false,
     isFullInfo: false,
     isAuthLoading: true,
@@ -94,7 +94,7 @@ interface IProps {
 // Create a component to manage all auth functionalities
 const AuthContextProvider = ({children}: IProps) => {
 
-    const [state, dispatch] = useReducer(authReducer, initalAuthState);
+    const [state, dispatch] = useReducer(authReducer, initialAuthState);
     const navigate = useNavigate();
 
     const isTokenValid = (token: string | null) => {
@@ -133,6 +133,9 @@ const AuthContextProvider = ({children}: IProps) => {
 
                 setJwtTokenSession(newAccessToken, newRefreshToken);
 
+                // Connect to signalR hub from back-end
+                await SignalRService.startConnection();
+
                 const userInfoResponse = await axiosInstance.get<IResponseDTO<IUserInfo>>(GET_USER_INFO_URL);
                 const userInfo = userInfoResponse.data.result;
 
@@ -145,6 +148,9 @@ const AuthContextProvider = ({children}: IProps) => {
                 axiosInstance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
                 const userInfoResponse = await axiosInstance.get<IResponseDTO<IUserInfo>>(GET_USER_INFO_URL);
                 const userInfo = userInfoResponse.data.result;
+
+                // Connect to signalR hub from back-end
+                await SignalRService.startConnection();
 
                 dispatch({
                     type: IAuthContextActionTypes.SIGNIN,
@@ -168,7 +174,7 @@ const AuthContextProvider = ({children}: IProps) => {
         initializeAuthContext()
             .then(() => console.log('AuthContext Initialization was successfully'))
             .catch((error: Error) => console.log(error));
-    }, [initializeAuthContext]);
+    }, []);
 
 
     // Sign In By Email and Password Method
@@ -238,6 +244,9 @@ const AuthContextProvider = ({children}: IProps) => {
                 const {accessToken, refreshToken} = signInResponse.result;
 
                 setJwtTokenSession(accessToken, refreshToken);
+
+                // Connect to signalR hub from back-end
+                await SignalRService.startConnection();
 
                 const userInfoResponse = await axiosInstance.get<IResponseDTO<IUserInfo>>(GET_USER_INFO_URL);
                 const userInfo = userInfoResponse.data.result;

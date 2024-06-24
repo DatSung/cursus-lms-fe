@@ -75,25 +75,23 @@ const InstructorsTable = () => {
         }));
     }
 
-    useEffect(() => {
-        SignalRService.on("DownloadExcelNow", async (fileName: string) => {
-            const response = await axiosInstance.get(INSTRUCTORS_URL.DOWNLOAD_INSTRUCTORS_URL(fileName), {responseType: 'blob'});
-            // Create a url from blob
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const link = document.createElement('a');
-            link.href = url;
+    SignalRService.on("DownloadExcelNow", async (fileName: string) => {
+        const response = await axiosInstance.get(INSTRUCTORS_URL.DOWNLOAD_INSTRUCTORS_URL(fileName), {responseType: 'blob'});
+        // Create a url from blob
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
 
-            // File name after download
-            link.setAttribute('download', `${fileName}.xlsx`);
+        // File name after download
+        link.setAttribute('download', `${fileName}`);
 
-            // Add link to dom to download the file
-            document.body.appendChild(link);
-            link.click();
+        // Add link to dom to download the file
+        document.body.appendChild(link);
+        link.click();
 
-            // Delete the link after download
-            link.parentNode?.removeChild(link);
-        });
-    }, []);
+        // Delete the link after download
+        link.parentNode?.removeChild(link);
+    });
 
     return (
         <>

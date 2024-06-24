@@ -1,21 +1,20 @@
 import InstructorComment from "../../../../components/admin/services/instructors/InstructorComment.tsx";
 import InstructorDetails from "../../../../components/admin/services/instructors/InstructorDetails.tsx";
-// import {PATH_ADMIN} from "../../../../routes/paths.ts";
-// import {useNavigate} from "react-router-dom";
-// import {Button} from "@material-tailwind/react";
+import {PATH_ADMIN} from "../../../../routes/paths.ts";
+import {useNavigate} from "react-router-dom";
 
 
 const InstructorInfoPage = () => {
     const query = new URLSearchParams(window.location.search);
     const instructorId: string | null = query.get('instructorId');
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     return (
         <div className={'w-full'}>
-            {/*<div>*/}
-            {/*    <Button className={'bg-green-800 py-2'} onClick={() => navigate(PATH_ADMIN.instructors)}*/}
-            {/*            placeholder={undefined} onPointerEnterCapture={undefined}*/}
-            {/*            onPointerLeaveCapture={undefined}> Back</Button>*/}
-            {/*</div>*/}
+            <div className='flex gap-2 text-3xl flex-row p-3 font-bold text-center rounded-md mb-8 text-green-800 border-2'>
+                <button onClick={() => navigate(PATH_ADMIN.instructors)} className="underline">Instructors</button>
+                <span>·</span>
+                <button className="underline">Details</button>
+            </div>
             <div>
                 <InstructorDetails instructorId={instructorId}></InstructorDetails>
             </div>

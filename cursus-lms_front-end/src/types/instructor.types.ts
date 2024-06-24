@@ -1,3 +1,4 @@
+
 export interface IQueryParameters {
     filterOn: string,
     filterQuery: string,
@@ -20,6 +21,21 @@ export interface IInstructorInfoLiteDTO {
     gender: string;
     birthDate: Date;
     isAccepted: boolean;
+}
+
+export interface IEditInstructorInfoDTO {
+    instructorId: string
+    introduction: string,
+    fullName: string,
+    email: string,
+    phoneNumber: string,
+    gender: string,
+    birthDate: Date,
+    country: string,
+    address: string,
+    degree: string,
+    industry: string,
+    taxNumber: string,
 }
 
 export interface IInstructorInfoDTO {
@@ -58,4 +74,8 @@ export interface IInstructorComment {
 export interface ICreateComment {
     comment: string | null,
     instructorId: string | null,
+}
+export interface IUpdateComment {
+    id: string | null,
+    comment: string | null,
 }
