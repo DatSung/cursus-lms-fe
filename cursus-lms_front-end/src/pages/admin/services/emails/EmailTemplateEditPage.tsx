@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 const EmailTemplateEditPage = () => {
     const query = new URLSearchParams(window.location.search);
     const emailId: string | null = query.get('emailId');
-    const navigate= useNavigate();
+    const navigate = useNavigate();
     return (
         <div className={'w-full'}>
             <div

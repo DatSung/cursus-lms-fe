@@ -16,7 +16,7 @@ const NotFoundPage = () => {
                 variant='secondary'
                 type='button'
                 label='Back'
-                onClick={() => navigate(role === RolesEnum.ADMIN ?  PATH_ADMIN.dashboard : PATH_PUBLIC.home)}
+                onClick={() => navigate(role === RolesEnum.ADMIN ? PATH_ADMIN.dashboard : PATH_PUBLIC.home)}
             />
         </div>
     )

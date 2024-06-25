@@ -1,4 +1,3 @@
-import React from 'react';
 import {RolesEnum} from "../../types/auth.types.ts";
 import {PATH_ADMIN, PATH_PUBLIC} from "../../routes/paths.ts";
 import Button from "../../components/general/Button.tsx";
@@ -16,7 +15,7 @@ const UnauthorizedPage = () => {
                 variant='secondary'
                 type='button'
                 label='Back'
-                onClick={() => navigate(role === RolesEnum.ADMIN ?  PATH_ADMIN.dashboard : PATH_PUBLIC.home)}
+                onClick={() => navigate(role === RolesEnum.ADMIN ? PATH_ADMIN.dashboard : PATH_PUBLIC.home)}
             />
         </div>
     );

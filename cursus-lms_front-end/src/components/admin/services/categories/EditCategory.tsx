@@ -1,19 +1,19 @@
-import { useState } from "react";
-import { Button, Form, Input, Modal, Select } from 'antd';
-import { EditOutlined } from "@ant-design/icons";
+import {useState} from "react";
+import {Button, Form, Input, Modal, Select} from 'antd';
+import {EditOutlined} from "@ant-design/icons";
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
-import { IResponseDTO } from "../../../../types/auth.types.ts";
+import {IResponseDTO} from "../../../../types/auth.types.ts";
 import {
     IAdminCategoryDTO,
     ICategoryDTO,
     IQueryParameters,
     IUpdateCategoryDTO
 } from "../../../../types/category.types.ts";
-import { CATEGORIES_URL } from "../../../../utils/apiUrl/globalConfig.ts";
+import {CATEGORIES_URL} from "../../../../utils/apiUrl/globalConfig.ts";
 import toast from "react-hot-toast";
 
-const { TextArea } = Input;
-const { Option } = Select;
+const {TextArea} = Input;
+const {Option} = Select;
 
 interface ParentItem {
     id: string;
@@ -26,9 +26,9 @@ interface IProps {
 }
 
 const statusOptions = [
-    { key: '0', value: 0, label: 'New' },
-    { key: '1', value: 1, label: 'Activated' },
-    { key: '2', value: 2, label: 'Deactivated' }
+    {key: '0', value: 0, label: 'New'},
+    {key: '1', value: 1, label: 'Activated'},
+    {key: '2', value: 2, label: 'Deactivated'}
 ];
 
 const EditCategory = (props: IProps) => {
@@ -108,7 +108,7 @@ const EditCategory = (props: IProps) => {
     return (
         <>
             <Button className={'bg-gray-200'} type="dashed" onClick={showModal}>
-                <EditOutlined /> Edit
+                <EditOutlined/> Edit
             </Button>
             <Modal
                 loading={loading}
@@ -126,23 +126,23 @@ const EditCategory = (props: IProps) => {
                         <Form.Item
                             label="Name"
                             name="name"
-                            rules={[{ required: true, message: 'Please input the name!' }]}
+                            rules={[{required: true, message: 'Please input the name!'}]}
                         >
-                            <Input />
+                            <Input/>
                         </Form.Item>
 
                         <Form.Item
                             label="Description"
                             name="description"
-                            rules={[{ required: true, message: 'Please input the description!' }]}
+                            rules={[{required: true, message: 'Please input the description!'}]}
                         >
-                            <TextArea rows={4} />
+                            <TextArea rows={4}/>
                         </Form.Item>
 
                         <Form.Item
                             label="Parent"
                             name="parentId"
-                            rules={[{ required: true, message: 'Please select a parent!' }]}
+                            rules={[{required: true, message: 'Please select a parent!'}]}
                         >
                             <Select placeholder="Select a parent">
                                 <Option key={'root'} value={'root'}>
@@ -159,7 +159,7 @@ const EditCategory = (props: IProps) => {
                         <Form.Item
                             label="Status"
                             name="status"
-                            rules={[{ required: true, message: 'Please select a status!' }]}
+                            rules={[{required: true, message: 'Please select a status!'}]}
                         >
                             <Select placeholder="Select a status">
                                 {statusOptions.map(status => (

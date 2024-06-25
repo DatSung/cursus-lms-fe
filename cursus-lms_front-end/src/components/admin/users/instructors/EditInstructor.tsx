@@ -73,7 +73,7 @@ const EditInstructor = (props: IProps) => {
         const formattedDate = birthDate.toISOString().split('T')[0];
 
         // Cập nhật lại dữ liệu với ngày đã chỉnh sửa
-        const updatedData = { ...data, birthDate: formattedDate };
+        const updatedData = {...data, birthDate: formattedDate};
         const response = await axiosInstance.put<IResponseDTO<string>>(INSTRUCTORS_URL.GET_PUT_INSTRUCTOR_URL(''), updatedData);
         if (response.data.statusCode === 200) {
             toast.success(response.data.message);
