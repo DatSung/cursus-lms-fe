@@ -88,7 +88,7 @@ export const INSTRUCTORS_URL = {
         (
             instructorId: string | null
         ) => {
-            return `/Instructor/total-courses${instructorId ? `/${instructorId}` : ''}`
+            return `/Instructor/total-rating${instructorId ? `/${instructorId}` : ''}`
         },
     GET_TOTAL_EARNED_MONEY_INSTRUCTOR_URL:
         (

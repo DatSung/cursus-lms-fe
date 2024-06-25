@@ -1,4 +1,3 @@
-
 export interface IQueryParameters {
     filterOn: string,
     filterQuery: string,
@@ -75,7 +74,25 @@ export interface ICreateComment {
     comment: string | null,
     instructorId: string | null,
 }
+
 export interface IUpdateComment {
     id: string | null,
     comment: string | null,
+}
+
+export interface ITotalCourses {
+    total: number,
+    pending: number,
+    activated: number,
+    rejected: number,
+    deleted: number
+}
+
+export interface IAvgRating {
+    avg: number,
+    one: number,
+    two: number,
+    three: number,
+    four: number
+    five: number
 }

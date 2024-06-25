@@ -68,6 +68,12 @@ const Sidebar = () => {
                                 variant='secondary'
                             />
                             <Button
+                                label='Emails'
+                                onClick={() => handleClick(PATH_ADMIN.emails)}
+                                type='button'
+                                variant='secondary'
+                            />
+                            <Button
                                 label='More'
                                 type='button'
                                 variant='secondary'
