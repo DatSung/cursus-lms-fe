@@ -10,6 +10,11 @@ import InstructorDegree from "./InstructorDegree.tsx";
 import {Button} from "@material-tailwind/react";
 import EditInstructor from "./EditInstructor.tsx";
 import toast from "react-hot-toast";
+import TotalCourses from "./TotalCourses.tsx";
+import TotalRating from "./TotalRating.tsx";
+import TotalEarned from "./TotalEarned.tsx";
+import TotalPayout from "./TotalPayout.tsx";
+import {Divider} from "antd";
 
 interface IProps {
     instructorId: string | null;
@@ -172,8 +177,24 @@ const InstructorDetails = (props: IProps) => {
                                     </div>
                                 )
                         }
+                    </div>
 
-
+                    <div>
+                        <Divider plain><h1 className={'m-8 text-xl font-bold'}>Statistic</h1></Divider>
+                        <div className='flex flex-wrap justify-center items-center gap-8'>
+                            <div>
+                                <TotalCourses instructorId={instructorDetails.instructorId}></TotalCourses>
+                            </div>
+                            <div>
+                                <TotalEarned></TotalEarned>
+                            </div>
+                            <div>
+                                <TotalPayout></TotalPayout>
+                            </div>
+                            <div>
+                                <TotalRating instructorId={instructorDetails.instructorId}></TotalRating>
+                            </div>
+                        </div>
                     </div>
 
                     <div>

@@ -26,7 +26,6 @@ const UploadDegreeInstructor = () => {
         }
     };
 
-
     const handleUpload = async () => {
         try {
             setLoading(true);

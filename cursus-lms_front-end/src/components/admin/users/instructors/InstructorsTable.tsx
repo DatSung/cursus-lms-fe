@@ -22,7 +22,7 @@ const InstructorsTable = () => {
             filterOn: 'name',
             filterQuery: '',
             sortBy: '',
-            pageSize: 10,
+            pageSize: 5,
             pageNumber: 1,
             isAscending: true
         }
@@ -52,7 +52,7 @@ const InstructorsTable = () => {
                     <td className="py-3 px-6 text-left">{instructor.phoneNumber ?? '-'}</td>
                     <td className="py-3 px-6 text-left">{instructor.gender ?? '-'}</td>
                     <td className="py-3 px-6 text-left">{formatTimestamp(instructor.birthDate)}</td>
-                    <td className="py-3 px-6 text-left">{instructor.isAccepted ? 'Yes': 'No'}</td>
+                    <td className="py-3 px-6 text-left">{instructor.isAccepted ? 'Yes' : 'No'}</td>
                     <td className="py-3 px-6 text-left">
                         <Button
                             label='Detail'

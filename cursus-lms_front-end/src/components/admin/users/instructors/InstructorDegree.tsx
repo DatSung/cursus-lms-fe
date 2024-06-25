@@ -2,6 +2,7 @@ import {
     DISPLAY_INSTRUCTOR_DEGREE_URL,
     HOST_API_KEY
 } from "../../../../utils/apiUrl/globalConfig.ts";
+import {Divider} from "antd";
 
 interface IProps {
     userId: string | null;
@@ -12,7 +13,7 @@ const InstructorAvatar = (props: IProps) => {
 
     return (
         <div className="flex flex-col items-center justify-center mt-6">
-            <h1 className={'text-xl font-bold mb-4'}>Instructor Degree</h1>
+            <Divider plain><h1 className={'m-8 text-xl font-bold'}>Degree</h1></Divider>
             <img
                 src={src}
                 alt={`Avatar of instructor ${props.userId}`}

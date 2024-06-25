@@ -15,6 +15,8 @@ export const PATH_PUBLIC = {
 export const PATH_ADMIN = {
     dashboard: '/admin/dashboard',
     categories: '/admin/services/categories',
+    emails: '/admin/services/emails',
+    emailsEdit: '/admin/services/emails/edit',
     instructors: '/admin/services/instructors',
     instructorInfo: '/admin/services/instructors/info',
 }

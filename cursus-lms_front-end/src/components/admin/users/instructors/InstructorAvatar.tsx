@@ -1,4 +1,4 @@
-import { DISPLAY_USER_AVATAR_URL, HOST_API_KEY } from "../../../../utils/apiUrl/globalConfig.ts";
+import {DISPLAY_USER_AVATAR_URL, HOST_API_KEY} from "../../../../utils/apiUrl/globalConfig.ts";
 
 interface IProps {
     userId: string | null;

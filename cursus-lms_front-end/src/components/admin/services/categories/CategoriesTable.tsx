@@ -4,7 +4,11 @@ import {IAdminCategoryDTO, IQueryParameters} from '../../../../types/category.ty
 import {CATEGORIES_URL} from '../../../../utils/apiUrl/globalConfig.ts';
 import {IResponseDTO} from '../../../../types/auth.types.ts';
 import Spinner from '../../../general/Spinner.tsx';
-import {formatTimestamp} from "../../../../utils/funcs/formatDate.ts";
+import CategoryDetails from "./CategoryDetails.tsx";
+import AddNewCategory from "./AddNewCategory.tsx";
+import AddSubCategory from "./AddSubCategory.tsx";
+import EditCategory from "./EditCategory.tsx";
+// import {formatTimestamp} from "../../../../utils/funcs/formatDate.ts";
 
 const CategoriesTable = () => {
     const [loading, setLoading] = useState<boolean>(true);
@@ -14,11 +18,16 @@ const CategoriesTable = () => {
             filterOn: 'name',
             filterQuery: '',
             sortBy: '',
-            pageSize: 10,
+            pageSize: 5,
             pageNumber: 1,
             isAscending: true,
         }
     );
+    const [reload, setReload] = useState<boolean>(true);
+
+    const handleReloadTable = () => {
+        setReload(!reload);
+    }
 
     useEffect(() => {
         const getCategories = async (query: IQueryParameters) => {
@@ -32,7 +41,7 @@ const CategoriesTable = () => {
             }
         };
         getCategories(query);
-    }, [query]);
+    }, [query, reload]);
 
     const renderCategories = (categories: IAdminCategoryDTO[]) => {
         return categories.map((category, index) => (
@@ -40,13 +49,26 @@ const CategoriesTable = () => {
                 <tr className="border-b border-gray-200">
                     <td className="py-3 px-6 text-left whitespace-nowrap">{index + 1}</td>
                     <td className="py-3 px-6 text-left">{category.name}</td>
-                    <td className="py-3 px-6 text-left">{category.description ?? '-'}</td>
                     <td className="py-3 px-6 text-left">{category.parentName ?? '-'}</td>
-                    <td className="py-3 px-6 text-left">{category.createdBy ?? '-'}</td>
-                    <td className="py-3 px-6 text-left">{formatTimestamp(category.createTime)}</td>
-                    <td className="py-3 px-6 text-left">{category.updatedBy ?? '-'}</td>
-                    <td className="py-3 px-6 text-left">{formatTimestamp(category.updateTime)}</td>
+                    <td className="py-3 px-6 text-left">{category.description ?? '-'}</td>
+                    {/*<td className="py-3 px-6 text-left">{category.createdBy ?? '-'}</td>*/}
+                    {/*<td className="py-3 px-6 text-left">{formatTimestamp(category.createTime)}</td>*/}
+                    {/*<td className="py-3 px-6 text-left">{category.updatedBy ?? '-'}</td>*/}
+                    {/*<td className="py-3 px-6 text-left">{formatTimestamp(category.updateTime)}</td>*/}
                     <td className="py-3 px-6 text-left">{category.statusDescription}</td>
+                    <td className="py-3 px-6 flex gap-2 text-left">
+                        <AddSubCategory
+                            handleReloadTable={handleReloadTable}
+                            parentId={category.id}
+                            parentName={category.name}
+                        >
+                        </AddSubCategory>
+                        <EditCategory
+                            handleReloadTable={handleReloadTable}
+                            category={category}
+                        ></EditCategory>
+                        <CategoryDetails categoryId={category.id}></CategoryDetails>
+                    </td>
                 </tr>
                 {category.subCategories.length > 0 && renderCategories(category.subCategories)}
             </React.Fragment>
@@ -63,7 +85,11 @@ const CategoriesTable = () => {
 
     return (
         <>
-            <div className='flex justify-between'>
+            <div className={'flex px-4 mb-4 flex-row-reverse'}>
+                <AddNewCategory handleReloadTable={handleReloadTable}></AddNewCategory>
+            </div>
+
+            <div className='flex flex-wrap lg:flex-nowrap justify-between'>
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="filterOn">
                         Search By
@@ -159,14 +185,14 @@ const CategoriesTable = () => {
                     <tr className="bg-gray-100 border-b border-gray-300">
                         <th className="text-left text-nowrap py-4 px-6">No</th>
                         <th className="text-left text-nowrap py-4 px-6">Name</th>
-                        <th className="text-left text-nowrap py-4 px-6">Description</th>
                         <th className="text-left text-nowrap py-4 px-6">Parent Name</th>
-                        <th className="text-left text-nowrap py-4 px-6">Created By</th>
-                        <th className="text-left text-nowrap py-4 px-6">Create Time</th>
-                        <th className="text-left text-nowrap py-4 px-6">Updated By</th>
-                        <th className="text-left text-nowrap py-4 px-6">UpdateTime</th>
+                        <th className="text-left text-nowrap py-4 px-6">Description</th>
+                        {/*<th className="text-left text-nowrap py-4 px-6">Created By</th>*/}
+                        {/*<th className="text-left text-nowrap py-4 px-6">Create Time</th>*/}
+                        {/*<th className="text-left text-nowrap py-4 px-6">Updated By</th>*/}
+                        {/*<th className="text-left text-nowrap py-4 px-6">UpdateTime</th>*/}
                         <th className="text-left text-nowrap py-4 px-6">Status</th>
-
+                        <th className="text-left text-nowrap py-4 px-6">Actions</th>
                         {/* Add more headers as needed */}
                     </tr>
                     </thead>
