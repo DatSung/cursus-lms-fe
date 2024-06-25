@@ -103,11 +103,15 @@ export const INSTRUCTORS_URL = {
             return `/Instructor/total-payout-money${instructorId ? `/${instructorId}` : ''}`
         },
     ACCEPT_INSTRUCTOR_URL:
-        (instructorId: string | null) => {
+        (
+            instructorId: string | null
+        ) => {
             return `/Instructor/accept/${instructorId}`
         },
     REJECT_INSTRUCTOR_URL:
-        (instructorId: string | null) => {
+        (
+            instructorId: string | null
+        ) => {
             return `/Instructor/reject/${instructorId}`
         },
     GET_ALL_COMMENT_INSTRUCTOR_URL:
@@ -118,7 +122,9 @@ export const INSTRUCTORS_URL = {
             return `/Instructor/comment/${instructorId}?pageNumber=${query.pageNumber > 0 ? query.pageNumber : 1}&pageSize=${query.pageSize ? query.pageSize : 10}`
         },
     POST_PUT_DELETE_COMMENT_INSTRUCTOR_URL:
-        (commentId: string | null) => {
+        (
+            commentId: string | null
+        ) => {
             return `/Instructor/comment${commentId != null ? `/${commentId}` : ''}`
         },
     EXPORT_INSTRUCTORS_URL:
@@ -134,4 +140,14 @@ export const INSTRUCTORS_URL = {
         ) => {
             return `/Instructor/download/${fileName}`
         },
+}
+
+// EMAIL TEMPLATES ROUTES
+export const EMAIL_TEMPLATES_URL = {
+    GET_PUT_EMAILS:
+        (
+            emailId: string | null
+        ) => {
+            return `/EmailTemplate${emailId ? `/${emailId}` : ''}`
+        }
 }

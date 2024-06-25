@@ -19,7 +19,8 @@ import UnauthorizedPage from "../pages/public/UnauthorizedPage.tsx";
 import CategoriesPage from "../pages/admin/services/categories/CategoriesPage.tsx";
 import InstructorsPage from "../pages/admin/services/instructors/InstructorsPage.tsx";
 import InstructorInfoPage from "../pages/admin/services/instructors/InstructorInfoPage.tsx";
-import EmailsTable from "../components/admin/services/emails/EmailsTable.tsx";
+import EmailTemplatesPage from "../pages/admin/services/emails/EmailTemplatesPage.tsx";
+import EmailTemplateEditPage from "../pages/admin/services/emails/EmailTemplateEditPage.tsx";
 
 const GlobalRouter = () => {
     return (
@@ -47,7 +48,8 @@ const GlobalRouter = () => {
                     <Route path={PATH_ADMIN.dashboard} element={<DashboardPage></DashboardPage>}/>
                     <Route path={PATH_ADMIN.categories} element={<CategoriesPage></CategoriesPage>}/>
                     <Route path={PATH_ADMIN.instructors} element={<InstructorsPage></InstructorsPage>}/>
-                    <Route path={PATH_ADMIN.emails} element={<EmailsTable></EmailsTable>}/>
+                    <Route path={PATH_ADMIN.emails} element={<EmailTemplatesPage></EmailTemplatesPage>}/>
+                    <Route path={PATH_ADMIN.emailsEdit} element={<EmailTemplateEditPage></EmailTemplateEditPage>}/>
                     <Route path={PATH_ADMIN.instructorInfo} element={<InstructorInfoPage></InstructorInfoPage>}/>
                     {/* Admin routes */}
                 </Route>
