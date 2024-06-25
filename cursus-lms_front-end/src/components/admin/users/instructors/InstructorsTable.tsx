@@ -22,7 +22,7 @@ const InstructorsTable = () => {
             filterOn: 'name',
             filterQuery: '',
             sortBy: '',
-            pageSize: 10,
+            pageSize: 5,
             pageNumber: 1,
             isAscending: true
         }

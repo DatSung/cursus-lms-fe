@@ -6,6 +6,8 @@ import {IResponseDTO} from '../../../../types/auth.types.ts';
 import Spinner from '../../../general/Spinner.tsx';
 import CategoryDetails from "./CategoryDetails.tsx";
 import AddNewCategory from "./AddNewCategory.tsx";
+import AddSubCategory from "./AddSubCategory.tsx";
+import EditCategory from "./EditCategory.tsx";
 // import {formatTimestamp} from "../../../../utils/funcs/formatDate.ts";
 
 const CategoriesTable = () => {
@@ -16,7 +18,7 @@ const CategoriesTable = () => {
             filterOn: 'name',
             filterQuery: '',
             sortBy: '',
-            pageSize: 10,
+            pageSize: 5,
             pageNumber: 1,
             isAscending: true,
         }
@@ -48,12 +50,23 @@ const CategoriesTable = () => {
                     <td className="py-3 px-6 text-left whitespace-nowrap">{index + 1}</td>
                     <td className="py-3 px-6 text-left">{category.name}</td>
                     <td className="py-3 px-6 text-left">{category.parentName ?? '-'}</td>
+                    <td className="py-3 px-6 text-left">{category.description ?? '-'}</td>
                     {/*<td className="py-3 px-6 text-left">{category.createdBy ?? '-'}</td>*/}
                     {/*<td className="py-3 px-6 text-left">{formatTimestamp(category.createTime)}</td>*/}
                     {/*<td className="py-3 px-6 text-left">{category.updatedBy ?? '-'}</td>*/}
                     {/*<td className="py-3 px-6 text-left">{formatTimestamp(category.updateTime)}</td>*/}
                     <td className="py-3 px-6 text-left">{category.statusDescription}</td>
-                    <td className="py-3 px-6 text-left">
+                    <td className="py-3 px-6 flex gap-2 text-left">
+                        <AddSubCategory
+                            handleReloadTable={handleReloadTable}
+                            parentId={category.id}
+                            parentName={category.name}
+                        >
+                        </AddSubCategory>
+                        <EditCategory
+                            handleReloadTable={handleReloadTable}
+                            category={category}
+                        ></EditCategory>
                         <CategoryDetails categoryId={category.id}></CategoryDetails>
                     </td>
                 </tr>
@@ -173,6 +186,7 @@ const CategoriesTable = () => {
                         <th className="text-left text-nowrap py-4 px-6">No</th>
                         <th className="text-left text-nowrap py-4 px-6">Name</th>
                         <th className="text-left text-nowrap py-4 px-6">Parent Name</th>
+                        <th className="text-left text-nowrap py-4 px-6">Description</th>
                         {/*<th className="text-left text-nowrap py-4 px-6">Created By</th>*/}
                         {/*<th className="text-left text-nowrap py-4 px-6">Create Time</th>*/}
                         {/*<th className="text-left text-nowrap py-4 px-6">Updated By</th>*/}

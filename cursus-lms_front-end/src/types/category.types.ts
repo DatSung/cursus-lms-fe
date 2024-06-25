@@ -18,6 +18,7 @@ export interface IAdminCategoryDTO {
     id: string;
     name: string;
     description?: string | null;
+    parentId: string;
     parentName?: string | null
     createBy: string;
     createTime: Date;
@@ -32,4 +33,11 @@ export interface IAddCategoryDTO {
     name: string;
     description?: string | null;
     parentId: string | 'root'
+}
+export interface IUpdateCategoryDTO {
+    id: string
+    name: string;
+    description?: string | null;
+    parentId: string | 'root'
+    status: number
 }

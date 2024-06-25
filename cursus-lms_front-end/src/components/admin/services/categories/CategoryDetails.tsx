@@ -27,6 +27,7 @@ const CategoryDetails = (props: IProps) => {
         description: "",
         id: "",
         name: "",
+        parentId: "",
         parentName: "",
         status: 0,
         statusDescription: "",
