@@ -56,7 +56,7 @@ export const CATEGORIES_URL = {
         ) => {
             return `/Category/get-parent-category/${id}`
         },
-    POST_PUT_DELETE_CATEGORY_URL:
+    GET_POST_PUT_DELETE_CATEGORY_URL:
         (
             id: string | null
         ) => {

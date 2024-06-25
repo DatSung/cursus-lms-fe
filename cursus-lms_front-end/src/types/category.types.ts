@@ -18,12 +18,18 @@ export interface IAdminCategoryDTO {
     id: string;
     name: string;
     description?: string | null;
-    parentName?:string | null
-    createdBy: string;
+    parentName?: string | null
+    createBy: string;
     createTime: Date;
-    updatedBy: string;
+    updateBy: string;
     updateTime: Date;
     status: number;
     statusDescription: string
     subCategories: IAdminCategoryDTO[];
+}
+
+export interface IAddCategoryDTO {
+    name: string;
+    description?: string | null;
+    parentId: string | 'root'
 }
