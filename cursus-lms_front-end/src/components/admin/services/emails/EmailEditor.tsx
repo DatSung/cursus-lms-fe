@@ -5,6 +5,7 @@ import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
 import {IEmailTemplateDTO} from "../../../../types/email.types.ts";
 import {EMAIL_TEMPLATES_URL} from "../../../../utils/apiUrl/globalConfig.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
+import toast from "react-hot-toast";
 
 interface IProps {
     emailId: string | null
@@ -12,8 +13,9 @@ interface IProps {
 
 const EmailEditor = (props: IProps) => {
     const [form] = Form.useForm();
-    const editorRef = useRef(null);
     const [email, setEmail] = useState<IEmailTemplateDTO>();
+    const editorRef = useRef(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const setInitialFormValues = async () => {
         form.setFieldsValue({
@@ -23,11 +25,41 @@ const EmailEditor = (props: IProps) => {
         });
     }
 
-    const onFinish = (values: any) => {
-        console.log('Form values:', values);
-        if (editorRef.current) {
-            // @ts-ignore
-            console.log('Editor content:', editorRef.current.getContent());
+    const onFinish = async (values: any) => {
+        try {
+            setLoading(true);
+            if (editorRef.current) {
+                // @ts-ignore
+                const editorContent = editorRef.current.getContent();
+                const data: IEmailTemplateDTO = {
+                    templateName: email?.templateName ? email?.templateName : '',
+                    senderName: email?.senderName ? email?.senderName : '',
+                    senderEmail: email?.senderEmail ? email?.senderEmail : '',
+                    category: email?.category ? email?.category : '',
+                    subjectLine: values.subjectLine,
+                    preHeaderText: values.preHeaderText,
+                    personalizationTags: email?.personalizationTags ? email.personalizationTags : '',
+                    bodyContent: editorContent,
+                    footerContent: values.footerContent,
+                    callToAction: email?.callToAction ? email?.callToAction : '',
+                    language: email?.language ? email.language : '',
+                    recipientType: email?.recipientType ? email?.recipientType : '',
+                    status: email?.status ? email.status : 0,
+                }
+
+                const response = await axiosInstance.put<IResponseDTO<string>>(EMAIL_TEMPLATES_URL.GET_PUT_EMAILS(email?.id ? email.id : null), data);
+                if (response.status === 200) {
+                    toast.success(response.data.message)
+                    setLoading(false);
+                } else {
+                    setLoading(false);
+                    toast.error(response.data.message);
+                }
+            }
+
+        } catch (e) {
+            console.log(e)
+            setLoading(false)
         }
     };
 
@@ -68,8 +100,9 @@ const EmailEditor = (props: IProps) => {
             >
                 <Editor
                     apiKey='9v3f6801xkjbo5g8uijy1kuncu1ltgp0khqtlsn6d9oulwdj'
-                    // onInit={(evt, editor) => editorRef.current = editor}
+                    onInit={(evt, editor) => editorRef.current = editor}
                     initialValue={email?.bodyContent}
+                    value={email?.bodyContent}
                     init={{
                         menubar: false,
                         plugins: 'anchor autolink charmap codesample emoticons link lists searchreplace table visualblocks wordcount linkchecker markdown',
@@ -87,7 +120,10 @@ const EmailEditor = (props: IProps) => {
             </Form.Item>
 
             <Form.Item>
-                <Button className={'bg-green-600'} type="primary" htmlType="submit">
+                <Button
+                    className={'bg-green-600'} type="primary" htmlType="submit"
+                    loading={loading}
+                >
                     Save Template
                 </Button>
             </Form.Item>

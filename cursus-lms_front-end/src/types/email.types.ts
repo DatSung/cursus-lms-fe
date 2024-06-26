@@ -1,5 +1,5 @@
 export interface IEmailTemplateDTO {
-    id: string;
+    id: string | undefined;
     templateName: string;
     senderName: string;
     senderEmail: string;
