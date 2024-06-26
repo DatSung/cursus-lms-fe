@@ -23,7 +23,7 @@ const ExportInstructor = () => {
         });
 
         if (formValues && formValues.month && formValues.year) {
-            setMonth(formValues.month);
+            setMonth(parseInt(formValues.month) + 1);
             setYear(formValues.year);
             await axiosInstance.post(INSTRUCTORS_URL.EXPORT_INSTRUCTORS_URL(month, year));
             Swal.fire({
