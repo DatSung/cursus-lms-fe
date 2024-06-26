@@ -87,7 +87,7 @@ const EmailEditor = (props: IProps) => {
             </Form.Item>
 
             <Form.Item>
-                <Button type="primary" htmlType="submit">
+                <Button className={'bg-green-600'} type="primary" htmlType="submit">
                     Save Template
                 </Button>
             </Form.Item>
