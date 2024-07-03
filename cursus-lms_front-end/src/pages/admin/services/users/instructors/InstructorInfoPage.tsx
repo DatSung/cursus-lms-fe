@@ -1,6 +1,6 @@
-import InstructorComment from "../../../../components/admin/users/instructors/InstructorComment.tsx";
-import InstructorDetails from "../../../../components/admin/users/instructors/InstructorDetails.tsx";
-import {PATH_ADMIN} from "../../../../routes/paths.ts";
+import InstructorComment from "../../../../../components/admin/users/instructors/InstructorComment.tsx";
+import InstructorDetails from "../../../../../components/admin/users/instructors/InstructorDetails.tsx";
+import {PATH_ADMIN} from "../../../../../routes/paths.ts";
 import {useNavigate} from "react-router-dom";
 
 

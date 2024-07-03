@@ -1,4 +1,4 @@
-import InstructorsTable from "../../../../components/admin/users/instructors/InstructorsTable.tsx";
+import InstructorsTable from "../../../../../components/admin/users/instructors/InstructorsTable.tsx";
 
 const InstructorsPage = () => {
     return (

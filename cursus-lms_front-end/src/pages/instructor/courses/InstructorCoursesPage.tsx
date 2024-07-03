@@ -3,7 +3,7 @@
 const InstructorCoursesPage = () => {
     return (
         <div>
-            Courses page
+            Instructor courses page
         </div>
     );
 };
