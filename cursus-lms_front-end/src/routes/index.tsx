@@ -1,6 +1,6 @@
 import {Navigate, Route, Routes} from "react-router-dom"
 import Layout from "../components/user/layout";
-import {PATH_ADMIN, PATH_PUBLIC} from "./paths";
+import {PATH_ADMIN, PATH_INSTRUCTOR, PATH_PUBLIC} from "./paths";
 import HomePage from "../pages/home/HomePage.tsx";
 import SignInPage from "../pages/authentication/SignInPage.tsx";
 import SignUpStudentPage from "../pages/authentication/SignUpStudentPage.tsx";
@@ -12,7 +12,7 @@ import SignUpInstructor from "../pages/authentication/SignUpInstructor.tsx";
 import UploadDegreeInstructor from "../pages/user/UploadDegreeInstructor.tsx";
 import CompleteProfile from "../pages/authentication/CompleteProfile.tsx";
 import AdminLayout from "../components/admin/layout";
-import DashboardPage from "../pages/admin/dashboard/DashboardPage.tsx";
+import AdminDashboardPage from "../pages/admin/dashboard/AdminDashboardPage.tsx";
 import AuthGuard from "../auth/AuthGuard.tsx";
 import {RolesEnum} from "../types/auth.types.ts";
 import UnauthorizedPage from "../pages/public/UnauthorizedPage.tsx";
@@ -21,6 +21,9 @@ import InstructorsPage from "../pages/admin/services/instructors/InstructorsPage
 import InstructorInfoPage from "../pages/admin/services/instructors/InstructorInfoPage.tsx";
 import EmailTemplatesPage from "../pages/admin/services/emails/EmailTemplatesPage.tsx";
 import EmailTemplateEditPage from "../pages/admin/services/emails/EmailTemplateEditPage.tsx";
+import InstructorLayout from "../components/instructor/layout";
+import InstructorDashBoardPage from "../pages/instructor/dashboard/InstructorDashBoardPage.tsx";
+import InstructorCoursesPage from "../pages/instructor/courses/InstructorCoursesPage.tsx";
 
 const GlobalRouter = () => {
     return (
@@ -45,13 +48,24 @@ const GlobalRouter = () => {
 
                 <Route element={<AuthGuard roles={[RolesEnum.ADMIN]}/>}>
                     {/* Admin routes */}
-                    <Route path={PATH_ADMIN.dashboard} element={<DashboardPage></DashboardPage>}/>
+                    <Route path={PATH_ADMIN.dashboard} element={<AdminDashboardPage></AdminDashboardPage>}/>
                     <Route path={PATH_ADMIN.categories} element={<CategoriesPage></CategoriesPage>}/>
                     <Route path={PATH_ADMIN.instructors} element={<InstructorsPage></InstructorsPage>}/>
                     <Route path={PATH_ADMIN.emails} element={<EmailTemplatesPage></EmailTemplatesPage>}/>
                     <Route path={PATH_ADMIN.emailsEdit} element={<EmailTemplateEditPage></EmailTemplateEditPage>}/>
                     <Route path={PATH_ADMIN.instructorInfo} element={<InstructorInfoPage></InstructorInfoPage>}/>
                     {/* Admin routes */}
+                </Route>
+
+            </Route>
+
+            <Route element={<InstructorLayout/>}>
+
+                <Route element={<AuthGuard roles={[RolesEnum.INSTRUCTOR]}/>}>
+                    {/* Instructor routes */}
+                    <Route path={PATH_INSTRUCTOR.dashboard} element={<InstructorDashBoardPage></InstructorDashBoardPage>}/>
+                    <Route path={PATH_INSTRUCTOR.courses} element={<InstructorCoursesPage></InstructorCoursesPage>}/>
+                    {/* Instructor routes */}
                 </Route>
 
             </Route>

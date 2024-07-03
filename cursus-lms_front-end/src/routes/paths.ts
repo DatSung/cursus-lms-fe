@@ -20,3 +20,8 @@ export const PATH_ADMIN = {
     instructors: '/admin/services/instructors',
     instructorInfo: '/admin/services/instructors/info',
 }
+
+export const PATH_INSTRUCTOR = {
+    dashboard: '/instructor/dashboard',
+    courses: '/instructor/course'
+}
