@@ -11,9 +11,12 @@ export const CATEGORIES_URL = {
         },
     SEARCH_CATEGORIES_URL:
         (
-            query: IQueryParameters
+            query: IQueryParameters | null,
         ) => {
-            return `/Category/search?filterOn=${query.filterOn}&filterQuery=${query.filterQuery}&sortBy=${query.sortBy}&isAscending=${query.isAscending}&pageNumber=${query.pageNumber > 0 ? query.pageNumber : 1}&pageSize=${query.pageSize > 0 ? query.pageSize : 10}`
+            if (query != null) {
+                return `/Category/search?filterOn=${query.filterOn}&filterQuery=${query.filterQuery}&sortBy=${query.sortBy}&isAscending=${query.isAscending}&pageNumber=${query.pageNumber > 0 ? query.pageNumber : 1}&pageSize=${query.pageSize > 0 ? query.pageSize : 10}`
+            }
+            return `/Category/search`
         },
     GET_SUB_CATEGORIES_URL:
         (

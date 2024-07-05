@@ -24,6 +24,7 @@ import EmailTemplateEditPage from "../pages/admin/services/emails/EmailTemplateE
 import InstructorLayout from "../components/instructor/layout";
 import InstructorDashBoardPage from "../pages/instructor/dashboard/InstructorDashBoardPage.tsx";
 import InstructorCoursesPage from "../pages/instructor/courses/InstructorCoursesPage.tsx";
+import InstructorCourseVersionsPage from "../pages/instructor/courses/InstructorCourseVersionsPage.tsx";
 
 const GlobalRouter = () => {
     return (
@@ -65,6 +66,7 @@ const GlobalRouter = () => {
                     {/* Instructor routes */}
                     <Route path={PATH_INSTRUCTOR.dashboard} element={<InstructorDashBoardPage></InstructorDashBoardPage>}/>
                     <Route path={PATH_INSTRUCTOR.courses} element={<InstructorCoursesPage></InstructorCoursesPage>}/>
+                    <Route path={PATH_INSTRUCTOR.courseVersions} element={<InstructorCourseVersionsPage></InstructorCourseVersionsPage>}/>
                     {/* Instructor routes */}
                 </Route>
 

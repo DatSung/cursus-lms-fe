@@ -10,7 +10,7 @@ export interface ICourseQueryParameters {
     pageNumber: number,
 }
 
-export interface IGetAllCoursesDTO {
+export interface ICourseDTO {
     id: string;
     courseId: string;
     title: string;

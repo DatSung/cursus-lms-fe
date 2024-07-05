@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {ICourseQueryParameters, IGetAllCoursesDTO} from "../../../../types/course.types.ts";
+import {ICourseQueryParameters, ICourseDTO} from "../../../../types/course.types.ts";
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
 import {COURSES_URL} from "../../../../utils/apiUrl/courseApiUrl.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
@@ -9,8 +9,9 @@ import AddNewCourse from "./AddNewCourse.tsx";
 
 
 const CoursesTable = () => {
+
     const [loading, setLoading] = useState<boolean>(false);
-    const [courses, setCourses] = useState<IGetAllCoursesDTO[]>([]);
+    const [courses, setCourses] = useState<ICourseDTO[]>([]);
     const [reload, setReload] = useState<boolean>(true);
     const [query, setQuery] = useState<ICourseQueryParameters>({
         instructorId: '',
@@ -40,7 +41,7 @@ const CoursesTable = () => {
         const getAllCourses = async () => {
             try {
                 setLoading(true);
-                const response = await axiosInstance.get<IResponseDTO<IGetAllCoursesDTO[]>>(COURSES_URL.GET_ALL_COURSES(query));
+                const response = await axiosInstance.get<IResponseDTO<ICourseDTO[]>>(COURSES_URL.GET_ALL_COURSES(query));
                 setCourses(response.data.result);
                 setLoading(false);
             } catch (error) {
@@ -51,7 +52,7 @@ const CoursesTable = () => {
         getAllCourses();
     }, [query, reload]);
 
-    const renderCourses = (courses: IGetAllCoursesDTO[]) => {
+    const renderCourses = (courses: ICourseDTO[]) => {
         return courses.map((course) => (
             <div key={course.id}>
                 <CourseCard course={course}></CourseCard>
@@ -61,7 +62,7 @@ const CoursesTable = () => {
 
     return (
         <>
-            <div className={'flex px-4 mb-4 flex-row-reverse'}>
+            <div className={`flex px-4 mb-4 flex-row-reverse`}>
                 <AddNewCourse handleReloadTable={handleReloadTable}></AddNewCourse>
             </div>
 
