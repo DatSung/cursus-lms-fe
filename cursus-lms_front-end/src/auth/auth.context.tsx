@@ -24,7 +24,7 @@ import {
     SIGN_UP_INSTRUCTOR_URL,
     SIGN_UP_STUDENT_URL,
     UPLOAD_INSTRUCTOR_DEGREE_URL
-} from "../utils/apiUrl/globalConfig.ts";
+} from "../utils/apiUrl/authApiUrl.ts";
 import toast from "react-hot-toast";
 import {PATH_ADMIN, PATH_PUBLIC} from "../routes/paths.ts";
 import {jwtDecode} from "jwt-decode";

@@ -4,7 +4,7 @@ import {IEmailTemplateDTO} from "../../../../types/email.types.ts";
 import {useEffect, useState} from "react";
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
-import {EMAIL_TEMPLATES_URL} from "../../../../utils/apiUrl/globalConfig.ts";
+import {EMAIL_TEMPLATES_URL} from "../../../../utils/apiUrl/emailTemplateApiUrl.ts";
 import {FormOutlined} from "@ant-design/icons";
 import {PATH_ADMIN} from "../../../../routes/paths.ts";
 import {useNavigate} from "react-router-dom";

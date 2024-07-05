@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import Swal from 'sweetalert2';
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
-import {INSTRUCTORS_URL} from "../../../../utils/apiUrl/globalConfig.ts";
+import {INSTRUCTORS_URL} from "../../../../utils/apiUrl/instructorApiUrl.ts";
 
 const ExportInstructor = () => {
     const [month, setMonth] = useState<number>(1);

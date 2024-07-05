@@ -3,7 +3,7 @@ import {Editor} from '@tinymce/tinymce-react';
 import {Button, Form, Input} from 'antd';
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
 import {IEmailTemplateDTO, IUpdateEmailTemplateDTO} from "../../../../types/email.types.ts";
-import {EMAIL_TEMPLATES_URL} from "../../../../utils/apiUrl/globalConfig.ts";
+import {EMAIL_TEMPLATES_URL} from "../../../../utils/apiUrl/emailTemplateApiUrl.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
 import toast from "react-hot-toast";
 

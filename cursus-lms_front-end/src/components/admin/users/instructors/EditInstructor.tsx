@@ -8,7 +8,7 @@ import Button from "../../../general/Button.tsx";
 import UpdateFile from "../../../general/UpdateFile.tsx";
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
-import {INSTRUCTORS_URL} from "../../../../utils/apiUrl/globalConfig.ts";
+import {INSTRUCTORS_URL} from "../../../../utils/apiUrl/instructorApiUrl.ts";
 import toast from "react-hot-toast";
 
 interface IProps {

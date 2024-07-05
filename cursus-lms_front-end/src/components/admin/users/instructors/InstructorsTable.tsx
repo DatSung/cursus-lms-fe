@@ -1,7 +1,7 @@
 import SignalRService from "../../../../utils/signalR/signalRService.ts";
 import React, {useEffect, useState} from "react";
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
-import {INSTRUCTORS_URL} from "../../../../utils/apiUrl/globalConfig.ts";
+import {INSTRUCTORS_URL} from "../../../../utils/apiUrl/instructorApiUrl.ts";
 import {IInstructorInfoLiteDTO} from "../../../../types/instructor.types.ts";
 import {IQueryParameters} from "../../../../types/category.types.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";

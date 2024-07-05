@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {IEmailTemplateDTO} from "../../../../types/email.types.ts";
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
-import {EMAIL_TEMPLATES_URL} from "../../../../utils/apiUrl/globalConfig.ts";
+import {EMAIL_TEMPLATES_URL} from "../../../../utils/apiUrl/emailTemplateApiUrl.ts";
 import {Card} from "antd";
 import {formatTimestamp} from "../../../../utils/funcs/formatDate.ts";
 

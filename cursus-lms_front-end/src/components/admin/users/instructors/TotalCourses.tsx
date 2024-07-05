@@ -2,7 +2,7 @@ import {Card, Col, Row, Statistic} from 'antd';
 import {useEffect, useState} from "react";
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
 import {ITotalCourses} from "../../../../types/instructor.types.ts";
-import {INSTRUCTORS_URL} from "../../../../utils/apiUrl/globalConfig.ts";
+import {INSTRUCTORS_URL} from "../../../../utils/apiUrl/instructorApiUrl.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
 
 

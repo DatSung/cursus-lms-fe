@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import {IAvgRating} from "../../../../types/instructor.types.ts";
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
-import {INSTRUCTORS_URL} from "../../../../utils/apiUrl/globalConfig.ts";
+import {INSTRUCTORS_URL} from "../../../../utils/apiUrl/instructorApiUrl.ts";
 
 interface IProps {
     instructorId: string;

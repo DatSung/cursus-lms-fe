@@ -7,13 +7,13 @@ import {
     IUpdateComment
 } from "../../../../types/instructor.types.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
-import {INSTRUCTORS_URL} from "../../../../utils/apiUrl/globalConfig.ts";
 import Spinner from "../../../general/Spinner.tsx";
 import {Button} from "@material-tailwind/react";
 import moment from "moment";
 import Swal from "sweetalert2";
 import useAuth from "../../../../hooks/useAuth.hook.ts";
 import toast from "react-hot-toast";
+import {INSTRUCTORS_URL} from "../../../../utils/apiUrl/instructorApiUrl.ts";
 
 export interface IProps {
     instructorId: string | null
