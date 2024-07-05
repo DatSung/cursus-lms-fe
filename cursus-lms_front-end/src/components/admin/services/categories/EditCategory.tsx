@@ -9,7 +9,7 @@ import {
     IQueryParameters,
     IUpdateCategoryDTO
 } from "../../../../types/category.types.ts";
-import {CATEGORIES_URL} from "../../../../utils/apiUrl/globalConfig.ts";
+import {CATEGORIES_URL} from "../../../../utils/apiUrl/categoryApiUrl.ts";
 import toast from "react-hot-toast";
 
 const {TextArea} = Input;

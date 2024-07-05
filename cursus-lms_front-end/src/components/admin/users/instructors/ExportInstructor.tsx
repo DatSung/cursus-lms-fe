@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import Swal from 'sweetalert2';
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
-import {INSTRUCTORS_URL} from "../../../../utils/apiUrl/globalConfig.ts";
+import {INSTRUCTORS_URL} from "../../../../utils/apiUrl/instructorApiUrl.ts";
 
 const ExportInstructor = () => {
     const [month, setMonth] = useState<number>(1);
@@ -23,7 +23,7 @@ const ExportInstructor = () => {
         });
 
         if (formValues && formValues.month && formValues.year) {
-            setMonth(formValues.month);
+            setMonth(parseInt(formValues.month) + 1);
             setYear(formValues.year);
             await axiosInstance.post(INSTRUCTORS_URL.EXPORT_INSTRUCTORS_URL(month, year));
             Swal.fire({

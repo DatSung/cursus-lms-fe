@@ -1,16 +1,22 @@
-import {useState} from "react";
-import {Button, Form, Input, Modal, Select} from 'antd';
-import {PlusOutlined} from "@ant-design/icons";
+import {useState} from 'react';
+import {Button, Form, Input, Modal, Select} from "antd";
+import {ICategoryDTO, IQueryParameters} from "../../../../types/category.types.ts";
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
-import {IAddCategoryDTO, ICategoryDTO, IQueryParameters} from "../../../../types/category.types.ts";
 import {CATEGORIES_URL} from "../../../../utils/apiUrl/categoryApiUrl.ts";
 import toast from "react-hot-toast";
+import {PlusOutlined} from "@ant-design/icons";
+import {ICreateNewCourseAndVersionDTO} from "../../../../types/course.types.ts";
 
 const {TextArea} = Input;
 const {Option} = Select;
 
-interface ParentItem {
+interface Category {
+    id: string;
+    name: string;
+}
+
+interface Level {
     id: string;
     name: string;
 }
@@ -19,9 +25,10 @@ interface IProps {
     handleReloadTable: () => void
 }
 
-const AddNewCategory = (props: IProps) => {
+const AddNewCourse = (props: IProps) => {
+
     const [form] = Form.useForm();
-    const [parentOptions, setParentOptions] = useState<ParentItem[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
     const [loading, setLoading] = useState(true);
     const [submitLoading, setSubmitLoading] = useState<boolean>(false);
     const [open, setOpen] = useState(false);
@@ -37,7 +44,7 @@ const AddNewCategory = (props: IProps) => {
 
     const showModal = async () => {
         setOpen(true);
-        await getParentOptions();
+        await getCategories();
         setLoading(false);
     };
 
@@ -45,13 +52,18 @@ const AddNewCategory = (props: IProps) => {
         setOpen(false);
     };
 
-    const onFinish = async (values: any) => {
+    const onFinish = async (values: ICreateNewCourseAndVersionDTO) => {
         try {
             setSubmitLoading(true);
-            const data: IAddCategoryDTO = {
-                name: values.name,
+            const data: ICreateNewCourseAndVersionDTO = {
+                title: values.title,
+                code: values.code,
                 description: values.description,
-                parentId: values.parentId
+                learningTime: values.learningTime,
+                levelId: values.levelId,
+                price: values.price,
+                categoryId: values.code,
+
             }
             const response = await axiosInstance.post<IResponseDTO<string>>(CATEGORIES_URL.GET_POST_PUT_DELETE_CATEGORY_URL(null), data);
             const result = response.data;
@@ -66,16 +78,14 @@ const AddNewCategory = (props: IProps) => {
                 setSubmitLoading(false);
             }
         } catch (error) {
-            // @ts-ignore
-            toast.error(error.data.message);
             setSubmitLoading(false);
         }
     };
 
-    const getParentOptions = async () => {
+    const getCategories = async () => {
         try {
             const response = await axiosInstance.get<IResponseDTO<ICategoryDTO[]>>(CATEGORIES_URL.SEARCH_CATEGORIES_URL(query));
-            setParentOptions(response.data.result);
+            setCategories(response.data.result);
         } catch (error) {
             console.error('Error fetching parent items:', error);
         }
@@ -84,7 +94,7 @@ const AddNewCategory = (props: IProps) => {
     return (
         <>
             <Button className={'bg-green-600'} type="primary" onClick={showModal}>
-                <PlusOutlined/> Create category
+                <PlusOutlined/> Create course
             </Button>
             <Modal
                 open={open}
@@ -100,11 +110,35 @@ const AddNewCategory = (props: IProps) => {
                 <div className={'flex w-full gap-2'}>
                     <Form className={'w-full'} form={form} onFinish={onFinish} layout="vertical">
                         <Form.Item
-                            label="Name"
-                            name="name"
-                            rules={[{required: true, message: 'Please input the name!'}]}
+                            label="Title"
+                            name="title"
+                            rules={[{required: true, message: 'Please input the title!'}]}
                         >
                             <Input/>
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Code"
+                            name="code"
+                            rules={[{required: true, message: 'Please input the code!'}]}
+                        >
+                            <Input/>
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Learning Time (hour)"
+                            name="learningTime"
+                            rules={[{required: true, message: 'Please input the learning time!'}]}
+                        >
+                            <Input type={'number'}/>
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Price (USD)"
+                            name="price"
+                            rules={[{required: true, message: 'Please input the price!'}]}
+                        >
+                            <Input type={'number'}/>
                         </Form.Item>
 
                         <Form.Item
@@ -116,17 +150,14 @@ const AddNewCategory = (props: IProps) => {
                         </Form.Item>
 
                         <Form.Item
-                            label="Parent"
-                            name="parentId"
-                            rules={[{required: true, message: 'Please select a parent!'}]}
+                            label="Category"
+                            name="categoryId"
+                            rules={[{required: true, message: 'Please select a category!'}]}
                         >
-                            <Select placeholder="Select a parent">
-                                <Option key={'root'} value={'root'}>
-                                    Root
-                                </Option>
-                                {parentOptions.map(parent => (
-                                    <Option key={parent.id} value={parent.id}>
-                                        {parent.name}
+                            <Select placeholder="Select a category">
+                                {categories.map(category => (
+                                    <Option key={category.id} value={category.id}>
+                                        {category.name}
                                     </Option>
                                 ))}
                             </Select>
@@ -145,4 +176,4 @@ const AddNewCategory = (props: IProps) => {
     );
 };
 
-export default AddNewCategory;
+export default AddNewCourse;

@@ -5,7 +5,7 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {IForgotPasswordDTO, IResponseDTO} from "../../types/auth.types.ts";
 import toast from "react-hot-toast";
 import axiosInstance from "../../utils/axios/axiosInstance.ts";
-import {FORGOT_PASSWORD_URL} from "../../utils/apiUrl/globalConfig.ts";
+import {FORGOT_PASSWORD_URL} from "../../utils/apiUrl/authApiUrl.ts";
 import InputField from "../../components/general/InputField.tsx";
 import Button from "../../components/general/Button.tsx";
 import {useNavigate} from "react-router-dom";

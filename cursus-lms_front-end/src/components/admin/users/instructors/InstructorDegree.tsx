@@ -1,8 +1,6 @@
-import {
-    DISPLAY_INSTRUCTOR_DEGREE_URL,
-    HOST_API_KEY
-} from "../../../../utils/apiUrl/globalConfig.ts";
 import {Divider} from "antd";
+import {DISPLAY_INSTRUCTOR_DEGREE_URL} from "../../../../utils/apiUrl/authApiUrl.ts";
+import {HOST_API_KEY} from "../../../../utils/apiUrl/globalConfig.ts";
 
 interface IProps {
     userId: string | null;

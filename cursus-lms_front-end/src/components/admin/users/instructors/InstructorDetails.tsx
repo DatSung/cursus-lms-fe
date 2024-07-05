@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {IInstructorInfoDTO} from "../../../../types/instructor.types.ts";
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
-import {INSTRUCTORS_URL} from "../../../../utils/apiUrl/globalConfig.ts";
+import {INSTRUCTORS_URL} from "../../../../utils/apiUrl/instructorApiUrl.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
 import Spinner from "../../../general/Spinner.tsx";
 import {formatTimestamp} from "../../../../utils/funcs/formatDate.ts";

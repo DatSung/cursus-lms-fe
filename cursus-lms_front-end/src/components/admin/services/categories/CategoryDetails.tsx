@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {Button, Card, Dropdown, MenuProps, Modal} from 'antd';
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
-import {CATEGORIES_URL} from "../../../../utils/apiUrl/globalConfig.ts";
+import {CATEGORIES_URL} from "../../../../utils/apiUrl/categoryApiUrl.ts";
 import {IAdminCategoryDTO, ICategoryDTO} from "../../../../types/category.types.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
 import {formatTimestamp} from "../../../../utils/funcs/formatDate.ts";

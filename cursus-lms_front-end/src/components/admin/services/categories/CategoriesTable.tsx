@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axiosInstance from '../../../../utils/axios/axiosInstance.ts';
 import {IAdminCategoryDTO, IQueryParameters} from '../../../../types/category.types.ts';
-import {CATEGORIES_URL} from '../../../../utils/apiUrl/globalConfig.ts';
+import {CATEGORIES_URL} from '../../../../utils/apiUrl/categoryApiUrl.ts';
 import {IResponseDTO} from '../../../../types/auth.types.ts';
 import Spinner from '../../../general/Spinner.tsx';
 import CategoryDetails from "./CategoryDetails.tsx";

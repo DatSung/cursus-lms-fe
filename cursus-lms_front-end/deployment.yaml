@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-vite-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: react-vite-app
+  template:
+    metadata:
+      labels:
+        app: react-vite-app
+    spec:
+      containers:
+      - name: react-vite-app
+        image: cursuscontainer.azurecr.io/react-vite-app:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-vite-app-service
+spec:
+  selector:
+    app: react-vite-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: LoadBalancer
