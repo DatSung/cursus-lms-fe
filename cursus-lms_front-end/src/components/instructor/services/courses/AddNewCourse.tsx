@@ -1,12 +1,15 @@
 import {useState} from 'react';
 import {Button, Form, Input, Modal, Select} from "antd";
-import {ICategoryDTO, IQueryParameters} from "../../../../types/category.types.ts";
+import {ICategoryDTO} from "../../../../types/category.types.ts";
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
 import {CATEGORIES_URL} from "../../../../utils/apiUrl/categoryApiUrl.ts";
 import toast from "react-hot-toast";
 import {PlusOutlined} from "@ant-design/icons";
 import {ICreateNewCourseAndVersionDTO} from "../../../../types/course.types.ts";
+import {ILevelDTO} from "../../../../types/level.types.ts";
+import {LEVEL_URL} from "../../../../utils/apiUrl/levelApiUrl.ts";
+import {COURSES_URL} from "../../../../utils/apiUrl/courseApiUrl.ts";
 
 const {TextArea} = Input;
 const {Option} = Select;
@@ -22,29 +25,22 @@ interface Level {
 }
 
 interface IProps {
-    handleReloadTable: () => void
+    handleReloadTable: () => void,
 }
 
 const AddNewCourse = (props: IProps) => {
 
     const [form] = Form.useForm();
+    const [levels, setLevels] = useState<Level[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
     const [loading, setLoading] = useState(true);
     const [submitLoading, setSubmitLoading] = useState<boolean>(false);
     const [open, setOpen] = useState(false);
-    const query: IQueryParameters =
-        {
-            filterOn: '',
-            filterQuery: '',
-            sortBy: '',
-            pageSize: 1000,
-            pageNumber: 1,
-            isAscending: true,
-        };
 
     const showModal = async () => {
         setOpen(true);
         await getCategories();
+        await getLevels();
         setLoading(false);
     };
 
@@ -61,11 +57,11 @@ const AddNewCourse = (props: IProps) => {
                 description: values.description,
                 learningTime: values.learningTime,
                 levelId: values.levelId,
+                categoryId: values.categoryId,
                 price: values.price,
-                categoryId: values.code,
 
             }
-            const response = await axiosInstance.post<IResponseDTO<string>>(CATEGORIES_URL.GET_POST_PUT_DELETE_CATEGORY_URL(null), data);
+            const response = await axiosInstance.post<IResponseDTO<string>>(COURSES_URL.CREATE_COURSE_VERSION(), data);
             const result = response.data;
             setSubmitLoading(false);
             if (result.isSuccess) {
@@ -84,8 +80,17 @@ const AddNewCourse = (props: IProps) => {
 
     const getCategories = async () => {
         try {
-            const response = await axiosInstance.get<IResponseDTO<ICategoryDTO[]>>(CATEGORIES_URL.SEARCH_CATEGORIES_URL(query));
+            const response = await axiosInstance.get<IResponseDTO<ICategoryDTO[]>>(CATEGORIES_URL.SEARCH_CATEGORIES_URL(null));
             setCategories(response.data.result);
+        } catch (error) {
+            console.error('Error fetching parent items:', error);
+        }
+    };
+
+    const getLevels = async () => {
+        try {
+            const response = await axiosInstance.get<IResponseDTO<ILevelDTO[]>>(LEVEL_URL.GET_ALL_LEVELS(null));
+            setLevels(response.data.result);
         } catch (error) {
             console.error('Error fetching parent items:', error);
         }
@@ -93,7 +98,7 @@ const AddNewCourse = (props: IProps) => {
 
     return (
         <>
-            <Button className={'bg-green-600'} type="primary" onClick={showModal}>
+            <Button className={`bg-green-600 ${open ? 'animate-spin' : ''}`} type="primary" onClick={showModal}>
                 <PlusOutlined/> Create course
             </Button>
             <Modal
@@ -158,6 +163,20 @@ const AddNewCourse = (props: IProps) => {
                                 {categories.map(category => (
                                     <Option key={category.id} value={category.id}>
                                         {category.name}
+                                    </Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Level"
+                            name="levelId"
+                            rules={[{required: true, message: 'Please select a level!'}]}
+                        >
+                            <Select placeholder="Select a level">
+                                {levels.map(level => (
+                                    <Option key={level.id} value={level.id}>
+                                        {level.name}
                                     </Option>
                                 ))}
                             </Select>

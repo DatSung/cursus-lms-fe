@@ -23,5 +23,6 @@ export const PATH_ADMIN = {
 
 export const PATH_INSTRUCTOR = {
     dashboard: '/instructor/dashboard',
-    courses: '/instructor/courses'
+    courses: '/instructor/courses',
+    courseVersions: '/instructor/courses/versions',
 }
