@@ -13,7 +13,7 @@ export interface ICourseQueryParameters {
 export interface IGetAllCoursesDTO {
     id: string;
     courseId: string;
-    title:string;
+    title: string;
     code: string,
     description: string;
     learningTime: string;
@@ -27,4 +27,14 @@ export interface IGetAllCoursesDTO {
     levelName: string;
     currentStatus: number
     currentStatusDescription: string
+}
+
+export interface ICreateNewCourseAndVersionDTO {
+    title: string;
+    code: string;
+    description: string;
+    learningTime: string;
+    price: number;
+    categoryId: string;
+    levelId: string;
 }
