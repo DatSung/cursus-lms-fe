@@ -1,5 +1,5 @@
 export interface ICourseVersionsQueryParametersDTO {
-    courseId: string;
+    courseId: string | null;
     filterOn: string,
     filterQuery: string,
     sortBy: string,
@@ -24,6 +24,7 @@ export interface ICourseVersionDTO {
     categoryName: string,
     levelId: string,
     levelName: string,
+    version: string,
     currentStatus: string,
     currentStatusDescription: string
 }

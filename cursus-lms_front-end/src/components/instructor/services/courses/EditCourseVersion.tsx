@@ -5,11 +5,12 @@ import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
 import {CATEGORIES_URL} from "../../../../utils/apiUrl/categoryApiUrl.ts";
 import toast from "react-hot-toast";
-import {PlusOutlined} from "@ant-design/icons";
-import {ICreateNewCourseAndVersionDTO} from "../../../../types/course.types.ts";
+import {EditOutlined} from "@ant-design/icons";
+import {IEditCourseVersionDTO} from "../../../../types/course.types.ts";
 import {ILevelDTO} from "../../../../types/level.types.ts";
 import {LEVEL_URL} from "../../../../utils/apiUrl/levelApiUrl.ts";
-import {COURSES_URL} from "../../../../utils/apiUrl/courseApiUrl.ts";
+import {ICourseVersionDTO} from "../../../../types/courseVersion.types.ts";
+import {COURSE_VERSIONS_URL} from "../../../../utils/apiUrl/courseVersionApiUrl.ts";
 
 const {TextArea} = Input;
 const {Option} = Select;
@@ -25,10 +26,11 @@ interface Level {
 }
 
 interface IProps {
-    handleReloadTable: () => void,
+    handleReload: () => void,
+    courseVersion: ICourseVersionDTO
 }
 
-const AddNewCourse = (props: IProps) => {
+const EditCourseVersion = (props: IProps) => {
 
     const [form] = Form.useForm();
     const [levels, setLevels] = useState<Level[]>([]);
@@ -39,6 +41,7 @@ const AddNewCourse = (props: IProps) => {
 
     const showModal = async () => {
         setOpen(true);
+        setInitialFormValues()
         await getCategories();
         await getLevels();
         setLoading(false);
@@ -48,10 +51,11 @@ const AddNewCourse = (props: IProps) => {
         setOpen(false);
     };
 
-    const onFinish = async (values: ICreateNewCourseAndVersionDTO) => {
+    const onFinish = async (values: IEditCourseVersionDTO) => {
         try {
             setSubmitLoading(true);
-            const data: ICreateNewCourseAndVersionDTO = {
+            const data: IEditCourseVersionDTO = {
+                id: props.courseVersion?.id,
                 title: values.title,
                 code: values.code,
                 description: values.description,
@@ -61,12 +65,12 @@ const AddNewCourse = (props: IProps) => {
                 price: values.price,
 
             }
-            const response = await axiosInstance.post<IResponseDTO<string>>(COURSES_URL.CREATE_COURSE_VERSION(), data);
+            const response = await axiosInstance.put<IResponseDTO<string>>(COURSE_VERSIONS_URL.EDIT_COURSE_VERSION(), data);
             const result = response.data;
             setSubmitLoading(false);
             if (result.isSuccess) {
                 toast.success(result.message);
-                props.handleReloadTable();
+                props.handleReload();
                 form.resetFields();
                 setOpen(false);
             } else {
@@ -96,10 +100,22 @@ const AddNewCourse = (props: IProps) => {
         }
     };
 
+    const setInitialFormValues = () => {
+        form.setFieldsValue({
+            title: props.courseVersion.title,
+            code: props.courseVersion.code,
+            levelId: props.courseVersion.levelId,
+            categoryId: props.courseVersion.categoryId,
+            learningTime: props.courseVersion.learningTime,
+            price: props.courseVersion.price,
+            description: props.courseVersion.description,
+        });
+    }
+
     return (
         <>
             <Button className={`bg-green-600 ${open ? 'animate-spin' : ''}`} type="primary" onClick={showModal}>
-                <PlusOutlined/> Create course
+                <EditOutlined/> Edit
             </Button>
             <Modal
                 open={open}
@@ -199,4 +215,4 @@ const AddNewCourse = (props: IProps) => {
     );
 };
 
-export default AddNewCourse;
+export default EditCourseVersion;

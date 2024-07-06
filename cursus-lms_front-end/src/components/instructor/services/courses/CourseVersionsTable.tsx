@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {ICourseDTO} from "../../../../types/course.types.ts";
 import {ICourseVersionDTO, ICourseVersionsQueryParametersDTO} from "../../../../types/courseVersion.types.ts";
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
-import {COURSES_URL} from "../../../../utils/apiUrl/courseApiUrl.ts";
-import AddNewCourse from "./AddNewCourse.tsx";
 import Spinner from "../../../general/Spinner.tsx";
-import CloneNewCourseVersion from "./CloneNewCourseVersion.tsx";
+import {COURSE_VERSIONS_URL} from "../../../../utils/apiUrl/courseVersionApiUrl.ts";
+import CourseVersionCard from "./CourseVersionCard.tsx";
 
 interface IProps {
     courseId: string | null
@@ -14,12 +12,10 @@ interface IProps {
 
 const CourseVersionsTable = (props: IProps) => {
 
-    const [course, setCourse] = useState<ICourseDTO>();
     const [courseVersions, setCourseVersions] = useState<ICourseVersionDTO[]>([]);
-    const [reload, setReload] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(false);
     const [query, setQuery] = useState<ICourseVersionsQueryParametersDTO>({
-        courseId: '',
+        courseId: props.courseId,
         filterOn: 'title',
         filterQuery: '',
         sortBy: '',
@@ -36,15 +32,11 @@ const CourseVersionsTable = (props: IProps) => {
         }));
     };
 
-    const handleReloadTable = () => {
-        setReload(!reload);
-    }
-
     useEffect(() => {
         const getAllCourseVersions = async () => {
             try {
                 setLoading(true);
-                const response = await axiosInstance.get<IResponseDTO<ICourseVersionDTO[]>>(COURSES_URL.GET_ALL_COURSES(query));
+                const response = await axiosInstance.get<IResponseDTO<ICourseVersionDTO[]>>(COURSE_VERSIONS_URL.GET_COURSE_VERSIONS(query));
                 setCourseVersions(response.data.result);
                 setLoading(false);
             } catch (error) {
@@ -53,12 +45,12 @@ const CourseVersionsTable = (props: IProps) => {
             }
         }
         getAllCourseVersions();
-    }, [query, reload]);
+    }, [query]);
 
     const renderCourseVersions = (courseVersions: ICourseVersionDTO[]) => {
         return courseVersions.map((courseVersion) => (
-            <div key={courseVersion.id}>
-
+            <div className={'w-full'} key={courseVersion.id}>
+                <CourseVersionCard courseVersion={courseVersion}></CourseVersionCard>
             </div>
         ));
     };
@@ -159,7 +151,7 @@ const CourseVersionsTable = (props: IProps) => {
                     (<Spinner/>)
                     :
                     (
-                        <div className={'w-full flex flex-wrap gap-2 justify-evenly items-center mt-6'}>
+                        <div className={'w-full flex flex-col flex-wrap gap-2 justify-evenly items-center mt-6'}>
                             {courseVersions.length > 0
                                 ?
                                 (
