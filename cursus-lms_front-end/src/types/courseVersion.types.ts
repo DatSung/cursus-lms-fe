@@ -63,7 +63,39 @@ export interface ICourseSectionVersionDTO {
 }
 
 export interface ICreateCourseSectionVersionDTO {
-    courseVersionId: string;
+    courseVersionId: string | null;
     title: string;
     description: string;
+}
+
+export interface ISectionDetailsVersionsQueryParametersDTO {
+    courseSectionId: string | null;
+    filterOn: string,
+    filterQuery: string,
+    sortBy: string,
+    isAscending: boolean,
+    pageNumber: number,
+    pageSize: number
+}
+
+export interface ISectionDetailVersionDTO {
+    id: string,
+    courseSectionDetail: string,
+    name: string,
+    videoUrl: string,
+    slideUrl: string,
+    docsUrl: string,
+    type: number,
+    currentStatus: string
+}
+
+export interface ICreateSectionDetailVersionDTO {
+    courseSectionVersionId: string | null
+    name: string
+}
+
+export interface IEditSectionDetailVersionDTO {
+    sectionDetailId: string | null
+    courseSectionId: string | null
+    name: string
 }

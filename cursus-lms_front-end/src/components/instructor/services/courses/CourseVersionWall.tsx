@@ -3,7 +3,7 @@ import {ICourseVersionDTO} from "../../../../types/courseVersion.types.ts";
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
 import {COURSE_VERSIONS_URL} from "../../../../utils/apiUrl/courseVersionApiUrl.ts";
-import {Button, Card, Divider, Upload} from "antd";
+import {Button, Card, Divider} from "antd";
 import EditCourseVersion from "./EditCourseVersion.tsx";
 import {UploadOutlined} from "@ant-design/icons";
 
@@ -18,7 +18,7 @@ const CourseVersionWall = (props: IProps) => {
         code: "",
         courseId: "",
         courseImgUrl: "",
-        currentStatus: "",
+        currentStatus: 0,
         currentStatusDescription: "",
         description: "",
         id: "",

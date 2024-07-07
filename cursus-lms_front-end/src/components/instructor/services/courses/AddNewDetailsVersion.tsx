@@ -4,17 +4,15 @@ import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
 import toast from "react-hot-toast";
 import {PlusOutlined} from "@ant-design/icons";
-import {ICreateCourseSectionVersionDTO} from "../../../../types/courseVersion.types.ts";
+import {ICreateSectionDetailVersionDTO} from "../../../../types/courseVersion.types.ts";
 import {COURSE_VERSIONS_URL} from "../../../../utils/apiUrl/courseVersionApiUrl.ts";
-
-const {TextArea} = Input;
 
 interface IProps {
     handleReloadTable: () => void,
-    courseVersionId: string | null;
+    sectionVersionId: string | null;
 }
 
-const AddNewSectionVersion = (props: IProps) => {
+const AddNewDetailsVersion = (props: IProps) => {
 
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(true);
@@ -30,15 +28,14 @@ const AddNewSectionVersion = (props: IProps) => {
         setOpen(false);
     };
 
-    const onFinish = async (values: ICreateCourseSectionVersionDTO) => {
+    const onFinish = async (values: ICreateSectionDetailVersionDTO) => {
         try {
             setSubmitLoading(true);
-            const data: ICreateCourseSectionVersionDTO = {
-                courseVersionId: props.courseVersionId,
-                title: values.title,
-                description: values.description,
+            const data: ICreateSectionDetailVersionDTO = {
+                courseSectionVersionId: props.sectionVersionId,
+                name: values.name
             }
-            const response = await axiosInstance.post<IResponseDTO<string>>(COURSE_VERSIONS_URL.CREATE_COURSE_SECTION_VERSION(), data);
+            const response = await axiosInstance.post<IResponseDTO<string>>(COURSE_VERSIONS_URL.GET_POST_PUT_DELETE_SECTION_DETAILS_VERSION(null), data);
             const result = response.data;
             setSubmitLoading(false);
             if (result.isSuccess) {
@@ -58,11 +55,11 @@ const AddNewSectionVersion = (props: IProps) => {
     return (
         <>
             <Button className={`bg-green-600`} type="primary" onClick={showModal}>
-                <PlusOutlined/> Create section
+                <PlusOutlined/> Create details
             </Button>
             <Modal
                 open={open}
-                title={'Create a new category'}
+                title={'Create a new details'}
                 onCancel={handleCancel}
                 loading={loading}
                 footer={[
@@ -74,19 +71,11 @@ const AddNewSectionVersion = (props: IProps) => {
                 <div className={'flex w-full gap-2'}>
                     <Form className={'w-full'} form={form} onFinish={onFinish} layout="vertical">
                         <Form.Item
-                            label="Title"
-                            name="title"
-                            rules={[{required: true, message: 'Please input the title!'}]}
+                            label="Name"
+                            name="name"
+                            rules={[{required: true, message: 'Please input the name!'}]}
                         >
                             <Input/>
-                        </Form.Item>
-
-                        <Form.Item
-                            label="Description"
-                            name="description"
-                            rules={[{required: true, message: 'Please input the description!'}]}
-                        >
-                            <TextArea rows={4}/>
                         </Form.Item>
 
                         <Form.Item>
@@ -102,4 +91,4 @@ const AddNewSectionVersion = (props: IProps) => {
     );
 };
 
-export default AddNewSectionVersion;
+export default AddNewDetailsVersion;

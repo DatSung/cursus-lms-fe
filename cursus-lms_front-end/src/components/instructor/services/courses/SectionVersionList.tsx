@@ -3,7 +3,6 @@ import {ICourseSectionVersionDTO} from "../../../../types/courseVersion.types.ts
 import {DeleteOutlined, InfoCircleOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router-dom";
 import {PATH_INSTRUCTOR} from "../../../../routes/paths.ts";
-import {id} from "date-fns/locale";
 
 interface IProps {
     courseSectionVersion: ICourseSectionVersionDTO[];
@@ -23,7 +22,7 @@ const SectionVersionList = (prop: IProps) => {
                     />
                     <div className={'flex gap-2'}>
                         <Button
-                            onClick={() => navigate(PATH_INSTRUCTOR.sectionVersionDetails + "?sectionVersionId" +  item.id)}
+                            onClick={() => navigate(PATH_INSTRUCTOR.sectionVersionDetails + "?sectionVersionId=" +  item.id)}
                             className={'bg-green-600'}
                             type="primary"
                         >

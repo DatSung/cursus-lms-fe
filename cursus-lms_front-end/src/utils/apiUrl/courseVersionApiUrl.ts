@@ -1,6 +1,6 @@
 import {
     ICourseSectionVersionsQueryParametersDTO,
-    ICourseVersionsQueryParametersDTO
+    ICourseVersionsQueryParametersDTO, ISectionDetailsVersionsQueryParametersDTO
 } from "../../types/courseVersion.types.ts";
 
 export const COURSE_VERSIONS_URL = {
@@ -51,5 +51,21 @@ export const COURSE_VERSIONS_URL = {
     CREATE_COURSE_SECTION_VERSION:
         () => {
             return `/CourseVersion/create-course-section-version`
+        },
+    GET_SECTION_DETAILS_VERSIONS:
+        (
+            query: ISectionDetailsVersionsQueryParametersDTO
+        ) => {
+            return `/CourseVersion/section/details?courseSectionId=${query.courseSectionId}&filterOn=${query.filterOn}&filterQuery=${query.filterQuery}&sortBy=${query.sortBy}&pageNumber=${query.pageNumber}&pageSize=${query.pageSize}`
+        },
+    GET_POST_PUT_DELETE_SECTION_DETAILS_VERSION:
+        (
+            detailsId: string | null
+        ) => {
+            return `/CourseVersion/section/details${detailsId != null ? `/${detailsId}` : ''}`
+        },
+    GET_POST_DETAILS_CONTENT_VERSION:
+        () => {
+            return `/CourseVersion/section/details/content`
         },
 }
