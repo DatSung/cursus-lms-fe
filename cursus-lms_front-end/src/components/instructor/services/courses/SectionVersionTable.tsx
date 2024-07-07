@@ -61,7 +61,8 @@ const SectionVersionTable = (props: IProps) => {
             <Card className={'border-2 shadow-xl items-center text-left min-w-80 mt-6'}>
                 <h1 className={'text-2xl font-bold text-green-800 my-6 text-center'}>Course Version Section</h1>
                 <div className={'text-right my-6'}>
-                    <AddNewSectionVersion courseVersionId={props.courseVersionId} handleReloadTable={handleReload}></AddNewSectionVersion>
+                    <AddNewSectionVersion courseVersionId={props.courseVersionId}
+                                          handleReloadTable={handleReload}></AddNewSectionVersion>
                 </div>
                 <div className={'flex justify-between w-full'}>
                     <div className="mb-4">
@@ -160,7 +161,8 @@ const SectionVersionTable = (props: IProps) => {
                                 {courseSectionVersions.length > 0
                                     ?
                                     (
-                                        <SectionVersionList courseSectionVersion={courseSectionVersions}></SectionVersionList>
+                                        <SectionVersionList handleReloadTable={handleReload}
+                                                            courseSectionVersion={courseSectionVersions}></SectionVersionList>
                                     )
                                     :
                                     (
@@ -171,9 +173,7 @@ const SectionVersionTable = (props: IProps) => {
                         )
                 }
             </Card>
-
-
-
+            
         </>
     );
 };

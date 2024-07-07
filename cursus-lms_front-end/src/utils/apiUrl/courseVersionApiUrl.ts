@@ -48,6 +48,12 @@ export const COURSE_VERSIONS_URL = {
         ) => {
             return `/CourseVersion/section?courseVersionId=${query.courseVersionId}&filterOn=${query.filterOn}&filterQuery=${query.filterQuery}&sortBy=${query.sortBy}&pageNumber=${query.pageNumber}&pageSize=${query.pageSize}`
         },
+    GET_DELETE_COURSE_SECTION_VERSION:
+        (
+            sectionId: string
+        ) => {
+            return `/CourseVersion/section${sectionId != null ? `/${sectionId}` : ''}`
+        },
     CREATE_COURSE_SECTION_VERSION:
         () => {
             return `/CourseVersion/create-course-section-version`
