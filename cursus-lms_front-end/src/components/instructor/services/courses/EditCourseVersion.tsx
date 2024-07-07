@@ -6,10 +6,9 @@ import {IResponseDTO} from "../../../../types/auth.types.ts";
 import {CATEGORIES_URL} from "../../../../utils/apiUrl/categoryApiUrl.ts";
 import toast from "react-hot-toast";
 import {EditOutlined} from "@ant-design/icons";
-import {IEditCourseVersionDTO} from "../../../../types/course.types.ts";
 import {ILevelDTO} from "../../../../types/level.types.ts";
 import {LEVEL_URL} from "../../../../utils/apiUrl/levelApiUrl.ts";
-import {ICourseVersionDTO} from "../../../../types/courseVersion.types.ts";
+import {ICourseVersionDTO, IEditCourseVersionDTO} from "../../../../types/courseVersion.types.ts";
 import {COURSE_VERSIONS_URL} from "../../../../utils/apiUrl/courseVersionApiUrl.ts";
 
 const {TextArea} = Input;
@@ -114,7 +113,7 @@ const EditCourseVersion = (props: IProps) => {
 
     return (
         <>
-            <Button className={`bg-green-600 ${open ? 'animate-spin' : ''}`} type="primary" onClick={showModal}>
+            <Button className={`bg-green-600`} type="primary" onClick={showModal}>
                 <EditOutlined/> Edit
             </Button>
             <Modal

@@ -26,4 +26,5 @@ export const PATH_INSTRUCTOR = {
     courses: '/instructor/courses',
     courseVersions: '/instructor/courses/versions',
     courseVersionDetails: '/instructor/courses/versions/details',
+    sectionVersionDetails: '/instructor/courses/versions/section/details',
 }

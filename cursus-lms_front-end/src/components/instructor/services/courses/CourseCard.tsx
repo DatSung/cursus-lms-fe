@@ -22,7 +22,6 @@ const CourseCard = (props: IProps) => {
             <p>Category: {props.course.categoryName}</p>
             <p>Level: {props.course.levelName}</p>
             <p className={'mb-2'}>Status: {props.course.currentStatusDescription}</p>
-            <i className={''}>{props.course.description}</i>
             <div className={'flex gap-2'}>
                 <Button
                     onClick={() => navigate(PATH_INSTRUCTOR.courseVersions + "?courseId=" + props.course.courseId)}

@@ -14,6 +14,7 @@ const CourseVersionsTable = (props: IProps) => {
 
     const [courseVersions, setCourseVersions] = useState<ICourseVersionDTO[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const [reload, setReload] = useState<boolean>(false);
     const [query, setQuery] = useState<ICourseVersionsQueryParametersDTO>({
         courseId: props.courseId,
         filterOn: 'title',
@@ -23,6 +24,10 @@ const CourseVersionsTable = (props: IProps) => {
         pageSize: 5,
         pageNumber: 1,
     });
+
+    const handleReloadTable = () => {
+        setReload(!reload);
+    }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const {name, value} = e.target;
@@ -45,12 +50,13 @@ const CourseVersionsTable = (props: IProps) => {
             }
         }
         getAllCourseVersions();
-    }, [query]);
+    }, [query, reload]);
 
     const renderCourseVersions = (courseVersions: ICourseVersionDTO[]) => {
         return courseVersions.map((courseVersion) => (
             <div className={'w-full'} key={courseVersion.id}>
-                <CourseVersionCard courseVersion={courseVersion}></CourseVersionCard>
+                <CourseVersionCard handleReloadTable={handleReloadTable}
+                                   courseVersion={courseVersion}></CourseVersionCard>
             </div>
         ));
     };

@@ -38,13 +38,3 @@ export interface ICreateNewCourseAndVersionDTO {
     categoryId: string;
     levelId: string;
 }
-export interface IEditCourseVersionDTO {
-    id: string;
-    title: string;
-    code: string;
-    description: string;
-    learningTime: string;
-    price: number;
-    categoryId: string;
-    levelId: string;
-}

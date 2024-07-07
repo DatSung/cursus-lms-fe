@@ -26,6 +26,7 @@ import InstructorDashBoardPage from "../pages/instructor/dashboard/InstructorDas
 import InstructorCoursesPage from "../pages/instructor/courses/InstructorCoursesPage.tsx";
 import InstructorCourseVersionsPage from "../pages/instructor/courses/InstructorCourseVersionsPage.tsx";
 import CourseVersionDetailsPage from "../pages/instructor/courses/CourseVersionDetailsPage.tsx";
+import SectionVersionDetailsPage from "../pages/instructor/courses/SectionVersionDetailsPage.tsx";
 
 const GlobalRouter = () => {
     return (
@@ -69,6 +70,7 @@ const GlobalRouter = () => {
                     <Route path={PATH_INSTRUCTOR.courses} element={<InstructorCoursesPage></InstructorCoursesPage>}/>
                     <Route path={PATH_INSTRUCTOR.courseVersions} element={<InstructorCourseVersionsPage></InstructorCourseVersionsPage>}/>
                     <Route path={PATH_INSTRUCTOR.courseVersionDetails} element={<CourseVersionDetailsPage></CourseVersionDetailsPage>}/>
+                    <Route path={PATH_INSTRUCTOR.sectionVersionDetails} element={<SectionVersionDetailsPage></SectionVersionDetailsPage>}/>
                     {/* Instructor routes */}
                 </Route>
 

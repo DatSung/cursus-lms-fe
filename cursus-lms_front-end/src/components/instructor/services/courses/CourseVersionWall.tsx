@@ -3,8 +3,9 @@ import {ICourseVersionDTO} from "../../../../types/courseVersion.types.ts";
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
 import {COURSE_VERSIONS_URL} from "../../../../utils/apiUrl/courseVersionApiUrl.ts";
-import {Card, Divider} from "antd";
+import {Button, Card, Divider, Upload} from "antd";
 import EditCourseVersion from "./EditCourseVersion.tsx";
+import {UploadOutlined} from "@ant-design/icons";
 
 interface IProps {
     courseVersionId: string | null
@@ -26,8 +27,8 @@ const CourseVersionWall = (props: IProps) => {
         learningTime: "",
         levelId: "",
         levelName: "",
-        oldPrice: "",
-        price: "",
+        oldPrice: 0,
+        price: 0,
         title: "",
         version: ""
     });
@@ -58,12 +59,13 @@ const CourseVersionWall = (props: IProps) => {
                 <EditCourseVersion courseVersion={courseVersion} handleReload={handleReload}></EditCourseVersion>
             </div>
             <div className="flex flex-col justify-evenly md:flex-row w-full items-center">
-                <div className="w-4/12">
+                <div className="w-4/12 flex items-center flex-col">
                     <img
-                        className="w-full h-auto rounded"
+                        className="w-full h-auto"
                         src="https://codeopinion.com/wp-content/uploads/2018/07/Bitmap-MEDIUM_ASP.NET-Core-Logo_2colors_Square_RGB.png"
                         alt="Course Image"
                     />
+                    <Button icon={<UploadOutlined/>}>Upload</Button>
                 </div>
                 <div className="w-6/12">
                     <h2 className="text-4xl font-bold mb-6">{courseVersion?.title}</h2>
