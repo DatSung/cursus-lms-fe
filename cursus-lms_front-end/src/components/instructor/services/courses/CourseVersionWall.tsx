@@ -59,10 +59,10 @@ const CourseVersionWall = (props: IProps) => {
                 <EditCourseVersion courseVersion={courseVersion} handleReload={handleReload}></EditCourseVersion>
             </div>
             <div className="flex flex-col justify-evenly md:flex-row w-full items-center">
-                <div className="w-4/12 flex items-center flex-col">
+                <div className="w-4/12 flex items-center gap-4 flex-col">
                     <img
                         className="w-full h-auto"
-                        src="https://codeopinion.com/wp-content/uploads/2018/07/Bitmap-MEDIUM_ASP.NET-Core-Logo_2colors_Square_RGB.png"
+                        src="https://i.pinimg.com/564x/ce/57/82/ce57824d38e7921c16e0c621c13fedd6.jpg"
                         alt="Course Image"
                     />
                     <Button icon={<UploadOutlined/>}>Upload</Button>

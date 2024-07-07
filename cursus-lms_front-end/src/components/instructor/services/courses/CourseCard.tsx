@@ -16,7 +16,7 @@ const CourseCard = (props: IProps) => {
             hoverable
             style={{width: 240}}
             cover={<img alt="example"
-                        src="https://codeopinion.com/wp-content/uploads/2018/07/Bitmap-MEDIUM_ASP.NET-Core-Logo_2colors_Square_RGB.png"/>}
+                        src="https://i.pinimg.com/564x/ce/57/82/ce57824d38e7921c16e0c621c13fedd6.jpg"/>}
         >
             <h1 className={'text-2xl mb-4'}>{props.course.title}</h1>
             <p>Category: {props.course.categoryName}</p>

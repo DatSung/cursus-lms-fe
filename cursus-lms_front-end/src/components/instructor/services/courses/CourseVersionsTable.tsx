@@ -5,6 +5,7 @@ import {IResponseDTO} from "../../../../types/auth.types.ts";
 import Spinner from "../../../general/Spinner.tsx";
 import {COURSE_VERSIONS_URL} from "../../../../utils/apiUrl/courseVersionApiUrl.ts";
 import CourseVersionCard from "./CourseVersionCard.tsx";
+import {Card} from "antd";
 
 interface IProps {
     courseId: string | null
@@ -62,7 +63,7 @@ const CourseVersionsTable = (props: IProps) => {
     };
 
     return (
-        <>
+        <Card>
             <div className='flex flex-wrap lg:flex-nowrap justify-between'>
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="filterOn">
@@ -172,7 +173,7 @@ const CourseVersionsTable = (props: IProps) => {
                     )
             }
 
-        </>
+        </Card>
     );
 };
 

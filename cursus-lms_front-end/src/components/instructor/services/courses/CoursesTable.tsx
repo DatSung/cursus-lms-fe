@@ -6,6 +6,7 @@ import {IResponseDTO} from "../../../../types/auth.types.ts";
 import CourseCard from "./CourseCard.tsx";
 import Spinner from "../../../general/Spinner.tsx";
 import AddNewCourse from "./AddNewCourse.tsx";
+import {Card} from "antd";
 
 
 const CoursesTable = () => {
@@ -61,7 +62,7 @@ const CoursesTable = () => {
     };
 
     return (
-        <>
+        <Card>
             <div className={`flex px-4 mb-4 flex-row-reverse`}>
                 <AddNewCourse handleReloadTable={handleReloadTable}></AddNewCourse>
             </div>
@@ -175,7 +176,7 @@ const CoursesTable = () => {
                     )
             }
 
-        </>
+        </Card>
     );
 };
 
