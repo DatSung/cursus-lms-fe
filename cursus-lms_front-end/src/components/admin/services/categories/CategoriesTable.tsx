@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import axiosInstance from '../../../../utils/axios/axiosInstance.ts';
 import {IAdminCategoryDTO, IQueryParameters} from '../../../../types/category.types.ts';
 import {CATEGORIES_URL} from '../../../../utils/apiUrl/categoryApiUrl.ts';
@@ -25,9 +25,9 @@ const CategoriesTable = () => {
     );
     const [reload, setReload] = useState<boolean>(true);
 
-    const handleReloadTable = () => {
-        setReload(!reload);
-    }
+    const handleReloadTable = useCallback(() => {
+        setReload(preReload => !preReload);
+    }, [])
 
     useEffect(() => {
         const getCategories = async (query: IQueryParameters) => {

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {
     ICourseSectionVersionDTO,
     ICourseSectionVersionsQueryParametersDTO,
@@ -29,9 +29,9 @@ const SectionVersionTable = (props: IProps) => {
         pageNumber: 1,
     });
 
-    const handleReload = () => {
-        setReload(!reload);
-    }
+    const handleReload = useCallback(() => {
+        setReload(preReload => !preReload);
+    }, [])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const {name, value} = e.target;
@@ -173,7 +173,7 @@ const SectionVersionTable = (props: IProps) => {
                         )
                 }
             </Card>
-            
+
         </>
     );
 };

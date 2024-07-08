@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {ICourseVersionDTO} from "../../../../types/courseVersion.types.ts";
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
@@ -49,9 +49,9 @@ const CourseVersionWall = (props: IProps) => {
         getCourseVersion();
     }, [props.courseVersionId, reload]);
 
-    const handleReload = () => {
-        setReload(!reload);
-    }
+    const handleReload = useCallback(() => {
+        setReload(preReload => !preReload);
+    }, [])
 
     return (
         <Card loading={loading} className="border-2 shadow-xl text-left min-w-80">

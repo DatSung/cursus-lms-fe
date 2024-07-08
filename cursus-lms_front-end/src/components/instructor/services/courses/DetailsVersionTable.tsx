@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {
     ISectionDetailsVersionsQueryParametersDTO, ISectionDetailVersionDTO
 } from "../../../../types/courseVersion.types.ts";
@@ -29,9 +29,9 @@ const DetailsVersionTable = (props: IProps) => {
         pageNumber: 1,
     });
 
-    const handleReloadTable = () => {
-        setReload(!reload);
-    }
+    const handleReloadTable = useCallback(() => {
+        setReload(preReload => !preReload);
+    }, [])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const {name, value} = e.target;

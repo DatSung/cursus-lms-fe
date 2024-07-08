@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {ICourseVersionDTO, ICourseVersionsQueryParametersDTO} from "../../../../types/courseVersion.types.ts";
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
@@ -26,9 +26,9 @@ const CourseVersionsTable = (props: IProps) => {
         pageNumber: 1,
     });
 
-    const handleReloadTable = () => {
-        setReload(!reload);
-    }
+    const handleReloadTable = useCallback(() => {
+        setReload(preReload => !preReload);
+    }, [])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const {name, value} = e.target;
