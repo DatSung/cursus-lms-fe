@@ -6,13 +6,21 @@ import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
 import {COURSE_VERSIONS_URL} from "../../../../utils/apiUrl/courseVersionApiUrl.ts";
 import toast from "react-hot-toast";
+import {useState} from "react";
 
 interface IProps {
     sectionDetailVersion: ISectionDetailVersionDTO[];
     handleReloadTable: () => void
+    handleCurrentDetailsVersionId: (detailsVersionId: string) => void
 }
 
 const DetailsVersionList = (props: IProps) => {
+    const [activeButton, setActiveButton] = useState<string>('');
+
+    const handleButtonClick = (detailsVersionId: string) => {
+        setActiveButton(detailsVersionId);
+        props.handleCurrentDetailsVersionId(detailsVersionId);
+    };
 
     const confirmDelete = (detailsVersionId: string) => {
         return new Promise((resolve, reject) => {
@@ -39,8 +47,11 @@ const DetailsVersionList = (props: IProps) => {
     const renderDetailsVersions = (sectionDetailVersion: ISectionDetailVersionDTO[]) => {
 
         return sectionDetailVersion.map((detailsVersion) => (
-            <div className={'w-full flex items-center justify-between'} key={detailsVersion.id}>
-                <a onClick={() => alert('s')}>{detailsVersion.name}</a>
+            <div
+                onClick={() => handleButtonClick(detailsVersion.id)}
+                className={`${activeButton === detailsVersion.id ? 'bg-gray-200' : ''} duration-100  w-full flex items-center justify-between cursor-pointer rounded hover:bg-gray-200 p-2`}
+                key={detailsVersion.id}>
+                <a>{detailsVersion.name}</a>
                 <div className={'flex gap-2'}>
                     <EditDetailsVersion
                         handleReloadTable={props.handleReloadTable}

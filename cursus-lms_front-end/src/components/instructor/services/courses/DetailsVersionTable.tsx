@@ -16,6 +16,7 @@ interface IProps {
 }
 
 const DetailsVersionTable = (props: IProps) => {
+    const [currentDetailsVersionId, setCurrentDetailsVersionId] = useState<string | null>(null);
     const [sectionDetailsVersions, setSectionDetailsVersions] = useState<ISectionDetailVersionDTO[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [reload, setReload] = useState<boolean>(false);
@@ -56,6 +57,9 @@ const DetailsVersionTable = (props: IProps) => {
         getAllSectionVersions();
     }, [query, reload]);
 
+    const handleCurrentDetailsVersionId = useCallback((detailVersionId: string) => {
+        setCurrentDetailsVersionId(detailVersionId);
+    }, [])
 
     return (
         <>
@@ -161,18 +165,22 @@ const DetailsVersionTable = (props: IProps) => {
                                 (<Spinner/>)
                                 :
                                 (
-                                    <DetailsVersionList handleReloadTable={handleReloadTable}
-                                                        sectionDetailVersion={sectionDetailsVersions}></DetailsVersionList>
+                                    <DetailsVersionList
+                                        handleCurrentDetailsVersionId={handleCurrentDetailsVersionId}
+                                        handleReloadTable={handleReloadTable}
+                                        sectionDetailVersion={sectionDetailsVersions}
+                                    >
+
+                                    </DetailsVersionList>
                                 )
                         }
                     </div>
                     <div className={'w-8/12'}>
-                        <ContentVersionCard></ContentVersionCard>
+                        <ContentVersionCard detailsVersionId={currentDetailsVersionId}></ContentVersionCard>
                     </div>
                 </div>
 
             </Card>
-
 
         </>
     );
