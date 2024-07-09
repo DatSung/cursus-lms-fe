@@ -99,3 +99,7 @@ export interface IEditSectionDetailVersionDTO {
     courseSectionId: string | null
     name: string
 }
+
+export interface IDetailsContentVersionDTO {
+
+}

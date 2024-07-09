@@ -70,8 +70,17 @@ export const COURSE_VERSIONS_URL = {
         ) => {
             return `/CourseVersion/section/details${detailsId != null ? `/${detailsId}` : ''}`
         },
-    GET_POST_DETAILS_CONTENT_VERSION:
-        () => {
-            return `/CourseVersion/section/details/content`
+    POST_DETAILS_CONTENT_VERSION:
+        (
+            detailVersionId: string | null
+        ) => {
+            return `/CourseVersion/section/details/content/${detailVersionId}`
         },
+    GET_DETAILS_CONTENT_VERSION:
+        (
+            detailsVersionId: string | null | undefined,
+            type: string | null
+        ) => {
+            return `/CourseVersion/section/details/content?sectionDetailsVersionId=${detailsVersionId}&type=${type}`
+        }
 }
