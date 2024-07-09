@@ -29,6 +29,7 @@ const ContentVersionCard = (props: IProps) => {
         videoUrl: ""
     });
     const [reload, setReload] = useState<boolean>(false);
+    const [videoKey, setVideoKey] = useState<number>(0);
 
     const uploadProps: UploadProps = {
         name: 'file',
@@ -43,6 +44,7 @@ const ContentVersionCard = (props: IProps) => {
             if (info.file.status === 'done') {
                 toast.success(`${info.file.name} file uploaded successfully`);
                 setReload(preReload => !preReload);
+                setVideoKey(preVideoKey => preVideoKey + 1);
             } else if (info.file.status === 'error') {
                 toast.error(`${info.file.name} file upload failed.`);
             }
@@ -98,7 +100,7 @@ const ContentVersionCard = (props: IProps) => {
             children: (
                 <div className="flex flex-col justify-center items-center gap-4">
 
-                    <VideoViewer videoUrl={videoUrl}></VideoViewer>
+                    <VideoViewer key={videoKey} videoUrl={videoUrl}></VideoViewer>
 
                     <Upload {...uploadProps}>
                         <Button icon={<UploadOutlined/>}>Upload Video</Button>
