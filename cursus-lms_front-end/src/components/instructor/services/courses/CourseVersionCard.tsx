@@ -273,7 +273,7 @@ const CourseVersionCard = (props: IProps) => {
                             </Popconfirm>
 
                             <Popconfirm
-                                className={'mt-6 bg-gray-100'}
+                                className={'mt-6 bg-green-600'}
                                 title="Confirmation"
                                 description="Are you sure to merge this version?"
                                 onConfirm={confirmMerge}
