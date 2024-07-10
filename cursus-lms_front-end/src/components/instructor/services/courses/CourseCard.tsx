@@ -2,6 +2,8 @@ import {ICourseDTO} from "../../../../types/course.types.ts";
 import {Button, Card} from "antd";
 import {PATH_INSTRUCTOR} from "../../../../routes/paths.ts";
 import {useNavigate} from "react-router-dom";
+import {COURSE_VERSIONS_URL} from "../../../../utils/apiUrl/courseVersionApiUrl.ts";
+import {HOST_API_KEY} from "../../../../utils/apiUrl/globalConfig.ts";
 
 interface IProps {
     course: ICourseDTO;
@@ -16,7 +18,7 @@ const CourseCard = (props: IProps) => {
             hoverable
             style={{width: 240}}
             cover={<img alt="example"
-                        src="https://i.pinimg.com/564x/ce/57/82/ce57824d38e7921c16e0c621c13fedd6.jpg"/>}
+                        src={`${HOST_API_KEY}${COURSE_VERSIONS_URL.DISPLAY_COURSE_VERSION_BACKGROUND(props.course.id)}`}/>}
         >
             <h1 className={'text-2xl mb-4'}>{props.course.title}</h1>
             <p>Category: {props.course.categoryName}</p>

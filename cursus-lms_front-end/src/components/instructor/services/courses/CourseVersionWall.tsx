@@ -3,9 +3,13 @@ import {ICourseVersionDTO} from "../../../../types/courseVersion.types.ts";
 import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
 import {COURSE_VERSIONS_URL} from "../../../../utils/apiUrl/courseVersionApiUrl.ts";
-import {Button, Card, Divider} from "antd";
+import {Button, Card, Divider, Upload, UploadProps} from "antd";
 import EditCourseVersion from "./EditCourseVersion.tsx";
 import {UploadOutlined} from "@ant-design/icons";
+import {HOST_API_KEY} from "../../../../utils/apiUrl/globalConfig.ts";
+import {getJwtTokenSession} from "../../../../auth/auth.utils.tsx";
+import toast from "react-hot-toast";
+import CourseVersionBackground from "./CourseVersionBackground.tsx";
 
 interface IProps {
     courseVersionId: string | null
@@ -34,6 +38,26 @@ const CourseVersionWall = (props: IProps) => {
     });
     const [loading, setLoading] = useState<boolean>(true);
     const [reload, setReload] = useState<boolean>(false);
+    const [imgKey, setImgKey] = useState<number>(0);
+
+    const uploadProps: UploadProps = {
+        name: 'file',
+        action: `${HOST_API_KEY}${COURSE_VERSIONS_URL.UPLOAD_COURSE_VERSION_BACKGROUND(props.courseVersionId)}`,
+        headers: {
+            authorization: 'Bearer ' + getJwtTokenSession().accessToken,
+        },
+        onChange(info) {
+            if (info.file.status !== 'uploading') {
+                console.log(info.file, info.fileList);
+            }
+            if (info.file.status === 'done') {
+                toast.success(`${info.file.name} file uploaded successfully`);
+                setImgKey(preImgKey => preImgKey + 1);
+            } else if (info.file.status === 'error') {
+                toast.error(`${info.file.name} file upload failed.`);
+            }
+        },
+    };
 
     useEffect(() => {
         const getCourseVersion = async () => {
@@ -60,12 +84,15 @@ const CourseVersionWall = (props: IProps) => {
             </div>
             <div className="flex flex-col justify-evenly md:flex-row w-full items-center">
                 <div className="w-4/12 flex items-center gap-4 flex-col">
-                    <img
-                        className="w-full h-auto"
-                        src="https://i.pinimg.com/564x/ce/57/82/ce57824d38e7921c16e0c621c13fedd6.jpg"
-                        alt="Course Image"
-                    />
-                    <Button icon={<UploadOutlined/>}>Upload</Button>
+                    <CourseVersionBackground
+                        key={imgKey}
+                        courseVersionId={courseVersion.id}
+                    >
+
+                    </CourseVersionBackground>
+                    <Upload {...uploadProps}>
+                        <Button icon={<UploadOutlined/>}>Upload</Button>
+                    </Upload>
                 </div>
                 <div className="w-6/12">
                     <h2 className="text-4xl font-bold mb-6">{courseVersion?.title}</h2>

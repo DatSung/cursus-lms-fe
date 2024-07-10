@@ -7,6 +7,7 @@ import axiosInstance from "../../../../utils/axios/axiosInstance.ts";
 import {COURSE_VERSIONS_URL} from "../../../../utils/apiUrl/courseVersionApiUrl.ts";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
 import toast from "react-hot-toast";
+import {HOST_API_KEY} from "../../../../utils/apiUrl/globalConfig.ts";
 
 interface IProps {
     courseVersion: ICourseVersionDTO;
@@ -194,8 +195,8 @@ const CourseVersionCard = (props: IProps) => {
             >
                 <div className={'flex gap-6 items-center'}>
                     <div className={'w-4/12'}>
-                        <img style={{width: "100%"}} alt="example"
-                             src="https://i.pinimg.com/564x/ce/57/82/ce57824d38e7921c16e0c621c13fedd6.jpg"/>
+                        <img style={{width: "100%"}} alt="course version background"
+                             src={`${HOST_API_KEY}${COURSE_VERSIONS_URL.DISPLAY_COURSE_VERSION_BACKGROUND(props.courseVersion.id)}`}/>
                     </div>
                     <div className={'w-8/12'}>
                         <div className="text-left">
