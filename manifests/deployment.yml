@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: frontendcursuslms 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontendcursuslms
+  template:
+    metadata:
+      labels:
+        app: frontendcursuslms 
+    spec:
+      containers:
+        - name: frontendcursuslms 
+          image: cursuscontainer.azurecr.io/frontendcursuslms
+          ports:
+          - containerPort: 80
