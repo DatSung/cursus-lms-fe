@@ -6,7 +6,7 @@ class SignalRService {
 
     constructor() {
         this.connection = new signalR.HubConnectionBuilder()
-            .withUrl(`https://localhost:7554/hubs/notification`,
+            .withUrl(`https://cursuslms.azurewebsites.net/hubs/notification`,
                 {
                     accessTokenFactory(): string | Promise<string> {
                         return getJwtTokenSession().accessToken || "";
