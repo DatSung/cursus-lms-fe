@@ -12,7 +12,7 @@ steps:
 # Prepare Analysis Configuration task
 - task: SonarQubePrepare@6
   inputs:
-    SonarQube: 'http://localhost:9000'
+    SonarQube: 'SonarQube'
     scannerMode: 'CLI'
     configMode: 'manual'
     cliProjectKey: 'Frontend_-_Cursus_LMS_Frontend_-_Cursus_LMS_87897cb4-33a2-4cc2-aea8-d6909523cadf'
