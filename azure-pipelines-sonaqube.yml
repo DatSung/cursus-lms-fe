@@ -1,0 +1,28 @@
+trigger:
+- develop # or the name of your main branch
+- feature/*
+
+steps:
+ # Checkout the repository
+ - checkout: self
+ 
+ # Disable shallow fetch
+   fetchDepth: 0
+
+# Prepare Analysis Configuration task
+- task: SonarQubePrepare@6
+  inputs:
+    SonarQube: 'http://localhost:9000'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'Frontend_-_Cursus_LMS_Frontend_-_Cursus_LMS_87897cb4-33a2-4cc2-aea8-d6909523cadf'
+
+# Run Code Analysis task
+- task: SonarQubeAnalyze@6
+  inputs:
+    jdkversion: 'JAVA_HOME_17_X64'
+
+# Publish Quality Gate Result task
+- task: SonarQubePublish@6
+  inputs:
+    pollingTimeoutSec: '300'
