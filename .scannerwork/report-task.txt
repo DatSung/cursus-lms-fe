@@ -1,0 +1,6 @@
+projectKey=Frontend_-_Cursus_LMS_Frontend_-_Cursus_LMS_f521129f-9d8f-4985-b4eb-40281099a854
+serverUrl=http://localhost:9000
+serverVersion=10.6.0.92116
+dashboardUrl=http://localhost:9000/dashboard?id=Frontend_-_Cursus_LMS_Frontend_-_Cursus_LMS_f521129f-9d8f-4985-b4eb-40281099a854
+ceTaskId=937362d6-a172-451e-a99f-e7c183fa3cf8
+ceTaskUrl=http://localhost:9000/api/ce/task?id=937362d6-a172-451e-a99f-e7c183fa3cf8
