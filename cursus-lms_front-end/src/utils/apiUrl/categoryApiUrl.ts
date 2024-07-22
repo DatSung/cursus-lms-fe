@@ -22,13 +22,13 @@ export const CATEGORIES_URL = {
         (
             id: string | null
         ) => {
-            return `/Category/get-sub-category/${id}`
+            return `/Category/sub/${id}`
         },
     GET_PARENT_CATEGORIES_URL:
         (
             id: string | null
         ) => {
-            return `/Category/get-parent-category/${id}`
+            return `/Category/parent/${id}`
         },
     GET_POST_PUT_DELETE_CATEGORY_URL:
         (

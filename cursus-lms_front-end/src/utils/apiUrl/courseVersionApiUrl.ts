@@ -18,29 +18,29 @@ export const COURSE_VERSIONS_URL = {
         },
     CLONE_COURSE_VERSION:
         () => {
-            return `/CourseVersion/clone-course-version`
+            return `/CourseVersion/clone`
         },
     REMOVE_COURSE_VERSION:
         (
             courseId: string | null
         ) => {
-            return `/CourseVersion/remove-course-version/${courseId}`
+            return `/CourseVersion/remove/${courseId}`
         },
     SUBMIT_COURSE_VERSION:
         (
             courseId: string | null
         ) => {
-            return `/CourseVersion/submit-course-version/${courseId}`
+            return `/CourseVersion/submit/${courseId}`
         },
     MERGE_COURSE_VERSION:
         (
             courseId: string | null
         ) => {
-            return `/CourseVersion/merge-course-version/${courseId}`
+            return `/CourseVersion/merge/${courseId}`
         },
     EDIT_COURSE_VERSION:
         () => {
-            return `/CourseVersion/edit-course-version`
+            return `/CourseVersion/edit`
         },
     GET_COURSE_SECTION_VERSIONS:
         (
@@ -56,7 +56,7 @@ export const COURSE_VERSIONS_URL = {
         },
     CREATE_COURSE_SECTION_VERSION:
         () => {
-            return `/CourseVersion/create-course-section-version`
+            return `/CourseVersion/section`
         },
     GET_SECTION_DETAILS_VERSIONS:
         (
