@@ -83,16 +83,10 @@ export const COURSE_VERSIONS_URL = {
         ) => {
             return `/CourseVersion/section/details/content?sectionDetailsVersionId=${detailsVersionId}&type=${type}`
         },
-    UPLOAD_COURSE_VERSION_BACKGROUND:
+    UP_DIS_COURSE_VERSION_BACKGROUND:
         (
             courseVersionId: string | null
         ) => {
-            return `/CourseVersion/upload-background/${courseVersionId}`
-        },
-    DISPLAY_COURSE_VERSION_BACKGROUND:
-        (
-            courseVersionId: string | null
-        ) => {
-            return `/CourseVersion/display-background/${courseVersionId}`
+            return `/CourseVersion/background/${courseVersionId}`
         }
 }

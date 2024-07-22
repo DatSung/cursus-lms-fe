@@ -42,7 +42,7 @@ const CourseVersionWall = (props: IProps) => {
 
     const uploadProps: UploadProps = {
         name: 'file',
-        action: `${HOST_API_KEY}${COURSE_VERSIONS_URL.UPLOAD_COURSE_VERSION_BACKGROUND(props.courseVersionId)}`,
+        action: `${HOST_API_KEY}${COURSE_VERSIONS_URL.UP_DIS_COURSE_VERSION_BACKGROUND(props.courseVersionId)}`,
         headers: {
             authorization: 'Bearer ' + getJwtTokenSession().accessToken,
         },

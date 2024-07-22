@@ -23,7 +23,7 @@ import {
     SIGN_IN_URL,
     SIGN_UP_INSTRUCTOR_URL,
     SIGN_UP_STUDENT_URL,
-    UPLOAD_INSTRUCTOR_DEGREE_URL
+    UP_GET_INSTRUCTOR_DEGREE_URL
 } from "../utils/apiUrl/authApiUrl.ts";
 import toast from "react-hot-toast";
 import {PATH_ADMIN, PATH_PUBLIC} from "../routes/paths.ts";
@@ -391,7 +391,7 @@ const AuthContextProvider = ({children}: IProps) => {
 
     const uploadDegree = useCallback(async (degreeUploadDTO: IDegreeUploadDTO) => {
         try {
-            const response = await axiosInstance.post<IResponseDTO<string>>(UPLOAD_INSTRUCTOR_DEGREE_URL, degreeUploadDTO, {
+            const response = await axiosInstance.post<IResponseDTO<string>>(UP_GET_INSTRUCTOR_DEGREE_URL, degreeUploadDTO, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

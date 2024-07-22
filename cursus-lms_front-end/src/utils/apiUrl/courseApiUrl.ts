@@ -9,6 +9,6 @@ export const COURSES_URL = {
         },
     CREATE_COURSE_VERSION:
         () => {
-            return `/CourseVersion/create-course-version`;
+            return `/CourseVersion/create`;
         }
 }

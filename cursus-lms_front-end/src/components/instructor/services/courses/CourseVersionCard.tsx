@@ -196,7 +196,7 @@ const CourseVersionCard = (props: IProps) => {
                 <div className={'flex gap-6 items-center'}>
                     <div className={'w-4/12'}>
                         <img style={{width: "100%"}} alt="course version background"
-                             src={`${HOST_API_KEY}${COURSE_VERSIONS_URL.DISPLAY_COURSE_VERSION_BACKGROUND(props.courseVersion.id)}`}/>
+                             src={`${HOST_API_KEY}${COURSE_VERSIONS_URL.UP_DIS_COURSE_VERSION_BACKGROUND(props.courseVersion.id)}`}/>
                     </div>
                     <div className={'w-8/12'}>
                         <div className="text-left">

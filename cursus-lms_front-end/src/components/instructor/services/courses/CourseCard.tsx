@@ -18,7 +18,7 @@ const CourseCard = (props: IProps) => {
             hoverable
             style={{width: 240}}
             cover={<img alt="example"
-                        src={`${HOST_API_KEY}${COURSE_VERSIONS_URL.DISPLAY_COURSE_VERSION_BACKGROUND(props.course.id)}`}/>}
+                        src={`${HOST_API_KEY}${COURSE_VERSIONS_URL.UP_DIS_COURSE_VERSION_BACKGROUND(props.course.id)}`}/>}
         >
             <h1 className={'text-2xl mb-4'}>{props.course.title}</h1>
             <p>Category: {props.course.categoryName}</p>

@@ -10,7 +10,7 @@ const CourseVersionBackground = (props: IProps) => {
         <>
             <img
                 className="w-full h-auto"
-                src={`${HOST_API_KEY}${COURSE_VERSIONS_URL.DISPLAY_COURSE_VERSION_BACKGROUND(props.courseVersionId)}`}
+                src={`${HOST_API_KEY}${COURSE_VERSIONS_URL.UP_DIS_COURSE_VERSION_BACKGROUND(props.courseVersionId)}`}
                 alt="Course Image"
             />
         </>
