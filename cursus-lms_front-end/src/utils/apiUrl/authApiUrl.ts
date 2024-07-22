@@ -1,8 +1,8 @@
 // AUTH API URLS
 export const SIGN_UP_STUDENT_URL = "/Auth/student/sign-up";
 export const SIGN_UP_INSTRUCTOR_URL = "/Auth/instructor/sign-up";
-export const UP_GET_INSTRUCTOR_DEGREE_URL = "/Auth/instructor/degree";
-export const UP_GET_USER_AVATAR_URL = "/Auth/user/avatar";
+export const UP_GET_INSTRUCTOR_DEGREE_URL = "/Auth/instructor/degree/";
+export const UP_GET_USER_AVATAR_URL = "/Auth/user/avatar/";
 export const FORGOT_PASSWORD_URL = "/Auth/forgot-password";
 export const RESET_PASSWORD_URL = "/Auth/reset-password";
 export const SEND_VERIFY_EMAIL_URL = "/Auth/send-verify-email";

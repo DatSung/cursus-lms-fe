@@ -31,13 +31,13 @@ export const INSTRUCTORS_URL = {
         (
             instructorId: string | null
         ) => {
-            return `/Instructor/total-earned-money${instructorId ? `/${instructorId}` : ''}`
+            return `/Instructor/money/earned/total${instructorId ? `/${instructorId}` : ''}`
         },
     GET_TOTAL_PAYOUT_MONEY_INSTRUCTOR_URL:
         (
             instructorId: string | null
         ) => {
-            return `/Instructor/total-payout-money${instructorId ? `/${instructorId}` : ''}`
+            return `/Instructor/money/payout/total${instructorId ? `/${instructorId}` : ''}`
         },
     ACCEPT_INSTRUCTOR_URL:
         (
