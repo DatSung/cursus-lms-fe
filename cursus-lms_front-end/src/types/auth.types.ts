@@ -52,6 +52,8 @@ export interface ISignUpStudentDTO {
 // Represent to UserInfo of back-end
 export interface IUserInfo {
     id: string;
+    studentId: string,
+    instructorId:string,
     userName: string,
     fullName: string;
     gender: string;
