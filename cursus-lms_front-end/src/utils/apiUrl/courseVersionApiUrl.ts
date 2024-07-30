@@ -79,9 +79,10 @@ export const COURSE_VERSIONS_URL = {
     GET_DETAILS_CONTENT_VERSION:
         (
             detailsVersionId: string | null | undefined,
+            userId: string | undefined,
             type: string | null
         ) => {
-            return `/CourseVersion/section/details/content?sectionDetailsVersionId=${detailsVersionId}&type=${type}`
+            return `/CourseVersion/section/details/content?sectionDetailsVersionId=${detailsVersionId}&userId=${userId}&type=${type}`
         },
     UP_DIS_COURSE_VERSION_BACKGROUND:
         (

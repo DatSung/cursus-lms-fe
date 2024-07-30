@@ -10,6 +10,7 @@ import DownloadContent from "../../../general/DownloadContent.tsx";
 import {useEffect, useState} from "react";
 import {IResponseDTO} from "../../../../types/auth.types.ts";
 import {ISectionDetailVersionDTO} from "../../../../types/courseVersion.types.ts";
+import useAuth from "../../../../hooks/useAuth.hook.ts";
 
 interface IProps {
     detailsVersionId: string | null;
@@ -30,6 +31,8 @@ const ContentVersionCard = (props: IProps) => {
     });
     const [reload, setReload] = useState<boolean>(false);
     const [videoKey, setVideoKey] = useState<number>(0);
+
+    const {user} = useAuth();
 
     const uploadProps: UploadProps = {
         name: 'file',
@@ -63,9 +66,9 @@ const ContentVersionCard = (props: IProps) => {
         getDetailsInfo()
     }, [props.detailsVersionId, reload]);
 
-    const videoUrl = `${HOST_API_KEY}${COURSE_VERSIONS_URL.GET_DETAILS_CONTENT_VERSION(props.detailsVersionId, 'video')}`;
-    const docUrl = `${HOST_API_KEY}${COURSE_VERSIONS_URL.GET_DETAILS_CONTENT_VERSION(props.detailsVersionId, 'docx')}`;
-    const slideUrl = `${HOST_API_KEY}${COURSE_VERSIONS_URL.GET_DETAILS_CONTENT_VERSION(props.detailsVersionId, 'slide')}`;
+    const videoUrl = `${HOST_API_KEY}${COURSE_VERSIONS_URL.GET_DETAILS_CONTENT_VERSION(props.detailsVersionId, user?.id, 'video')}`;
+    const docUrl = `${HOST_API_KEY}${COURSE_VERSIONS_URL.GET_DETAILS_CONTENT_VERSION(props.detailsVersionId, user?.id, 'docx')}`;
+    const slideUrl = `${HOST_API_KEY}${COURSE_VERSIONS_URL.GET_DETAILS_CONTENT_VERSION(props.detailsVersionId, user?.id, 'slide')}`;
 
     const tabItems = [
         {
