@@ -1,5 +1,5 @@
 export interface ICourseQueryParameters {
-    instructorId: string | null,
+    instructorId: string | undefined,
     filterOn: string,
     filterQuery: string,
     sortBy: string,

@@ -7,6 +7,7 @@ import CourseCard from "./CourseCard.tsx";
 import Spinner from "../../../general/Spinner.tsx";
 import AddNewCourse from "./AddNewCourse.tsx";
 import {Card} from "antd";
+import useAuth from "../../../../hooks/useAuth.hook.ts";
 
 
 const CoursesTable = () => {
@@ -14,8 +15,9 @@ const CoursesTable = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [courses, setCourses] = useState<ICourseDTO[]>([]);
     const [reload, setReload] = useState<boolean>(true);
+    const {user} = useAuth();
     const [query, setQuery] = useState<ICourseQueryParameters>({
-        instructorId: '',
+        instructorId: user?.instructorId,
         filterOn: 'title',
         filterQuery: '',
         sortBy: '',
